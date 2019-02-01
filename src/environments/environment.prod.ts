@@ -1,12 +1,12 @@
 export const environment = {
   production: true,
   firebase: {
-    apiKey: 'AIzaSyBZuc0cGLhgXHhuZCuCwai9iLGT4CGZUsU',
-    authDomain: 'ng-fire-universal.firebaseapp.com',
-    databaseURL: 'https://ng-fire-universal.firebaseio.com',
-    projectId: 'ng-fire-universal',
-    storageBucket: 'ng-fire-universal.appspot.com',
-    messagingSenderId: '881590998188'
+    apiKey: 'AIzaSyAbrcuG8XgH5FvWf4WkoiQKm92tNf67Jpk',
+    authDomain: 'dabeersbe.firebaseapp.com',
+    databaseURL: 'https://dabeersbe.firebaseio.com',
+    projectId: 'dabeersbe',
+    storageBucket: 'dabeersbe.appspot.com',
+    messagingSenderId: '741661794320'
   },
   'output-path': './dist/ng-fire-universal'
 };

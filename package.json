@@ -1,7 +1,7 @@
 {
-  "name": "ng-fire-universal",
-  "version": "0.8.0",
-  "repository": "https://github.com/jrodl3r/ng-fire-universal",
+  "name": "dabeers.be",
+  "version": "1.0.0",
+  "repository": "https://github.com/jrodl3r/dabeers.be",
   "author": "John Rodler",
   "license": "MIT",
   "scripts": {
