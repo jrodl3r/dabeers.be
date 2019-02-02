@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 
 import { AuthService } from '../../services/auth.service';
 
@@ -7,7 +8,18 @@ import { AuthService } from '../../services/auth.service';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit {
+  userSub: Subscription;
+  user: any;
 
   constructor(public auth: AuthService) { }
+
+  ngOnInit() {
+    this.auth.redirectAfterSignIn();
+    this.userSub = this.auth.user.subscribe(user => {
+      if (user) {
+        this.user = user;
+      }
+    });
+  }
 }

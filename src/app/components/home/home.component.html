@@ -1,7 +1,13 @@
 <div class="mt-4 mb-5">
-  <h1>Home</h1>
-  <hr>
+  <p class="rounded bg-light text-dark p-2">
+    {{ user && user.isActive ? 'logged-in (' + user.email + ')' : 'logged-out' }}
+  </p>
   <p>
-    <span class="badge bg-secondary-dark shadow-none mr-2">TODO:</span> Home Page
+    <span class="badge bg-secondary-dark shadow-none mr-2">TODO:</span>
+    Setup Results Component
+  </p>
+  <p>
+    <span class="badge bg-secondary-dark shadow-none mr-2">TODO:</span>
+    Setup Vote Component
   </p>
 </div>

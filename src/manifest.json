@@ -1,7 +1,7 @@
 {
-  "name": "ngFireUniversal",
-  "short_name": "ngFireUniversal",
-  "description": "Angular Universal + Firebase + PWA = NgFireUniversal",
+  "name": "dabeers.be",
+  "short_name": "dabeers.be",
+  "description": "We need Your Vote to decide the next Beer selection!",
   "theme_color": "#ff8800",
   "background_color": "#ffffff",
   "display": "standalone",

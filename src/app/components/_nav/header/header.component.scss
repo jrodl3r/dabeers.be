@@ -3,6 +3,8 @@
 @import '../../../styles/colors';
 
 .nav {
+  align-items: center;
+  height: 54px;
   padding: .5rem 1rem;
   background: $special-dark-color;
   box-shadow: none;
@@ -24,10 +26,10 @@
   white-space: nowrap;
   user-select: none;
 
-  .logo-text {
-    position: relative;
-    top: -4px;
-  }
+  // .logo-text {
+  //   position: relative;
+  //   top: -4px;
+  // }
 
   .logo-icon {
     display: inline-flex;
@@ -43,17 +45,18 @@
 
 .menu-container {
   display: flex;
-  width: 100%;
+  // width: 100%;
 
-  @media (min-width: $sm-screen) {
+  // @media (min-width: $sm-screen) {
     width: auto;
     margin-left: auto;
-  }
+  // }
 }
 
 .menu {
-  display: none;
+  display: flex;
   flex-direction: row;
+  width: auto;
   margin-left: auto;
 
   &.expanded {
@@ -77,21 +80,21 @@
   }
 }
 
-.menu-toggle {
-  margin-right: .25rem;
-  margin-left: auto;
-  color: #FFF;
-  font-size: 25px;
+// .menu-toggle {
+//   margin-right: .25rem;
+//   margin-left: auto;
+//   color: #FFF;
+//   font-size: 25px;
 
-  &:hover, &.active {
-    color: $grey-color;
-    cursor: pointer;
-  }
+//   &:hover, &.active {
+//     color: $grey-color;
+//     cursor: pointer;
+//   }
 
-  @media (min-width: $sm-screen) {
-    display: none;
-  }
-}
+//   @media (min-width: $sm-screen) {
+//     display: none;
+//   }
+// }
 
 .menu-item {
   display: flex;
@@ -101,7 +104,7 @@
 .menu-link {
   height: 37px;
   width: 100%;
-  margin-top: 5px;
+  // margin-top: 5px;
   display: inline-flex;
   justify-content: center;
   align-items: center;
@@ -162,16 +165,16 @@
 }
 
 .dropdown-toggle {
-  display: none;
+  // display: none;
   padding-right: 0;
 
   &:after {
     margin-left: .6em;
   }
 
-  @media (min-width: $sm-screen) {
+  // @media (min-width: $sm-screen) {
     display: inline-flex;
-  }
+  // }
 }
 
 .dropdown-menu {
@@ -190,7 +193,7 @@
     left: auto;
   }
 
-  @media (min-width: $sm-screen) {
+  // @media (min-width: $sm-screen) {
     position: absolute;
     padding: 5px 0;
     background: #FFF;
@@ -201,7 +204,7 @@
     &:not(.expanded) {
       display: none;
     }
-  }
+  // }
 }
 
 .dropdown-divider {
@@ -253,7 +256,7 @@
     margin-bottom: 0;
   }
 
-  @media (min-width: $sm-screen) {
+  // @media (min-width: $sm-screen) {
     height: 100%;
     width: auto;
     margin-bottom: 0;
@@ -274,5 +277,5 @@
     &:last-of-type {
       margin-top: 0;
     }
-  }
+  // }
 }

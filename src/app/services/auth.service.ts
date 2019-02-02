@@ -79,7 +79,7 @@ export class AuthService {
         .then(response => {
           if (response.user) {
             this.createUser(response.user);
-            this.zone.run(async () => await this.router.navigate(['/dashboard']))
+            this.zone.run(async () => await this.router.navigate(['/']))
               .then(() => setTimeout(() => this.isLoading = false, 100));
           }
         })
@@ -134,7 +134,7 @@ export class AuthService {
       if (this.system.isBrowser) {
         sessionStorage.clear();
       }
-      this.router.navigate(['/login']);
+      this.router.navigate(['/']);
     });
   }
 
@@ -146,7 +146,10 @@ export class AuthService {
   }
 
   public getUserID(): String {
-    return this.afAuth.auth.currentUser.uid;
+    if (this.isLoggedIn()) {
+      return this.afAuth.auth.currentUser.uid;
+    }
+    return '';
   }
 
 }

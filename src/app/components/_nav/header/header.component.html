@@ -3,15 +3,9 @@
   [class.offline]="system.isBrowser() && !system.isOnline()"
   (click)="nav.collapseHeader()">
   <a class="logo" routerLink="/">
-    <span class="logo-text">ngFireUniversal</span>
-    <span class="logo-icon"></span>
+    <span class="logo-text">dabeers.be 🍺</span>
+    <!-- <span class="logo-icon"></span> -->
   </a>
-  <div
-    class="menu-toggle"
-    [class.active]="nav.isHeaderMenuExpanded"
-    (click)="nav.toggleMenu($event)">
-    <i class="fa fa-bars"></i>
-  </div>
   <div
     class="menu-container"
     *ngIf="(auth.user | async) as user; else isStatic">
@@ -19,29 +13,6 @@
       *ngIf="user?.isActive && !auth.isLoading"
       class="menu"
       [class.expanded]="nav.isHeaderMenuExpanded">
-      <li class="menu-item">
-        <a
-          class="menu-link"
-          href="https://github.com/jrodl3r/ng-fire-universal">GitHub</a>
-      </li>
-      <li class="menu-item">
-        <a
-          class="menu-link"
-          routerLink="/start"
-          routerLinkActive="active">Get Started</a>
-      </li>
-      <li class="menu-item" *ngIf="!auth.isLoggedIn()">
-        <a
-          class="menu-link"
-          routerLink="/signup"
-          routerLinkActive="active">Sign Up</a>
-      </li>
-      <li class="menu-item" *ngIf="!auth.isLoggedIn()">
-        <a
-          class="menu-link"
-          routerLink="/login"
-          routerLinkActive="active">Login</a>
-      </li>
       <li
         *ngIf="auth.isLoggedIn()"
         class="menu-item dropdown">
@@ -58,25 +29,6 @@
           class="dropdown-menu"
           [class.expanded]="nav.isHeaderAccountMenuExpanded"
           (click)="nav.collapseHeader()">
-          <div class="dropdown-divider"></div>
-          <a
-            class="dropdown-item"
-            routerLink="/dashboard"
-            routerLinkActive="active"
-            [routerLinkActiveOptions]="{exact: true}">My Profile</a>
-          <a
-            class="dropdown-item"
-            routerLink="/dashboard/projects"
-            routerLinkActive="active">My Projects</a>
-          <a
-            class="dropdown-item"
-            routerLink="/dashboard/reports"
-            routerLinkActive="active">My Reports</a>
-          <a
-            class="dropdown-item"
-            routerLink="/settings"
-            routerLinkActive="active">Settings</a>
-          <div class="dropdown-divider"></div>
           <a
             href="#"
             class="dropdown-item logout"
@@ -87,31 +39,17 @@
   </div>
   <!-- Not logged-in / Initial render (server-side) -->
   <ng-template #isStatic>
-    <ul
-      class="menu"
-      [class.expanded]="nav.isHeaderMenuExpanded">
-      <li class="menu-item">
+    <ul class="menu">
+      <li class="menu-item d-none">
         <a
           class="menu-link"
-          href="https://github.com/jrodl3r/ng-fire-universal">GitHub</a>
+          href="https://github.com/jrodl3r/dabeers.be">GitHub</a>
       </li>
       <li class="menu-item">
         <a
           class="menu-link"
-          routerLink="/start"
-          routerLinkActive="active">Get Started</a>
-      </li>
-      <li class="menu-item">
-        <a
-          class="menu-link"
-          routerLink="/signup"
-          routerLinkActive="active">Sign Up</a>
-      </li>
-      <li class="menu-item">
-        <a
-          class="menu-link"
-          routerLink="/login"
-          routerLinkActive="active">Login</a>
+          (click)="auth.googleLogin()"
+          href="#">Login</a>
       </li>
     </ul>
   </ng-template>
