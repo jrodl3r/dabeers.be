@@ -14,8 +14,8 @@ import { NavModule } from './components/_nav/nav.module';
 
 import { HomeComponent } from './components/home/home.component';
 import { VoteComponent } from './components/vote/vote/vote.component';
-import { ResultsComponent } from './components/results/results/results.component';
 import { ErrorComponent } from './components/error/error.component';
+import { LoadingComponent } from './components/loading/loading.component';
 
 import { LoginComponent } from './components/login/login.component';
 import { SignupComponent } from './components/signup/signup.component';
@@ -28,11 +28,11 @@ import { environment } from '../environments/environment';
     AppComponent,
     HomeComponent,
     VoteComponent,
-    ResultsComponent,
     LoginComponent,
     SignupComponent,
     StartComponent,
-    ErrorComponent
+    ErrorComponent,
+    LoadingComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-fire-universal' }),
