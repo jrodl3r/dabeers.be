@@ -10,6 +10,7 @@ import { NavService } from '../../../services/nav.service';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent {
+
   constructor(
     public auth: AuthService,
     public system: SystemService,

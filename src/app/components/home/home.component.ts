@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 
 import { AuthService } from '../../services/auth.service';
+import { IUser } from 'src/app/models/user';
 
 @Component({
   selector: 'app-home',
@@ -10,7 +11,7 @@ import { AuthService } from '../../services/auth.service';
 })
 export class HomeComponent implements OnInit, OnDestroy {
   userSub: Subscription;
-  user: any = null;
+  user: IUser | null = null;
 
   constructor(public auth: AuthService) { }
 

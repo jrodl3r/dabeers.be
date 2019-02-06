@@ -77,10 +77,14 @@ export class AuthService {
       sessionStorage.removeItem('login-pending');
       this.afAuth.auth.getRedirectResult()
         .then(response => {
-          if (response.user) {
+          // Must have LightspeedVT email address
+          if (response.user && response.user.email.indexOf('@lightspeedvt.com') !== -1) {
             this.createUser(response.user);
             this.zone.run(async () => await this.router.navigate(['/']))
               .then(() => setTimeout(() => this.isLoading = false, 100));
+          } else {
+            this.logout();
+            throw new Error('You must have a LightspeedVT email address to login.');
           }
         })
         .catch(error => {
