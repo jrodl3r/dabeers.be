@@ -84,7 +84,7 @@ export class AuthService {
               .then(() => setTimeout(() => this.isLoading = false, 100));
           } else {
             this.logout();
-            throw new Error('You must have a LightspeedVT email address to login.');
+            this.notify.error('You must have a LightspeedVT email address to login.');
           }
         })
         .catch(error => {
@@ -138,7 +138,7 @@ export class AuthService {
       if (this.system.isBrowser) {
         sessionStorage.clear();
       }
-      this.router.navigate(['/']);
+      this.zone.run(async () => await this.router.navigate(['/']))
     });
   }
 
