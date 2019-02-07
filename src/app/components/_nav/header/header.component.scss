@@ -148,10 +148,15 @@
 }
 
 .display-name {
+  display: none;
   font-size: 16px;
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
+
+  @media (min-width: $sm-screen) {
+    display: flex;
+  }
 }
 
 .avatar {
