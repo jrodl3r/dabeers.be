@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 
 import { AuthService } from '../../services/auth.service';
-import { IUser } from 'src/app/models/user';
+import { IUser } from '../../models/user';
 
 @Component({
   selector: 'app-home',
