@@ -13,13 +13,9 @@ import { ServicesModule } from './services/services.module';
 import { NavModule } from './components/_nav/nav.module';
 
 import { HomeComponent } from './components/home/home.component';
-import { VoteComponent } from './components/vote/vote/vote.component';
+import { VoteComponent } from './components/vote/vote.component';
 import { ErrorComponent } from './components/error/error.component';
 import { LoadingComponent } from './components/loading/loading.component';
-
-import { LoginComponent } from './components/login/login.component';
-import { SignupComponent } from './components/signup/signup.component';
-import { StartComponent } from './components/start/start.component';
 
 import { environment } from '../environments/environment';
 
@@ -28,9 +24,6 @@ import { environment } from '../environments/environment';
     AppComponent,
     HomeComponent,
     VoteComponent,
-    LoginComponent,
-    SignupComponent,
-    StartComponent,
     ErrorComponent,
     LoadingComponent
   ],

@@ -84,7 +84,7 @@ export class AuthService {
               .then(() => setTimeout(() => this.isLoading = false, 100));
           } else {
             this.logout();
-            this.notify.error('You must have a LightspeedVT email address to login.');
+            this.notify.error('You must have a LightspeedVT email address');
           }
         })
         .catch(error => {
@@ -99,39 +99,6 @@ export class AuthService {
     const provider = new auth.GoogleAuthProvider();
     provider.setCustomParameters({ prompt: 'select_account' });
     this.oAuthLogin(provider);
-  }
-
-  // Email login
-  public emailLogin(email: string, password: string) {
-    return this.afAuth.auth
-      .signInWithEmailAndPassword(email, password)
-      .then(() => this.router.navigate(['/dashboard']))
-      .catch(error => this.notify.error(error));
-  }
-
-  // Email sign up
-  public emailSignUp(email: string, password: string) {
-    return this.afAuth.auth
-      .createUserWithEmailAndPassword(email, password)
-      .then(credential => this.createUser(credential.user))
-      .then(() => this.router.navigate(['/dashboard']))
-      .catch(error => this.notify.error(error));
-  }
-
-  // Send password reset email
-  public resetPassword(email: string) {
-    return this.afAuth.auth
-      .sendPasswordResetEmail(email)
-      .then(() => this.notify.info('Password reset email sent.'))
-      .catch(error => this.notify.error(error));
-  }
-
-  // Change password
-  public updatePassword(password: string) {
-    return this.afAuth.auth.currentUser
-      .updatePassword(password)
-      .then(() => this.notify.success('Password changed successfully.'))
-      .catch(error => this.notify.error(error));
   }
 
   public logout() {
