@@ -24,7 +24,9 @@ export class AdminGuard implements CanActivate {
       return this.afAuth.user.pipe(
         take(1),
         map(state => {
-          if (this.afAuth.auth.currentUser !== null && this.afAuth.auth.currentUser.email !== 'john.rodler@lightspeedvt.com') {
+          if (this.afAuth.auth.currentUser !== null
+            && this.afAuth.auth.currentUser.email !== 'john.rodler@lightspeedvt.com'
+            && this.afAuth.auth.currentUser.email !== 'eric.mullen@lightspeedvt.com') {
             return false;
           }
           return !!state;
