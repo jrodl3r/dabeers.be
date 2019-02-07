@@ -97,6 +97,7 @@ export class AuthService {
   // Google login
   public googleLogin() {
     const provider = new auth.GoogleAuthProvider();
+    provider.setCustomParameters({ prompt: 'select_account' });
     this.oAuthLogin(provider);
   }
 
