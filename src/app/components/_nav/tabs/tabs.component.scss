@@ -21,9 +21,9 @@
 
   &.justify-sm-center {
     // NOTE: This is custom (based on combined tab width)
-    @media (min-width: 340px) {
+    // @media (min-width: 340px) {
       justify-content: center;
-    }
+    // }
 
     @media (min-width: $md-screen) {
       justify-content: initial;
@@ -34,11 +34,13 @@
     bottom: initial;
 
     .tab-item {
-      &:last-of-type .tab-link {
-        border-radius: 0 0 3px 3px;
+      @media (min-width: $md-screen) {
+        &:last-of-type .tab-link {
+          border-radius: 0 0 3px 3px;
 
-        &.active:after {
-          border-radius: 0 0 0 3px;
+          &.active:after {
+            border-radius: 0 0 0 3px;
+          }
         }
       }
     }

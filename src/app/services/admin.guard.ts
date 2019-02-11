@@ -11,6 +11,10 @@ import { NotifyService } from './notify.service';
   providedIn: 'root'
 })
 export class AdminGuard implements CanActivate {
+  admins: Array<String> = [
+    'john.rodler@lightspeedvt.com',
+    'eric.mullen@lightspeedvt.com'
+  ];
 
   constructor(
     private system: SystemService,
@@ -24,9 +28,7 @@ export class AdminGuard implements CanActivate {
       return this.afAuth.user.pipe(
         take(1),
         map(state => {
-          if (this.afAuth.auth.currentUser !== null
-            && this.afAuth.auth.currentUser.email !== 'john.rodler@lightspeedvt.com'
-            && this.afAuth.auth.currentUser.email !== 'eric.mullen@lightspeedvt.com') {
+          if (this.afAuth.auth.currentUser !== null && !(this.admins.indexOf(this.afAuth.auth.currentUser.email) >= 0)) {
             return false;
           }
           return !!state;

@@ -1,0 +1,30 @@
+<div class="mt-4 mt-md-2 pr-3 pl-3 pb-3 pr-sm-0 pl-sm-0">
+  <h3>Beers</h3>
+  <hr>
+  <div *ngIf="beers?.length; else isLoading">
+    <div *ngFor="let beer of beers">
+      {{ beer }}
+    </div>
+  </div>
+
+  <p class="mt-4">
+    <span class="badge bg-secondary-dark shadow-none mr-2">TODO:</span>
+    Add Beer Modal + Form + Logic
+  </p>
+
+  <p class="mt-4">
+    <span class="badge bg-secondary-dark shadow-none mr-2">TODO:</span>
+    Remove Beer Modal + Logic
+  </p>
+
+  <p class="mt-4">
+    <span class="badge bg-secondary-dark shadow-none mr-2">TODO:</span>
+    Update Beer Modal + Logic
+  </p>
+
+  <ng-template #isLoading>
+    <div class="loading-spinner mt-4">
+      <i class="fa fa-refresh"></i>
+    </div>
+  </ng-template>
+</div>

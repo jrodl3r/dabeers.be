@@ -1,31 +1,19 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Component } from '@angular/core';
 
-import { BeersService } from '../../services/beers.service';
-
-import { IBeer } from '../../models/beers';
+import { ITabs } from '../../models/tabs';
 
 @Component({
   selector: 'app-admin',
   templateUrl: './admin.component.html',
   styleUrls: ['./admin.component.scss']
 })
-export class AdminComponent implements OnInit, OnDestroy {
-  beersSub: Subscription;
-  beers: IBeer[] | null;
-  isLoading: Boolean = true;
+export class AdminComponent {
+  tabs: ITabs[] = [
+    { label: 'Beers', routerLink: '/admin/beers' },
+    { label: 'Users', routerLink: '/admin/users' },
+    { label: 'History', routerLink: '/admin/history' }
+  ];
 
-  constructor(private beersService: BeersService) { }
-
-  ngOnInit() {
-    this.beersSub = this.beersService.getBeers().subscribe(data => {
-      this.beers = data ? data.items : [];
-      this.isLoading = false;
-    });
-  }
-
-  ngOnDestroy() {
-    this.beersSub.unsubscribe();
-  }
+  constructor() { }
 
 }

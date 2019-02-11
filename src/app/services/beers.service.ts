@@ -17,7 +17,7 @@ export class BeersService {
     private notify: NotifyService) { }
 
   public getBeers(): Observable<IBeers> {
-    this.beersDoc = this.afs.doc<IBeers>('beers/active');
+    this.beersDoc = this.afs.doc<IBeers>('catalog/beers');
     return this.beersDoc.valueChanges();
   }
 
