@@ -45,7 +45,9 @@ export class AuthService {
         if (!userDoc.exists) {
           const data: IUser = {
             created: new Date(),
+            lastLogin: new Date(),
             displayName: user.displayName || '',
+            photoURL: user.photoURL || '',
             email: user.email,
             isActive: true,
             profile: {},
@@ -53,6 +55,10 @@ export class AuthService {
           };
           return userRef.set(data);
         }
+        return userRef.update({
+          lastLogin: new Date(),
+          photoURL: user.photoURL || ''
+        });
       });
   }
 

@@ -24,8 +24,8 @@
             [innerHTML]="user.displayName"></div>
           <span class="avatar">
             <img
-              *ngIf="user.created"
-              [src]="user.avatar || '/assets/img/user.png'">
+              *ngIf="user.isActive"
+              [src]="user.avatar || user.photoURL || '/assets/img/user.png'">
           </span>
         </div>
         <div
