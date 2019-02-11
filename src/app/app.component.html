@@ -1,6 +1,8 @@
 <app-header></app-header>
-<div class="container" (click)="nav.collapseHeader()">
-  <router-outlet></router-outlet>
+<div class="wrapper" (click)="nav.collapseHeader()">
+  <div class="container">
+    <router-outlet></router-outlet>
+  </div>
 </div>
 <app-footer></app-footer>
 <app-loading></app-loading>
