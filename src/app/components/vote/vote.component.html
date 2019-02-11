@@ -1,4 +1,17 @@
-<p class="text-center mt-4">
-  <span class="badge bg-secondary-dark shadow-none mr-2">TODO:</span>
-  Setup Vote Component
-</p>
+<div *ngIf="beers?.length; else isLoading">
+  <div *ngFor="let beer of beers">
+    {{ beer }}
+  </div>
+
+  <p class="text-center mt-4">
+    <span class="badge bg-secondary-dark shadow-none mr-2">TODO:</span>
+    Setup Vote Component
+  </p>
+
+</div>
+
+<ng-template #isLoading>
+  <div class="loading-spinner mt-4">
+    <i class="fa fa-refresh"></i>
+  </div>
+</ng-template>

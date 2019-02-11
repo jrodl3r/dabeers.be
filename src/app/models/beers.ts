@@ -1,9 +1,10 @@
 export interface IBeer {
-  id: string;
-  title: string;
-  description: string;
-  created: string;
-  edited: string;
+  id: String;
+  title: String;
+  description: String;
+  image: String;
+  created: String;
+  edited: String;
 }
 
 export interface IBeers {
