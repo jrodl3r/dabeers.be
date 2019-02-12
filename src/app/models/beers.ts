@@ -2,8 +2,8 @@ export interface IBeer {
   title: String;
   description: String;
   image: String;
-  created: String;
-  edited: String;
+  created: Date;
+  edited: Date;
   isActive: Boolean;
 }
 

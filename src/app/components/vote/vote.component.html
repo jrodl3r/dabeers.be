@@ -1,7 +1,12 @@
 <div *ngIf="!(isLoading | async); else showLoading">
   <div *ngIf="beers?.length">
     <div *ngFor="let beer of beers; let i = index">
-      <div *ngIf="beer.isActive">{{ beer.title }}</div>
+      <div
+        class="pb-2"
+        *ngIf="beer.isActive">
+        <h5 class="m-0">{{ beer.title }}</h5>
+        <p><small>{{ beer.description }}</small></p>
+      </div>
     </div>
   </div>
   <div *ngIf="!beers.length">No Beers On Tap!</div>

@@ -16,7 +16,13 @@ export class BeersService {
   constructor(
     private afs: AngularFirestore,
     private notify: NotifyService) {
-      this.activeBeer = new BehaviorSubject<IBeer>({ title: '', description: '', image: '', created: '', edited: '', isActive: false });
+      this.activeBeer = new BehaviorSubject<IBeer>({
+        title: '',
+        description: '',
+        image: '',
+        created: new Date(null),
+        edited: new Date(null),
+        isActive: false });
     }
 
   public getBeers(): Observable<IBeers> {
