@@ -15,7 +15,7 @@
           class="mb-2 pt-2 pb-3"
           [class.inactive]="!beer.isActive"
           *ngFor="let beer of beers; let i = index">
-          {{ beer.title }} {{ beer.isActive ? '' : '(Inactive)'}}
+          <strong>{{ beer.title }} {{ beer.isActive ? '' : '(Inactive)'}}</strong>
           <button
             type="button"
             class="btn btn-sm btn-primary shadow-none mt-1 mb-1 mr-2 ml-auto"
@@ -51,7 +51,7 @@
 <!-- Modals -->
 <div
   [class.modal-open]="isCreateModalActive || isEditModalActive || isRemoveModalActive"
-  (click)="hideAllModals()">
+  (click)="hideModals()">
 
   <!-- Create / Edit Beer -->
   <div
@@ -62,7 +62,10 @@
     role="dialog"
     aria-labelledby="editBeerModal"
     aria-hidden="true">
-    <div class="modal-dialog modal-notify" role="document">
+    <div
+      role="document"
+      class="modal-dialog modal-notify"
+      (click)="stopPropagation($event)">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title">{{ isEditModalActive ? 'Edit' : 'New' }} Beer</h5>
@@ -71,7 +74,7 @@
             class="close"
             data-dismiss="modal"
             aria-label="Close"
-            (click)="hideEditBeerModal()">
+            (click)="hideModals()">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
@@ -99,7 +102,7 @@
               type="button"
               class="btn btn-sm btn-grey mr-2"
               data-dismiss="modal"
-              (click)="hideEditBeerModal()">Cancel</button>
+              (click)="hideModals()">Cancel</button>
             <button
               type="button"
               *ngIf="isEditModalActive"
@@ -127,7 +130,10 @@
     role="dialog"
     aria-labelledby="removeBeerModal"
     aria-hidden="true">
-    <div class="modal-dialog modal-sm modal-notify modal-danger" role="document">
+    <div
+      role="document"
+      class="modal-dialog modal-sm modal-notify modal-danger"
+      (click)="stopPropagation($event)">
       <div class="modal-content text-center">
         <div class="modal-header d-flex justify-content-center">
           <p class="heading">Are you sure?</p>
@@ -144,7 +150,7 @@
             type="button"
             class="btn btn-sm btn-grey waves-effect"
             data-dismiss="modal"
-            (click)="hideRemoveBeerModal()">No</button>
+            (click)="hideModals()">No</button>
         </div>
       </div>
     </div>

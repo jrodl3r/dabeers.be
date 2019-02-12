@@ -80,7 +80,7 @@ export class BeersComponent implements OnInit, OnDestroy {
     };
     this.beers.unshift(beer);
     this.beersService.updateBeers(this.beers)
-      .then(() => this.hideEditBeerModal());
+      .then(() => this.hideModals());
   }
 
   editBeer() {
@@ -88,7 +88,7 @@ export class BeersComponent implements OnInit, OnDestroy {
     this.beers[this.activeBeerIndex].description = this.beersForm.getRawValue().description;
     this.beers[this.activeBeerIndex].edited = new Date();
     this.beersService.updateBeers(this.beers)
-      .then(() => this.hideEditBeerModal());
+      .then(() => this.hideModals());
   }
 
   removeBeer() {
@@ -103,6 +103,8 @@ export class BeersComponent implements OnInit, OnDestroy {
   }
 
   showCreateBeerModal() {
+    this.beersForm.setValue({ title: '', description: '' });
+    this.beersForm.reset();
     this.isCreateModalActive = true;
   }
 
@@ -111,24 +113,19 @@ export class BeersComponent implements OnInit, OnDestroy {
     this.isEditModalActive = true;
   }
 
-  hideEditBeerModal() {
-    this.isEditModalActive = false;
-    this.isCreateModalActive = false;
-  }
-
   showRemoveBeerModal(index: number) {
     this.setActiveBeer(index);
     this.isRemoveModalActive = true;
   }
 
-  hideRemoveBeerModal() {
-    this.isRemoveModalActive = false;
-  }
-
-  hideAllModals() {
+  hideModals() {
     this.isEditModalActive = false;
     this.isCreateModalActive = false;
     this.isRemoveModalActive = false;
+  }
+
+  stopPropagation(event: Event) {
+    event.stopPropagation();
   }
 
   buildForm() {

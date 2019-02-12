@@ -1,8 +1,17 @@
 .modal {
   background: rgba(0,0,0, .4);
+  pointer-events: none;
 }
 
-.modal-open .modal.show {
-  display: initial;
-  opacity: 1;
+.modal-open {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+
+  .modal.show {
+    display: initial;
+    opacity: 1;
+  }
 }
