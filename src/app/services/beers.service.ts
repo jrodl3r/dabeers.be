@@ -22,7 +22,7 @@ export class BeersService {
   }
 
   public updateBeers(beers: IBeer[]) {
-    this.beersDoc.set({ items: beers })
+    return this.beersDoc.set({ items: beers })
       .catch(error => this.notify.error(error));
   }
 }

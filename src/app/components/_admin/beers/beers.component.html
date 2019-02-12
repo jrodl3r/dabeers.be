@@ -1,31 +1,66 @@
 <div class="mt-4 mt-md-2 pr-3 pl-3 pb-3 pr-sm-0 pl-sm-0">
   <h3>Beers</h3>
   <hr>
-  <div *ngIf="beers?.length; else isLoading">
-    <div *ngFor="let beer of beers">
-      {{ beer }}
+  <div *ngIf="!(isLoading | async); else showLoading">
+    <div *ngIf="beers?.length">
+      <div *ngFor="let beer of beers; let i = index">
+        <div [class.inactive]="!beer.isActive">
+          {{ beer.title }} {{ beer.isActive ? '' : '(inactive)'}}
+          <button
+            type="button"
+            class="btn btn-sm btn-primary waves-effect shadow-none mt-1 mb-3 mr-1 ml-2">
+              <i class="fa fa-edit mr-1"></i> Edit</button>
+          <button
+            type="button"
+            class="btn btn-sm btn-danger btn-deactivate shadow-none mt-1 mb-3 mr-1 ml-2"
+            (click)="showRemoveBeerModal(i)">
+              <i class="fa fa-remove mr-1"></i> Remove</button>
+        </div>
+      </div>
     </div>
+    <div *ngIf="!beers.length">No Beers On Tap!</div>
+
+    <p class="mt-4">
+      <span class="badge bg-secondary-dark shadow-none mr-2">TODO:</span>
+      Create + Edit Beer Modal + Form + Logic
+    </p>
+
   </div>
-
-  <p class="mt-4">
-    <span class="badge bg-secondary-dark shadow-none mr-2">TODO:</span>
-    Add Beer Modal + Form + Logic
-  </p>
-
-  <p class="mt-4">
-    <span class="badge bg-secondary-dark shadow-none mr-2">TODO:</span>
-    Remove Beer Modal + Logic
-  </p>
-
-  <p class="mt-4">
-    <span class="badge bg-secondary-dark shadow-none mr-2">TODO:</span>
-    Update Beer Modal + Logic
-  </p>
-
 </div>
 
-<ng-template #isLoading>
+<!-- Loading Spinner -->
+<ng-template #showLoading>
   <div class="loading-spinner mt-4">
     <i class="fa fa-refresh"></i>
   </div>
 </ng-template>
+
+<!-- Action Dialogs -->
+<div [class.modal-open]="isRemoveModalActive | async">
+  <!-- Create + Edit Beer -->
+
+  <!-- Remove Beer -->
+  <div
+    [class.show]="isRemoveModalActive | async"
+    class="modal fade"
+    id="removeBeerModal"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="removeBeerModal"
+    aria-hidden="true">
+    <div class="modal-dialog modal-sm modal-notify modal-danger" role="document">
+      <div class="modal-content text-center">
+        <div class="modal-header d-flex justify-content-center">
+          <p class="heading">Are you sure?</p>
+        </div>
+        <div class="modal-body">
+          <i class="fa fa-times fa-4x animated rotateIn"></i>
+        </div>
+        <div class="modal-footer flex-center p-2">
+          <button type="button" class="btn btn-sm btn-danger mr-2" (click)="removeBeer()">Yes</button>
+          <button type="button" class="btn btn-sm btn-grey waves-effect" data-dismiss="modal" (click)="hideRemoveBeerModal()">No</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,16 +1,13 @@
-<div *ngIf="beers?.length; else isLoading">
-  <div *ngFor="let beer of beers">
-    {{ beer }}
+<div *ngIf="!(isLoading | async); else showLoading">
+  <div *ngIf="beers?.length">
+    <div *ngFor="let beer of beers; let i = index">
+      <div *ngIf="beer.isActive">{{ beer.title }}</div>
+    </div>
   </div>
-
-  <p class="text-center mt-4">
-    <span class="badge bg-secondary-dark shadow-none mr-2">TODO:</span>
-    Setup Vote Component
-  </p>
-
+  <div *ngIf="!beers.length">No Beers On Tap!</div>
 </div>
 
-<ng-template #isLoading>
+<ng-template #showLoading>
   <div class="loading-spinner mt-4">
     <i class="fa fa-refresh"></i>
   </div>

@@ -1,10 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Subscription, BehaviorSubject } from 'rxjs';
 
-import { AuthService } from '../../services/auth.service';
 import { BeersService } from '../../services/beers.service';
 
-import { IUser } from '../../models/user';
 import { IBeer } from '../../models/beers';
 
 @Component({
@@ -15,14 +13,15 @@ import { IBeer } from '../../models/beers';
 export class VoteComponent implements OnInit, OnDestroy {
   beersSub: Subscription;
   beers: IBeer[] | null;
-  isLoading: Boolean = true;
+  isLoading: BehaviorSubject<Boolean>;
 
   constructor(public beersService: BeersService) { }
 
   ngOnInit() {
+    this.isLoading = new BehaviorSubject<Boolean>(true);
     this.beersSub = this.beersService.getBeers().subscribe(data => {
       this.beers = data ? data.items : [];
-      this.isLoading = false;
+      this.isLoading.next(false);
     });
   }
 
