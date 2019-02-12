@@ -1,5 +1,25 @@
-.inactive {
-  opacity: .5;
+@import '../../../styles/animation';
 
-  .btn-deactivate { display: none; }
+h3 {
+  display: flex;
+  align-items: center;
+}
+
+.beers {
+
+  li {
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid $offset-grey-color;
+    transition: $default-anim;
+
+    &:last-of-type { border-bottom: none; }
+    
+    &.inactive {
+      color: $mid-grey-color;
+      opacity: .5;
+    
+      &:hover { opacity: 1; }
+    }    
+  }
 }
