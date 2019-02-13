@@ -1,19 +1,29 @@
-<div *ngIf="!(isLoading | async); else showLoading">
-  <div *ngIf="beers?.length">
-    <div *ngFor="let beer of beers; let i = index">
-      <div
-        class="pb-2"
-        *ngIf="beer.isActive">
-        <h5 class="m-0">{{ beer.title }}</h5>
-        <p><small>{{ beer.description }}</small></p>
+<div class="card">
+  <div class="card-header text-center">LightspeedVT Beers</div>
+  <div class="card-body">
+
+    <div *ngIf="!(isLoading | async); else showLoading">
+      <div *ngIf="beers?.length">
+        <div *ngFor="let beer of beers; let i = index">
+          <div *ngIf="beer.isActive">
+            <span>
+              <h6 class="m-0">{{ beer.title }}</h6>
+              <p><small>{{ beer.description }}</small></p>
+            </span>
+          </div>
+        </div>
       </div>
+      <h3
+        class="text-center"
+        *ngIf="!beers.length">No Beers On Tap... 😬</h3>
     </div>
+
+    <ng-template #showLoading>
+      <div class="loading-spinner mt-4">
+        <i class="fa fa-refresh"></i>
+      </div>
+    </ng-template>
+
   </div>
-  <div *ngIf="!beers.length">No Beers On Tap!</div>
 </div>
 
-<ng-template #showLoading>
-  <div class="loading-spinner mt-4">
-    <i class="fa fa-refresh"></i>
-  </div>
-</ng-template>
