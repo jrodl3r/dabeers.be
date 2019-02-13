@@ -5,3 +5,7 @@ label { font-weight: 700; }
 .bs-switch input:checked + .slider {
   background-color: $success-green;
 }
+
+textarea.form-control {
+  height: 100px !important;
+}
