@@ -1,3 +1,6 @@
+@import '../../styles/variables';
+@import '../../styles/animation';
+
 .card-header {
   font-family: Roboto;
   font-weight: 700;
@@ -5,31 +8,117 @@
 }
 
 .beers {
+
   li {
     display: flex;
+    align-items: center;
+    transition: $default-anim;
+
+    &:last-of-type { border-bottom: none; }
 
     & > div {
       display: flex;
       flex-direction: row;
       align-items: center;
       width: 100%;
+      padding: 5px;
+      border-bottom: 1px solid $offset-grey-color;
+    }
+
+    @media (min-width: $md-screen) {
+      padding: 15px;
     }
   }
 
   img {
-    max-height: 100px;
-    max-width: 100px;
+    max-height: 60px;
+    max-width: 60px;
+    margin-right: 10px;
+
+    @media (min-width: $md-screen) {
+      max-height: 100px;
+      max-width: 100px;
+    }
   }
-  
-  .info {
-    display: flex;
+}
+
+.score {
+  padding: 5px;
+  font-family: Montserrat;
+  font-size: 17px;
+  font-weight: 700;
+
+  @media (min-width: $sm-screen) {
+    padding: 10px;
+    font-size: 20px;
   }
 
+  @media (min-width: $md-screen) {
+    padding: 20px;
+    font-size: 24px;
+  }
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+
+  p { display: none; }
+
+  .title {
+    font-family: Montserrat;
+    font-weight: 700;
+    font-size: 12px;
+  }
+
+  @media (min-width: $sm-screen) {
+    .title { font-size: 16px; }
+  }
+
+  @media (min-width: $md-screen) {
+    margin-right: 50px;
+
+    p { display: inline-block; }
+  }
+}
+
+.vote {
+  display: flex;
+  flex-direction: row;
+  margin-right: 0;
+  margin-left: auto;
+  padding: 10px;
+  font-size: 22px;
+
   .fa-thumbs-up {
+    margin-right: 15px;
     color: rgb(0, 255, 0);
   }
 
   .fa-thumbs-down {
     color: rgb(255, 0, 0);
   }
+
+  @media (min-width: $sm-screen) {
+    padding: 20px;
+    font-size: 24px;
+
+    .fa-thumbs-up { margin-right: 20px; }
+  }
+
+  @media (min-width: $md-screen) {
+    font-size: 28px;
+  }
+}
+
+.bottom {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5px;
+  font-size: 13px;
+  font-weight: 700;
+  color: $mid-grey-color;
+  background-color: rgba(0,0,0, .03);
 }

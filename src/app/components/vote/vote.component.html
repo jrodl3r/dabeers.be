@@ -1,6 +1,6 @@
 <div class="card">
   <div class="card-header text-center">LightSpeedVT Beers</div>
-  <div class="card-body">
+  <div class="card-body p-0">
 
     <div
       class="beers"
@@ -11,12 +11,14 @@
             <div class="score">+20</div>
             <img src="https://drizly-products1.imgix.net/ci_2822.jpg">
             <div class="info">
-              <h6 class="m-0">{{ beer.title }}</h6>
-              <p><small>{{ beer.description }}</small></p>
-              <div class="chad">
-                <i class="fa fa-thumbs-up"></i>
-                <i class="fa fa-thumbs-down"></i>
-              </div>
+              <h6 class="title m-0">{{ beer.title }}</h6>
+              <p class="m-0">
+                <small>{{ beer.description }}</small>
+              </p>
+            </div>
+            <div class="vote">
+              <i class="fa fa-thumbs-up"></i>
+              <i class="fa fa-thumbs-down"></i>
             </div>
           </div>
         </li>
@@ -31,6 +33,11 @@
         <i class="fa fa-refresh"></i>
       </div>
     </ng-template>
+
+    <div class="bottom">
+      <span *ngIf="user?.isActive">You have 6 votes remaining</span>
+      <span *ngIf="!user?.isActive">You must have a LightSpeedVT account to vote</span>
+    </div>
 
   </div>
 </div>
