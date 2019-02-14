@@ -3,3 +3,33 @@
   font-weight: 700;
   font-size: 18px;
 }
+
+.beers {
+  li {
+    display: flex;
+
+    & > div {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      width: 100%;
+    }
+  }
+
+  img {
+    max-height: 100px;
+    max-width: 100px;
+  }
+  
+  .info {
+    display: flex;
+  }
+
+  .fa-thumbs-up {
+    color: rgb(0, 255, 0);
+  }
+
+  .fa-thumbs-down {
+    color: rgb(255, 0, 0);
+  }
+}
