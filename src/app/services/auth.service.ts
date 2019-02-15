@@ -112,7 +112,7 @@ export class AuthService {
       if (this.system.isBrowser) {
         sessionStorage.clear();
       }
-      this.zone.run(async () => await this.router.navigate(['/']))
+      this.zone.run(async () => await this.router.navigate(['/']));
     });
   }
 

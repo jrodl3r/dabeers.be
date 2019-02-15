@@ -6,6 +6,7 @@ export interface IUser {
   photoURL?: String;
   email: String;
   isActive?: Boolean;
+  isAdmin?: Boolean;
   profile?: IProfile;
   uid: String;
 }

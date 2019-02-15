@@ -12,17 +12,16 @@
   li {
     display: flex;
     align-items: center;
+    width: 100%;
+    padding: 5px;
     transition: $default-anim;
+    border-bottom: 1px solid $offset-grey-color;
 
-    &:last-of-type { border-bottom: none; }
+    // &:last-of-type { border-bottom: none; }
 
     & > div {
       display: flex;
-      flex-direction: row;
-      align-items: center;
-      width: 100%;
-      padding: 5px;
-      border-bottom: 1px solid $offset-grey-color;
+      flex-direction: column;
     }
 
     @media (min-width: $md-screen) {
@@ -69,7 +68,7 @@
   .title {
     font-family: Montserrat;
     font-weight: 700;
-    font-size: 12px;
+    font-size: 15px;
   }
 
   @media (min-width: $sm-screen) {
