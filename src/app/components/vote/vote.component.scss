@@ -2,7 +2,7 @@
 @import '../../styles/animation';
 
 .card-header {
-  font-family: Roboto;
+  font-family: $font-montserrat;
   font-weight: 700;
   font-size: 18px;
 }
@@ -18,11 +18,6 @@
     border-bottom: 1px solid $offset-grey-color;
 
     // &:last-of-type { border-bottom: none; }
-
-    & > div {
-      display: flex;
-      flex-direction: column;
-    }
 
     @media (min-width: $md-screen) {
       padding: 15px;
@@ -43,7 +38,7 @@
 
 .score {
   padding: 5px;
-  font-family: Montserrat;
+  font-family: $font-montserrat;
   font-size: 17px;
   font-weight: 700;
 
@@ -66,7 +61,7 @@
   p { display: none; }
 
   .title {
-    font-family: Montserrat;
+    font-family: $font-montserrat;
     font-weight: 700;
     font-size: 15px;
   }
