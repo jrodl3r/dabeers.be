@@ -13,7 +13,8 @@ import { NotifyService } from './notify.service';
 export class AdminGuard implements CanActivate {
   admins: Array<String> = [
     'john.rodler@lightspeedvt.com',
-    'eric.mullen@lightspeedvt.com'
+    'eric.mullen@lightspeedvt.com',
+    'henry.martinez@lightspeedvt.com'
   ];
 
   constructor(
