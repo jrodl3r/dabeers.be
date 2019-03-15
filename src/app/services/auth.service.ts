@@ -90,7 +90,7 @@ export class AuthService {
               .then(() => setTimeout(() => this.isLoading = false, 100));
           } else {
             this.logout();
-            this.notify.error('You must have a LightspeedVT email address');
+            this.notify.error('LightSpeedVT Personel Only - Fuck Off!');
           }
         })
         .catch(error => {

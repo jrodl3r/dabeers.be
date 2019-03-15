@@ -19,9 +19,9 @@
 
     // &:last-of-type { border-bottom: none; }
 
-    @media (min-width: $md-screen) {
-      padding: 15px;
-    }
+    // @media (min-width: $md-screen) {
+    //   padding: 15px;
+    // }
   }
 
   img {
@@ -29,10 +29,10 @@
     max-width: 60px;
     margin-right: 10px;
 
-    @media (min-width: $md-screen) {
-      max-height: 100px;
-      max-width: 100px;
-    }
+    // @media (min-width: $md-screen) {
+    //   max-height: 100px;
+    //   max-width: 100px;
+    // }
   }
 }
 
@@ -48,7 +48,7 @@
   }
 
   @media (min-width: $md-screen) {
-    padding: 20px;
+    // padding: 20px;
     font-size: 24px;
   }
 }
@@ -58,7 +58,11 @@
   flex-direction: column;
   width: 100%;
 
-  p { display: none; }
+  p {
+    display: none;
+    font-size: 15px;
+    line-height: 18px;
+  }
 
   .title {
     font-family: $font-montserrat;
