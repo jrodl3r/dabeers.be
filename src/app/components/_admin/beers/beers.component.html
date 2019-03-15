@@ -8,13 +8,13 @@
         <i class="fa fa-plus mr-1"></i> Add New Beer</button>
   </h3>
   <hr>
-  <div *ngIf="!isLoading; else showLoading">
-    <div *ngIf="beers?.length">
+  <div *ngIf="!beersService.isLoading; else showLoading">
+    <div *ngIf="beersService.beers.length">
       <ul class="beers">
         <li
           class="mb-2 pt-2 pb-3"
           [class.inactive]="!beer.isActive"
-          *ngFor="let beer of beers; let i = index">
+          *ngFor="let beer of beersService.beers; let i = index">
           <strong>{{ beer.title }} {{ beer.isActive ? '' : '(Inactive)'}}</strong>
           <button
             type="button"
@@ -37,7 +37,7 @@
         </li>
       </ul>
     </div>
-    <div *ngIf="!beers.length">No Beers On Tap!</div>
+    <div *ngIf="!beersService.beers.length">No Beers On Tap!</div>
   </div>
 </div>
 
@@ -65,7 +65,7 @@
     <div
       role="document"
       class="modal-dialog modal-notify"
-      (click)="stopPropagation($event)">
+      (click)="$event.stopPropagation()">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title">{{ isEditModalActive ? 'Edit' : 'Add New' }} Beer</h5>
@@ -133,7 +133,7 @@
     <div
       role="document"
       class="modal-dialog modal-sm modal-notify modal-danger"
-      (click)="stopPropagation($event)">
+      (click)="$event.stopPropagation()">
       <div class="modal-content text-center">
         <div class="modal-header d-flex justify-content-center">
           <p class="heading">Are you sure?</p>

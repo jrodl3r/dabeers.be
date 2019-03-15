@@ -4,9 +4,9 @@
 
     <div
       class="beers"
-      *ngIf="!(isLoading | async); else showLoading">
-      <ul *ngIf="beers?.length">
-        <ng-container *ngFor="let beer of beers">
+      *ngIf="!beersService.isLoading; else showLoading">
+      <ul *ngIf="beersService.beers.length">
+        <ng-container *ngFor="let beer of beersService.beers">
           <li *ngIf="beer.isActive">
             <div class="score">+20</div>
             <img src="https://drizly-products1.imgix.net/ci_2822.jpg">
@@ -25,7 +25,7 @@
       </ul>
       <h3
         class="text-center"
-        *ngIf="!beers.length">No Beers On Tap... 😬</h3>
+        *ngIf="!beersService.beers.length">No Beers On Tap... 😬</h3>
     </div>
 
     <ng-template #showLoading>
