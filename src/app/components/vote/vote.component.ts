@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 
-import { BeersService } from '../../services/beers.service';
+// import { BeersService } from '../../services/beers.service';
 
 @Component({
   selector: 'app-vote',
@@ -8,12 +8,13 @@ import { BeersService } from '../../services/beers.service';
   styleUrls: ['./vote.component.scss']
 })
 export class VoteComponent implements OnInit {
-  @Input() user;
+  // @Input() user;
 
-  constructor(public beersService: BeersService) { }
+  constructor() { }
+  // constructor(public beersService: BeersService) { }
 
   ngOnInit() {
-    this.beersService.getBeers();
+    // this.beersService.getBeers();
   }
 
 }

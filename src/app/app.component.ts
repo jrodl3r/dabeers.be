@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { NavService } from './services/nav.service';
+// import { NavService } from './services/nav.service';
 
 @Component({
   selector: 'app-root',
@@ -8,6 +8,7 @@ import { NavService } from './services/nav.service';
 })
 export class AppComponent {
 
-  constructor(public nav: NavService) { }
+  // constructor(public nav: NavService) { }
+  constructor() { }
 
 }

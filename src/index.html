@@ -19,13 +19,14 @@
   <meta property="og:url" content="https://dabeersbe.firebaseapp.com">
   <!-- <link rel="manifest" href="manifest.json"> -->
   <link rel="icon" type="image/x-icon" href="favicon.ico">
-  <!-- <script async src="/assets/js/pwacompat.js"></script>
+  <script src="/assets/js/pwacompat.js"></script>
   <script> // NOTE: Fix for PWA iOS homescreen / oAuth issue (https://goo.gl/mfrv87)
     var iOS = !!navigator.platform && /iPhone|iPod|iPad/.test(navigator.platform) && !window.MSStream;
-    if (iOS) { document.querySelector('link[rel="manifest"]').setAttribute('rel', 'no-on-ios'); }</script> -->
+    if (iOS) { document.querySelector('link[rel="manifest"]').setAttribute('rel', 'no-on-ios'); }
+  </script>
 </head>
 <body>
   <app-root></app-root>
-  <!-- <noscript>Please enable JavaScript to continue using this application.</noscript> -->
+  <noscript>Please enable JavaScript to continue using this application.</noscript>
 </body>
 </html>

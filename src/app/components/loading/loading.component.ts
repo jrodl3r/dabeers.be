@@ -9,25 +9,24 @@ import { Component, OnInit, HostBinding } from '@angular/core';
   styleUrls: ['./loading.component.scss']
 })
 export class LoadingComponent implements OnInit {
-  // @HostBinding('class.loading')
-  @HostBinding('class.active') isLoading: Boolean = true;
+  @HostBinding('class.disabled') disabled: Boolean = false;
 
   // userSub: Subscription;
 
-  constructor() {
   // constructor(public auth: AuthService) {
-    // if (this.auth.user) {
-    //   this.isLoading = false;
-    // }
+  constructor() {
+    if (typeof window !== 'undefined') { // TODO: Change to system.isBrowser()
+      setTimeout(() => this.disabled = true, 500);
+    }
   }
 
   ngOnInit() {
     // this.userSub = this.auth.user.subscribe(user => {
     //   if (user === null && !this.auth.isLoggedIn() || typeof user === 'object' && !!user) {
-    //     this.isLoading = false;
+    //     this.isDisabled = false;
     //     return;
     //   }
-    //   this.isLoading = true;
+    //   this.isDisabled = true;
     // });
   }
 
