@@ -1,6 +1,7 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
-// import { BeersService } from '../../services/beers.service';
+import { AuthService } from '../../services/auth.service';
+import { BeersService } from '../../services/beers.service';
 
 @Component({
   selector: 'app-vote',
@@ -8,13 +9,11 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./vote.component.scss']
 })
 export class VoteComponent implements OnInit {
-  // @Input() user;
 
-  constructor() { }
-  // constructor(public beersService: BeersService) { }
+  constructor(
+    public auth: AuthService,
+    public beersService: BeersService) { }
 
-  ngOnInit() {
-    // this.beersService.getBeers();
-  }
+  ngOnInit() { }
 
 }

@@ -36,7 +36,6 @@ export class BeersComponent implements OnInit {
     private fb: FormBuilder) { }
 
   ngOnInit() {
-    this.beersService.getBeers();
     this.buildForm();
   }
 

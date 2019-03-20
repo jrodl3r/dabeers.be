@@ -1,21 +1,19 @@
 <nav
-  class="nav">
-  <!-- [class.offline]="system.isBrowser() && !system.isOnline()"
+  class="nav"
+  [class.offline]="system.isBrowser() && !system.isOnline()"
   (click)="nav.collapseHeader()">
   <a class="logo" routerLink="/">
-    <span class="logo-text">dabeers.be 🍺</span> -->
+    <span class="logo-text">dabeers.be 🍺</span>
     <!-- <span class="logo-icon"></span> -->
-  <!-- </a>
+  </a>
   <div
     class="menu-container"
     *ngIf="(auth.user | async) as user; else isStatic">
     <ul
-      *ngIf="user?.isActive && !auth.isLoading"
       class="menu"
-      [class.expanded]="nav.isHeaderMenuExpanded">
-      <li
-        *ngIf="auth.isLoggedIn()"
-        class="menu-item dropdown">
+      [class.expanded]="nav.isHeaderMenuExpanded"
+      *ngIf="!auth.isLoading && user?.isActive">
+      <li class="menu-item dropdown">
         <div
           class="menu-link dropdown-toggle"
           (click)="nav.toggleAccountMenu($event)">
@@ -24,8 +22,8 @@
             [innerHTML]="user.displayName"></div>
           <span class="avatar">
             <img
-              *ngIf="user.isActive"
-              [src]="user.avatar || user.photoURL || '/assets/img/user.png'">
+              [src]="user.avatar || user.photoURL || '/assets/img/user.png'"
+              *ngIf="user.isActive">
           </span>
         </div>
         <div
@@ -46,9 +44,9 @@
         </div>
       </li>
     </ul>
-  </div> -->
+  </div>
   <!-- Not logged-in / Initial render (server-side) -->
-  <!-- <ng-template #isStatic>
+  <ng-template #isStatic>
     <ul class="menu">
       <li class="menu-item d-none">
         <a
@@ -62,14 +60,14 @@
           <i class="fa fa-sign-in mr-2"></i> Login</div>
       </li>
     </ul>
-  </ng-template> -->
+  </ng-template>
 </nav>
 <!-- Offline / PWA (global offline banner) -->
-<!-- <div
+<div
   class="offline-warning"
   [class.active]="system.isBrowser() && !system.isOnline()">
   <div class="container">
     <i class="fa fa-warning mr-2"></i>
     Connection Lost / Offline
   </div>
-</div> -->
+</div>

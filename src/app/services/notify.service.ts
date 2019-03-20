@@ -27,14 +27,15 @@ export class NotifyService {
     this.log(msg);
   }
 
-  error(err: string) {
+  error(msg: string, err: string = '') {
     if (this.system.isBrowser()) {
-      this.toastr.error(err);
+      this.toastr.error(msg);
     }
-    console.error(err);
+    console.error(err ? err : msg);
   }
 
   log(msg: string) {
     console.log(msg);
   }
+
 }

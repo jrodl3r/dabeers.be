@@ -1,4 +1,4 @@
-<!-- <div class="card">
+<div class="card">
   <div class="card-header text-center">LightSpeedVT Beers</div>
   <div class="card-body p-0">
 
@@ -24,7 +24,7 @@
         </ng-container>
       </ul>
       <h3
-        class="text-center"
+        class="text-center mt-5 mb-5"
         *ngIf="!beersService.beers.length">No Beers On Tap... 😬</h3>
     </div>
 
@@ -35,10 +35,9 @@
     </ng-template>
 
     <div class="bottom">
-      <span *ngIf="user?.isActive">You have 6 beer votes to go...</span>
-      <span *ngIf="!user?.isActive">You must have a LightSpeedVT account to vote</span>
+      <span *ngIf="auth.isLoggedIn()">You have 6 beer votes to go...</span>
+      <span *ngIf="!auth.isLoggedIn()">You must have a LightSpeedVT account to vote</span>
     </div>
 
   </div>
 </div>
- -->

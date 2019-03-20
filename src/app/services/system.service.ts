@@ -5,8 +5,6 @@ import { Injectable } from '@angular/core';
 })
 export class SystemService {
 
-  constructor() { }
-
   isBrowser = () => {
     return typeof window !== 'undefined';
   }

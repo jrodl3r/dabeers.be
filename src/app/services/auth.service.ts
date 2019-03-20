@@ -37,7 +37,6 @@ export class AuthService {
     ) : afAuth.authState;
   }
 
-  // Save new user
   private createUser(user: IUser) {
     const userRef: AngularFirestoreDocument<IUser> = this.afs.doc<IUser>(`users/${user.uid}`);
     return userRef.ref.get()
@@ -62,7 +61,6 @@ export class AuthService {
       });
   }
 
-  // OAuth login
   private oAuthLogin(provider: any) {
     if (this.system.isBrowser()) {
       sessionStorage.setItem('login-pending', '1');
@@ -76,21 +74,19 @@ export class AuthService {
     }
   }
 
-  // Redirect OAuth login
   public redirectAfterSignIn() {
     if (this.system.isBrowser() && sessionStorage.getItem('login-pending')) {
       this.isLoading = true;
       sessionStorage.removeItem('login-pending');
       this.afAuth.auth.getRedirectResult()
         .then(response => {
-          // Must have LightspeedVT email address
-          if (response.user && response.user.email.indexOf('@lightspeedvt.com') !== -1) {
+          if (response.user && response.user.email.indexOf('@lightspeedvt.com') !== -1) { // LightspeedVT email required
             this.createUser(response.user);
             this.zone.run(async () => await this.router.navigate(['/']))
               .then(() => setTimeout(() => this.isLoading = false, 100));
           } else {
             this.logout();
-            this.notify.error('LightSpeedVT Personel Only - Fuck Off!');
+            this.notify.error('LightSpeedVT Members Only - Get Lost!');
           }
         })
         .catch(error => {
@@ -100,7 +96,6 @@ export class AuthService {
     }
   }
 
-  // Google login
   public googleLogin() {
     const provider = new auth.GoogleAuthProvider();
     provider.setCustomParameters({ prompt: 'select_account' });
@@ -117,17 +112,13 @@ export class AuthService {
   }
 
   public isLoggedIn(): Boolean {
-    if (this.system.isBrowser()) {
-      return !!sessionStorage.getItem('user') && sessionStorage.getItem('user') !== 'null';
-    }
-    return this.afAuth.auth.currentUser !== null;
+    return this.system.isBrowser()
+      ? !!sessionStorage.getItem('user') && sessionStorage.getItem('user') !== 'null'
+      : this.afAuth.auth.currentUser !== null;
   }
 
   public getUserID(): String {
-    if (this.isLoggedIn()) {
-      return this.afAuth.auth.currentUser.uid;
-    }
-    return '';
+    return this.isLoggedIn() ? this.afAuth.auth.currentUser.uid : '';
   }
 
 }

@@ -7,8 +7,6 @@ export class NavService {
   isHeaderMenuExpanded: Boolean = false;
   isHeaderAccountMenuExpanded: Boolean = false;
 
-  constructor() { }
-
   toggleMenu(event: Event) {
     event.stopPropagation();
     this.isHeaderMenuExpanded = !this.isHeaderMenuExpanded;
@@ -23,4 +21,5 @@ export class NavService {
     this.isHeaderMenuExpanded = false;
     this.isHeaderAccountMenuExpanded = false;
   }
+
 }

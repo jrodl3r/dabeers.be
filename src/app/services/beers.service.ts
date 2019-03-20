@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestoreDocument, AngularFirestore } from '@angular/fire/firestore';
-import { Observable } from 'rxjs';
-import { take } from 'rxjs/operators';
+import { shareReplay } from 'rxjs/operators';
 
 import { NotifyService } from './notify.service';
 
@@ -26,19 +25,15 @@ export class BeersService {
 
   constructor(
     private afs: AngularFirestore,
-    private notify: NotifyService) { }
-
-  public getBeers() {
-    if (!this.beers.length) {
-      this.isLoading = true;
-      this.beersDoc = this.afs.doc<IBeers>('catalog/beers');
-      this.beersDoc.valueChanges()
-        .pipe(take(1))
-        .subscribe(beers => {
-          this.beers = beers.items;
-          this.isLoading = false;
-        });
-    }
+    private notify: NotifyService) {
+    this.isLoading = true;
+    this.beersDoc = this.afs.doc<IBeers>('catalog/beers');
+    this.beersDoc.valueChanges()
+      .pipe(shareReplay(1))
+      .subscribe(beers => {
+        this.beers = beers.items;
+        this.isLoading = false;
+      });
   }
 
   public createBeer(title: String, description: String, image: String) {

@@ -1,7 +1,7 @@
 import { Component, OnInit, HostBinding } from '@angular/core';
-// import { Subscription } from 'rxjs';
 
-// import { AuthService } from '../../services/auth.service';
+import { AuthService } from '../../services/auth.service';
+import { SystemService } from '../../services/system.service';
 
 @Component({
   selector: 'app-loading',
@@ -9,25 +9,23 @@ import { Component, OnInit, HostBinding } from '@angular/core';
   styleUrls: ['./loading.component.scss']
 })
 export class LoadingComponent implements OnInit {
-  @HostBinding('class.disabled') disabled: Boolean = false;
+  @HostBinding('class.disabled') isDisabled: Boolean = false;
 
-  // userSub: Subscription;
-
-  // constructor(public auth: AuthService) {
-  constructor() {
-    if (typeof window !== 'undefined') { // TODO: Change to system.isBrowser()
-      setTimeout(() => this.disabled = true, 500);
-    }
-  }
+  constructor(
+    public auth: AuthService,
+    public system: SystemService
+  ) { }
 
   ngOnInit() {
-    // this.userSub = this.auth.user.subscribe(user => {
-    //   if (user === null && !this.auth.isLoggedIn() || typeof user === 'object' && !!user) {
-    //     this.isDisabled = false;
-    //     return;
-    //   }
-    //   this.isDisabled = true;
-    // });
+    if (this.system.isBrowser()) {
+      this.auth.user.subscribe(user => {
+        if (user === null && !this.auth.isLoggedIn() || typeof user === 'object' && user.hasOwnProperty('isActive') && user.isActive) {
+          setTimeout(() => this.isDisabled = true, 500);
+          return;
+        }
+        this.isDisabled = false;
+      });
+    }
   }
 
 }

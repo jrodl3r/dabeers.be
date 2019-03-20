@@ -9,7 +9,7 @@ import { AngularFireStorageModule } from '@angular/fire/storage';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-// import { ServicesModule } from './services/services.module';
+import { ServicesModule } from './services/services.module';
 import { NavModule } from './components/_nav/nav.module';
 
 import { HomeComponent } from './components/home/home.component';
@@ -30,7 +30,7 @@ import { environment } from '../environments/environment';
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-fire-universal' }),
     AppRoutingModule,
-    // ServicesModule,
+    ServicesModule,
     NavModule,
     ReactiveFormsModule,
     AngularFireModule.initializeApp(environment.firebase),
