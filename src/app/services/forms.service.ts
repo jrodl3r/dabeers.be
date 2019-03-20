@@ -6,8 +6,6 @@ import { AbstractControl } from '@angular/forms';
 })
 export class FormsService {
 
-  constructor() { }
-
   validate(data?: any, form?: any, errors?: any, msgs?: any, fields?: any) {
     if (!form) { return; }
 

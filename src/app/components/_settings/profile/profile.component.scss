@@ -1,9 +1,0 @@
-@import '../../../styles/variables';
-
-.avatar-upload {
-  @media (min-width: $lg-screen) {
-    order: 2;
-
-    & + div { order: 1; }
-  }
-}

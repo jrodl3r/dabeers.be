@@ -25,7 +25,8 @@ export class BeersService {
 
   constructor(
     private afs: AngularFirestore,
-    private notify: NotifyService) {
+    private notify: NotifyService
+  ) {
     this.isLoading = true;
     this.beersDoc = this.afs.doc<IBeers>('catalog/beers');
     this.beersDoc.valueChanges()
@@ -38,9 +39,9 @@ export class BeersService {
 
   public createBeer(title: String, description: String, image: String) {
     const beer: IBeer = {
-      title: title,
-      description: description,
-      image: image,
+      title,
+      description,
+      image,
       created: new Date(),
       edited: new Date(null),
       isActive: true
