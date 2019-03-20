@@ -1,8 +1,8 @@
 <div class="mt-4 mt-md-2 pr-3 pl-3 pb-3 pr-sm-0 pl-sm-0">
   <h3>Users</h3>
   <hr>
-  <p class="mt-4">
-    <span class="badge bg-secondary-dark shadow-none mr-2">TODO:</span>
-    Setup Users Component
-  </p>
+  <ul *ngFor="let user of history.userHistoryKeys">
+    <li>{{ history.userHistory[user].email }} (Last Login: {{ history.userHistory[user].lastLogin.toDate() | date:'h:mm:ss a - MM/dd/yyyy' }})</li>
+  </ul>
+  <div *ngIf="(history.userHistory | json) == '{}'">No Users</div>
 </div>

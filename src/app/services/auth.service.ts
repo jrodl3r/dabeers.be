@@ -8,6 +8,7 @@ import { switchMap, shareReplay, startWith, tap } from 'rxjs/operators';
 
 import { SystemService } from './system.service';
 import { NotifyService } from './notify.service';
+import { HistoryService } from './history.service';
 
 import { IUser } from '../models/user';
 
@@ -21,6 +22,7 @@ export class AuthService {
   constructor(
     private system: SystemService,
     private notify: NotifyService,
+    private history: HistoryService,
     private router: Router,
     private zone: NgZone,
     private afAuth: AngularFireAuth,
@@ -39,12 +41,13 @@ export class AuthService {
 
   private createUser(user: IUser) {
     const userRef: AngularFirestoreDocument<IUser> = this.afs.doc<IUser>(`users/${user.uid}`);
+    const date = new Date();
     return userRef.ref.get()
       .then(userDoc => {
         if (!userDoc.exists) {
           const data: IUser = {
-            created: new Date(),
-            lastLogin: new Date(),
+            created: date,
+            lastLogin: date,
             displayName: user.displayName || '',
             photoURL: user.photoURL || '',
             email: user.email,
@@ -52,12 +55,16 @@ export class AuthService {
             profile: {},
             uid: user.uid
           };
-          return userRef.set(data);
+          return userRef
+            .set(data)
+            .then(() => this.history.addUser(user.uid.toString(), user.email, date));
         }
-        return userRef.update({
-          lastLogin: new Date(),
-          photoURL: user.photoURL || ''
-        });
+        return userRef
+          .update({
+            lastLogin: date,
+            photoURL: user.photoURL || ''
+          })
+          .then(() => this.history.updateUserLoginDate(user.uid.toString(), date));
       });
   }
 

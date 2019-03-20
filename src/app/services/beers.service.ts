@@ -34,6 +34,7 @@ export class BeersService {
       .subscribe(beers => {
         this.beers = beers.items;
         this.isLoading = false;
+        // beers.items.forEach(b => console.log(b));
       });
   }
 
