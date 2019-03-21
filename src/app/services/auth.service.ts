@@ -39,7 +39,7 @@ export class AuthService {
     ) : afAuth.authState;
   }
 
-  private createUser(user: IUser) {
+  private saveUser(user: IUser) {
     const userRef: AngularFirestoreDocument<IUser> = this.afs.doc<IUser>(`users/${user.uid}`);
     const date = new Date();
     return userRef.ref.get()
@@ -52,19 +52,18 @@ export class AuthService {
             photoURL: user.photoURL || '',
             email: user.email,
             isActive: true,
-            profile: {},
             uid: user.uid
           };
           return userRef
             .set(data)
-            .then(() => this.history.addUser(user.uid.toString(), user.email, date));
+            .then(() => this.history.addUser(user.uid, user.email, date));
         }
         return userRef
           .update({
             lastLogin: date,
             photoURL: user.photoURL || ''
           })
-          .then(() => this.history.updateUserLoginDate(user.uid.toString(), date));
+          .then(() => this.history.updateUserLoginDate(user.uid, date));
       });
   }
 
@@ -88,7 +87,7 @@ export class AuthService {
       this.afAuth.auth.getRedirectResult()
         .then(response => {
           if (response.user && response.user.email.indexOf('@lightspeedvt.com') !== -1) { // LightspeedVT email required
-            this.createUser(response.user);
+            this.saveUser(response.user);
             this.zone.run(async () => await this.router.navigate(['/']))
               .then(() => setTimeout(() => this.isLoading = false, 100));
           } else {

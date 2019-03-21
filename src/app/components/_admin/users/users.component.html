@@ -1,11 +1,19 @@
 <div class="mt-4 mt-md-2 pr-3 pl-3 pb-3 pr-sm-0 pl-sm-0">
   <h3>Users</h3>
   <hr>
-  <ul *ngFor="let user of history.userHistoryIndex">
-    <li>
-      <strong>{{ history.userHistory[user].email }}</strong>
-      (Last Login: {{ history.userHistory[user].lastLogin.toDate() | date:'h:mm:ss a - MM/dd/yyyy' }})
-    </li>
-  </ul>
-  <div *ngIf="(history.userHistory | json) == '{}'">No Users</div>
+  <div *ngIf="!history.isLoading; else showLoading">
+    <ul *ngIf="history.userHistory">
+      <li *ngFor="let user of history.userHistoryIndex">
+        <strong>{{ history.userHistory[user].email }}</strong>
+        (Last Login: {{ history.userHistory[user].lastLogin.toDate() | date:'h:mm:ss a - MM/dd/yyyy' }})
+      </li>
+    </ul>
+    <div *ngIf="!history.userHistory">No Users</div>
+  </div>
+  <!-- Loading -->
+  <ng-template #showLoading>
+    <div class="loading-spinner mt-4">
+      <i class="fa fa-refresh"></i>
+    </div>
+  </ng-template>
 </div>

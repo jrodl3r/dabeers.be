@@ -21,7 +21,7 @@ export class BeersService {
     isActive: false
   };
   activeBeerIndex: number;
-  isLoading = false;
+  isLoading: Boolean = false;
 
   constructor(
     private afs: AngularFirestore,
@@ -34,7 +34,6 @@ export class BeersService {
       .subscribe(beers => {
         this.beers = beers.items;
         this.isLoading = false;
-        // beers.items.forEach(b => console.log(b));
       });
   }
 

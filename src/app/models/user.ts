@@ -7,13 +7,5 @@ export interface IUser {
   email: String;
   isActive?: Boolean;
   isAdmin?: Boolean;
-  profile?: IProfile;
   uid: String;
-}
-
-export interface IProfile {
-  company?: String;
-  fname?: String;
-  lname?: String;
-  website?: String;
 }
