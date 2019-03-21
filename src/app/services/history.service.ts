@@ -10,7 +10,7 @@ import { NotifyService } from './notify.service';
 export class HistoryService {
   userHistoryDoc: AngularFirestoreDocument;
   userHistory: any;
-  userHistoryKeys: Array<string>;
+  userHistoryIndex: Array<string>;
 
   constructor(
     private afs: AngularFirestore,
@@ -23,7 +23,7 @@ export class HistoryService {
       .pipe(shareReplay(1))
       .subscribe(userHistory => {
         this.userHistory = userHistory;
-        this.userHistoryKeys = Object.keys(this.userHistory);
+        this.userHistoryIndex = Object.keys(this.userHistory);
       });
   }
 
