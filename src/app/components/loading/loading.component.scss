@@ -11,6 +11,7 @@
   opacity: 1;
   overflow: hidden;
   transition: 0s;
+  user-select: none;
 
   &.disabled {
     width: 0;

@@ -10,6 +10,8 @@ import { BeersComponent } from './beers/beers.component';
 import { UsersComponent } from './users/users.component';
 import { HistoryComponent } from './history/history.component';
 
+import { SortUserHistoryPipe } from 'src/app/services/pipes/sort-user-history.pipe';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -22,7 +24,8 @@ import { HistoryComponent } from './history/history.component';
     AdminComponent,
     BeersComponent,
     UsersComponent,
-    HistoryComponent
+    HistoryComponent,
+    SortUserHistoryPipe
   ]
 })
 export class AdminModule { }

@@ -3,9 +3,9 @@
   <hr>
   <div *ngIf="!history.isLoading; else showLoading">
     <ul *ngIf="history.userHistory">
-      <li *ngFor="let user of history.userHistoryIndex">
+      <li *ngFor="let user of history.userHistoryIndex | SortUserHistoryPipe: history.userHistory : 'desc'">
         <strong>{{ history.userHistory[user].email }}</strong>
-        (Last Login: {{ history.userHistory[user].lastLogin.toDate() | date:'h:mm:ss a - MM/dd/yyyy' }})
+        (Last Login: {{ history.userHistory[user].lastLogin.toDate() | date: 'h:mm:ss a - MM/dd/yyyy' }})
       </li>
     </ul>
     <div *ngIf="!history.userHistory">No Users</div>
