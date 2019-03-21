@@ -55,8 +55,8 @@ export class BeersComponent implements OnInit {
     this.beersService.removeBeer().then(() => this.hideModals());
   }
 
-  restoreBeer(index: number) {
-    this.beersService.restoreBeer(index);
+  restoreBeer(id: String) {
+    this.beersService.restoreBeer(id);
   }
 
   showCreateBeerModal() {
@@ -65,8 +65,8 @@ export class BeersComponent implements OnInit {
     this.isCreateModalActive = true;
   }
 
-  showEditBeerModal(index: number) {
-    this.beersService.setActiveBeer(index);
+  showEditBeerModal(id: String) {
+    this.beersService.setActiveBeer(id);
     this.beersForm.setValue({
       title: this.beersService.activeBeer.title,
       description: this.beersService.activeBeer.description
@@ -74,8 +74,8 @@ export class BeersComponent implements OnInit {
     this.isEditModalActive = true;
   }
 
-  showRemoveBeerModal(index: number) {
-    this.beersService.setActiveBeer(index);
+  showRemoveBeerModal(id: String) {
+    this.beersService.setActiveBeer(id);
     this.isRemoveModalActive = true;
   }
 

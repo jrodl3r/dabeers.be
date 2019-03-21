@@ -1,4 +1,5 @@
 export interface IBeer {
+  id: String;
   title: String;
   description: String;
   image: String;
@@ -8,5 +9,5 @@ export interface IBeer {
 }
 
 export interface IBeers {
-  items: IBeer[];
+  [key: string]: IBeer;
 }

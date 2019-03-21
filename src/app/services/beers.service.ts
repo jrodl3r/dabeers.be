@@ -11,8 +11,9 @@ import { IBeer, IBeers } from '../models/beers';
 })
 export class BeersService {
   beersDoc: AngularFirestoreDocument<IBeers>;
-  beers: IBeer[] = [];
+  beers: IBeers;
   activeBeer: IBeer = {
+    id: '',
     title: '',
     description: '',
     image: '',
@@ -32,50 +33,54 @@ export class BeersService {
     this.beersDoc.valueChanges()
       .pipe(shareReplay(1))
       .subscribe(beers => {
-        this.beers = beers.items;
+        this.beers = beers;
         this.isLoading = false;
       });
   }
 
   public createBeer(title: String, description: String, image: String) {
     const beer: IBeer = {
-      title,
-      description,
+      id: 'beer-' + title.replace(/[^A-Za-z0-9]/g, '').trim().toLowerCase(),
+      title: title.trim(),
+      description: description.trim(),
       image,
       created: new Date(),
       edited: new Date(null),
       isActive: true
     };
-    this.beers.unshift(beer);
+    this.beers[`${beer.id}`] = beer;
     return this.updateBeers();
   }
 
   public removeBeer() {
-    this.beers[this.activeBeerIndex].isActive = false;
+    this.beers[`${this.activeBeer.id}`].isActive = false;
     return this.updateBeers();
   }
 
-  public restoreBeer(index: number) {
-    this.beers[index].isActive = true;
+  public restoreBeer(id: String) {
+    this.beers[`${id}`].isActive = true;
     return this.updateBeers();
   }
 
-  public setActiveBeer(index: number) {
-    this.activeBeerIndex = index;
-    this.activeBeer = this.beers[this.activeBeerIndex];
+  public setActiveBeer(id: String) {
+    this.activeBeer = this.beers[`${id}`];
   }
 
   public editBeer(title: String, description: String) {
-    this.beers[this.activeBeerIndex].title = title;
-    this.beers[this.activeBeerIndex].description = description;
-    this.beers[this.activeBeerIndex].edited = new Date();
+    this.beers[`${this.activeBeer.id}`].title = title;
+    this.beers[`${this.activeBeer.id}`].description = description;
+    this.beers[`${this.activeBeer.id}`].edited = new Date();
     return this.updateBeers()
       .then(() => this.notify.success('Beer updated successfully'));
   }
 
   private updateBeers() {
-    return this.beersDoc.set({ items: this.beers })
-      .catch(error => this.notify.error(error));
+    return this.beersDoc.set(this.beers)
+      .catch(error => this.notify.error('Error updating beer', error));
+  }
+
+  public hasBeers() {
+    return Object.keys(this.beers).length;
   }
 
 }

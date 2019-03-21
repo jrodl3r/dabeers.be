@@ -5,15 +5,16 @@
     <div
       class="beers"
       *ngIf="!beersService.isLoading; else showLoading">
-      <ul *ngIf="beersService.beers.length">
-        <ng-container *ngFor="let beer of beersService.beers">
-          <li *ngIf="beer.isActive">
+      <ul
+        *ngIf="beersService.hasBeers()">
+        <ng-container *ngFor="let beer of beersService.beers | keyvalue">
+          <li *ngIf="beer.value.isActive">
             <div class="score">+20</div>
             <img src="https://drizly-products1.imgix.net/ci_2822.jpg">
             <div class="info">
-              <h6 class="title m-0">{{ beer.title }}</h6>
+              <h6 class="title m-0">{{ beer.value.title }}</h6>
               <p class="m-0">
-                <small>{{ beer.description }}</small>
+                <small>{{ beer.value.description }}</small>
               </p>
             </div>
             <div class="vote">
@@ -25,7 +26,7 @@
       </ul>
       <h3
         class="text-center mt-5 mb-5"
-        *ngIf="!beersService.beers.length">No Beers On Tap... 😬</h3>
+        *ngIf="!beersService.hasBeers()">No Beers On Tap... 😬</h3>
     </div>
 
     <ng-template #showLoading>

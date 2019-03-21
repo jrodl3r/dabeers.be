@@ -9,35 +9,35 @@
   </h3>
   <hr>
   <div *ngIf="!beersService.isLoading; else showLoading">
-    <div *ngIf="beersService.beers.length">
-      <ul class="beers">
-        <li
-          class="mb-2 pt-2 pb-3"
-          [class.inactive]="!beer.isActive"
-          *ngFor="let beer of beersService.beers; let i = index">
-          <strong>{{ beer.title }} {{ beer.isActive ? '' : '(Inactive)'}}</strong>
-          <button
-            type="button"
-            class="btn btn-sm btn-primary shadow-none mt-1 mb-1 mr-2 ml-auto"
-            [class.d-none]="!beer.isActive"
-            (click)="showEditBeerModal(i)">
-            <i class="fa fa-edit mr-1"></i> Edit</button>
-          <button
-            type="button"
-            class="btn btn-sm btn-danger shadow-none mt-1 mb-1 mr-2 ml-2"
-            [class.d-none]="!beer.isActive"
-            (click)="showRemoveBeerModal(i)">
-            <i class="fa fa-remove mr-1"></i> Remove</button>
-          <button
-            type="button"
-            class="btn btn-sm btn-warning shadow-none mt-1 mb-1 mr-2 ml-auto"
-            [class.d-none]="beer.isActive"
-            (click)="restoreBeer(i)">
-            <i class="fa fa-undo mr-1"></i> Restore</button>
-        </li>
-      </ul>
-    </div>
-    <div *ngIf="!beersService.beers.length">No Beers On Tap!</div>
+    <ul
+      class="beers"
+      *ngIf="beersService.hasBeers()">
+      <li
+        class="mb-2 pt-2 pb-3"
+        [class.inactive]="!beer.value.isActive"
+        *ngFor="let beer of beersService.beers | keyvalue">
+        <strong>{{ beer.value.title }} {{ beer.value.isActive ? '' : '(Inactive)'}}</strong>
+        <button
+          type="button"
+          class="btn btn-sm btn-primary shadow-none mt-1 mb-1 mr-2 ml-auto"
+          [class.d-none]="!beer.value.isActive"
+          (click)="showEditBeerModal(beer.value.id)">
+          <i class="fa fa-edit mr-1"></i> Edit</button>
+        <button
+          type="button"
+          class="btn btn-sm btn-danger shadow-none mt-1 mb-1 mr-2 ml-2"
+          [class.d-none]="!beer.value.isActive"
+          (click)="showRemoveBeerModal(beer.value.id)">
+          <i class="fa fa-remove mr-1"></i> Remove</button>
+        <button
+          type="button"
+          class="btn btn-sm btn-warning shadow-none mt-1 mb-1 mr-2 ml-auto"
+          [class.d-none]="beer.value.isActive"
+          (click)="restoreBeer(beer.value.id)">
+          <i class="fa fa-undo mr-1"></i> Restore</button>
+      </li>
+    </ul>
+    <div *ngIf="!beersService.hasBeers()">No Beers On Tap!</div>
   </div>
 </div>
 

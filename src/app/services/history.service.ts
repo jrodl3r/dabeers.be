@@ -11,7 +11,7 @@ import { IUserHistory, IUserHistoryItem } from '../models/history';
 })
 export class HistoryService {
   userHistoryDoc: AngularFirestoreDocument;
-  userHistory: any;
+  userHistory: IUserHistory;
   userHistoryIndex: Array<string>;
   isLoading: Boolean = false;
 
@@ -37,7 +37,7 @@ export class HistoryService {
     const userHistorySub = this.userHistoryDoc.valueChanges()
       .subscribe(userHistory => {
         const user: IUserHistoryItem = { email, lastLogin: date };
-        userHistory = { ...userHistory, [uid.toString()]: { ...user }};
+        userHistory = { ...userHistory, [`${uid}`]: { ...user }};
         this.userHistoryDoc
           .set(userHistory)
           .then(() => userHistorySub.unsubscribe())
@@ -48,7 +48,7 @@ export class HistoryService {
   updateUserLoginDate(uid: String, date: Date) {
     this.userHistoryDoc = this.afs.doc<IUserHistory>('history/users');
     this.userHistoryDoc
-      .set({ [uid.toString()]: { lastLogin: date }}, { merge: true })
+      .set({ [`${uid}`]: { lastLogin: date }}, { merge: true })
       .catch(error => this.notify.error('Error updating user history', error));
   }
 
