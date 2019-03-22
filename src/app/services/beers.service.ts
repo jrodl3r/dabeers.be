@@ -66,9 +66,10 @@ export class BeersService {
     this.activeBeer = this.beers[`${id}`];
   }
 
-  public editBeer(title: String, description: String) {
+  public editBeer(title: String, description: String, image: String) {
     this.beers[`${this.activeBeer.id}`].title = title;
     this.beers[`${this.activeBeer.id}`].description = description;
+    this.beers[`${this.activeBeer.id}`].image = image;
     this.beers[`${this.activeBeer.id}`].edited = new Date();
     return this.updateBeers()
       .then(() => this.notify.success('Beer updated successfully'));

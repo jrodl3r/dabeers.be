@@ -47,7 +47,7 @@ export class BeersComponent implements OnInit {
 
   editBeer() {
     this.beersService
-      .editBeer(this.beersForm.getRawValue().title, this.beersForm.getRawValue().description)
+      .editBeer(this.beersForm.getRawValue().title, this.beersForm.getRawValue().description, '')
       .then(() => this.hideModals());
   }
 
@@ -57,6 +57,12 @@ export class BeersComponent implements OnInit {
 
   restoreBeer(id: String) {
     this.beersService.restoreBeer(id);
+  }
+
+  changeImage(event: Event) {
+    event.preventDefault();
+    console.log('changeImage()');
+
   }
 
   showCreateBeerModal() {

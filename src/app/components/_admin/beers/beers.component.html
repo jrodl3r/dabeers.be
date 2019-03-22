@@ -98,6 +98,10 @@
             <div *ngIf="formErrors.description" class="text-danger p-2 pb-3">{{ formErrors.description }}</div>
           </div>
           <div class="modal-footer p-2">
+            <a
+              href=""
+              class="mr-auto ml-2"
+              (click)="changeImage($event)">{{ beersService.activeBeer.image ? 'Edit' : 'Add' }} Image</a>
             <button
               type="button"
               class="btn btn-sm btn-grey mr-2"
