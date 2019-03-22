@@ -2,11 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AngularFireStorage, AngularFireUploadTask } from '@angular/fire/storage';
 import { Observable } from 'rxjs';
+import { finalize } from 'rxjs/operators';
 
 import { BeersService } from '../../../services/beers.service';
-import { NotifyService } from 'src/app/services/notify.service';
 import { FormsService } from '../../../services/forms.service';
-import { tap, finalize } from 'rxjs/operators';
 
 type InputFields = 'title' | 'description';
 type FormErrors = { [u in InputFields]: string };
@@ -36,12 +35,10 @@ export class BeersComponent implements OnInit {
   imageUploadTask: AngularFireUploadTask;
   imageUploadPercentage: Observable<number>;
   imageUploadSnapshot: Observable<any>;
-  imageURL: string;
 
   constructor(
     public beersService: BeersService,
     private storage: AngularFireStorage,
-    private notify: NotifyService,
     private forms: FormsService,
     private fb: FormBuilder
   ) { }
@@ -52,13 +49,13 @@ export class BeersComponent implements OnInit {
 
   createBeer() {
     this.beersService
-      .createBeer(this.beersForm.getRawValue().title, this.beersForm.getRawValue().description, '')
+      .createBeer(this.beersForm.getRawValue().title, this.beersForm.getRawValue().description)
       .then(() => this.hideModals());
   }
 
   editBeer() {
     this.beersService
-      .editBeer(this.beersForm.getRawValue().title, this.beersForm.getRawValue().description, '')
+      .editBeer(this.beersForm.getRawValue().title, this.beersForm.getRawValue().description)
       .then(() => this.hideModals());
   }
 
@@ -76,19 +73,20 @@ export class BeersComponent implements OnInit {
   }
 
   uploadImage(files: FileList) {
-    const path = `beers/${Date.now()}_${files[0].name}`;
+    const file = files[0];
+    const path = `${this.beersService.activeBeer.id}_${Date.now()}_${file.name}`;
     const ref = this.storage.ref(path);
-    this.imageUploadTask = this.storage.upload(path, files[0]);
+    this.imageUploadTask = this.storage.upload(path, file);
     this.imageUploadPercentage = this.imageUploadTask.percentageChanges();
-    this.imageUploadSnapshot = this.imageUploadTask.snapshotChanges().pipe(
-      tap(console.log),
-      finalize(async() => {
-        this.imageURL = await ref.getDownloadURL().toPromise();
-
-        // TODO: update beer data [`${beersService.activeBeer.id}]
-        // .catch(error => this.notify.error('Error uploading image', error));
+    this.imageUploadTask.snapshotChanges().pipe(
+      finalize(() => {
+        ref.getDownloadURL().subscribe(url => {
+          if (url) {
+            this.beersService.editBeerImage(url);
+          }
+        });
       })
-    );
+    ).subscribe();
   }
 
   showCreateBeerModal() {

@@ -10,7 +10,7 @@
         <ng-container *ngFor="let beer of beersService.beers | keyvalue">
           <li *ngIf="beer.value.isActive">
             <div class="score">+20</div>
-            <img src="https://drizly-products1.imgix.net/ci_2822.jpg">
+            <img [src]="beer.value.image || 'https://drizly-products1.imgix.net/ci_2822.jpg'">
             <div class="info">
               <h6 class="title m-0">{{ beer.value.title }}</h6>
               <p class="m-0">
