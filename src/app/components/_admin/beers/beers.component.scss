@@ -33,3 +33,10 @@ h3 {
 .modal .modal-footer a {
   text-decoration: underline;
 }
+
+input#changeImage {
+  height: 0;
+  width: 0;
+  visibility: hidden;
+  opacity: 0;
+}

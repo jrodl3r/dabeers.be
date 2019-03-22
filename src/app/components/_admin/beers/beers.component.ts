@@ -1,8 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { AngularFireStorage, AngularFireUploadTask } from '@angular/fire/storage';
+import { Observable } from 'rxjs';
 
-import { FormsService } from '../../../services/forms.service';
 import { BeersService } from '../../../services/beers.service';
+import { NotifyService } from 'src/app/services/notify.service';
+import { FormsService } from '../../../services/forms.service';
+import { tap, finalize } from 'rxjs/operators';
 
 type InputFields = 'title' | 'description';
 type FormErrors = { [u in InputFields]: string };
@@ -29,11 +33,18 @@ export class BeersComponent implements OnInit {
   isCreateModalActive: Boolean = false;
   isEditModalActive: Boolean = false;
   isRemoveModalActive: Boolean = false;
+  imageUploadTask: AngularFireUploadTask;
+  imageUploadPercentage: Observable<number>;
+  imageUploadSnapshot: Observable<any>;
+  imageURL: string;
 
   constructor(
     public beersService: BeersService,
+    private storage: AngularFireStorage,
+    private notify: NotifyService,
     private forms: FormsService,
-    private fb: FormBuilder) { }
+    private fb: FormBuilder
+  ) { }
 
   ngOnInit() {
     this.buildForm();
@@ -61,8 +72,23 @@ export class BeersComponent implements OnInit {
 
   changeImage(event: Event) {
     event.preventDefault();
-    console.log('changeImage()');
+    document.getElementById('changeImage').click();
+  }
 
+  uploadImage(files: FileList) {
+    const path = `beers/${Date.now()}_${files[0].name}`;
+    const ref = this.storage.ref(path);
+    this.imageUploadTask = this.storage.upload(path, files[0]);
+    this.imageUploadPercentage = this.imageUploadTask.percentageChanges();
+    this.imageUploadSnapshot = this.imageUploadTask.snapshotChanges().pipe(
+      tap(console.log),
+      finalize(async() => {
+        this.imageURL = await ref.getDownloadURL().toPromise();
+
+        // TODO: update beer data [`${beersService.activeBeer.id}]
+        // .catch(error => this.notify.error('Error uploading image', error));
+      })
+    );
   }
 
   showCreateBeerModal() {

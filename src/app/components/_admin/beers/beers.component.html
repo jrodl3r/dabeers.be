@@ -102,6 +102,10 @@
               href=""
               class="mr-auto ml-2"
               (click)="changeImage($event)">{{ beersService.activeBeer.image ? 'Edit' : 'Add' }} Image</a>
+            <input
+              id="changeImage"
+              type="file"
+              (change)="uploadImage($event.target.files)" />
             <button
               type="button"
               class="btn btn-sm btn-grey mr-2"
