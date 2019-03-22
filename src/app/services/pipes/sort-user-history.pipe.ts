@@ -1,6 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
-import { IUserHistory } from 'src/app/models/history';
+import { IUserHistory } from '../../models/history';
 
 @Pipe({
   name: 'SortUserHistoryPipe'
