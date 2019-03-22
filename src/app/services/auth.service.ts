@@ -92,7 +92,7 @@ export class AuthService {
               .then(() => setTimeout(() => this.isLoading = false, 100));
           } else {
             this.logout();
-            this.notify.error('LightSpeedVT Members Only - Get Lost!');
+            this.notify.error('LightSpeedVT Personel Only - Take a hike');
           }
         })
         .catch(error => {

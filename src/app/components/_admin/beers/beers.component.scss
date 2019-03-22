@@ -19,9 +19,13 @@ h3 {
 
     &.inactive {
       color: $mid-grey-color;
-      opacity: .5;
+      
+      & * {
+        opacity: .5;
+        transition: $default-anim;
+      }
 
-      &:hover { opacity: 1; }
+      &:hover * { opacity: 1; }
     }
   }
 }

@@ -5,7 +5,7 @@
 .nav {
   align-items: center;
   height: 54px;
-  padding: .5rem 1rem;
+  padding: 0;
   background: $special-dark-color;
   box-shadow: none;
   transition: $default-anim;
@@ -16,10 +16,11 @@
 }
 
 .logo {
-  display: inline-block;
+  display: flex;
+  align-items: center;
+  height: 100%;
+  padding-left: 1rem;
   margin-right: 1rem;
-  padding-top: 0;
-  padding-bottom: 0;
   color: #FFF;
   font-size: 1.25rem;
   line-height: inherit;
@@ -45,12 +46,9 @@
 
 .menu-container {
   display: flex;
-  // width: 100%;
-
-  // @media (min-width: $sm-screen) {
-    width: auto;
-    margin-left: auto;
-  // }
+  height: 100%;
+  width: auto;
+  margin-left: auto;
 }
 
 .menu {
@@ -178,16 +176,10 @@
 }
 
 .dropdown-toggle {
-  // display: none;
-  padding-right: 0;
+  display: inline-flex;
+  padding-right: 1rem;
 
-  &:after {
-    margin-left: .6em;
-  }
-
-  // @media (min-width: $sm-screen) {
-    display: inline-flex;
-  // }
+  &:after { margin-left: .6em; }
 }
 
 .dropdown-menu {
@@ -201,8 +193,8 @@
   &.expanded {
     display: flex;
     flex-direction: column;
-    top: 38px;
-    right: 0;
+    top: 46px;
+    right: 1rem;
     left: auto;
   }
 
