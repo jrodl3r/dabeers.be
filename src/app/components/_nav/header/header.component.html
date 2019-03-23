@@ -22,7 +22,7 @@
             [innerHTML]="user.displayName"></div>
           <span class="avatar">
             <img
-              [src]="user.avatar || user.photoURL || '/assets/img/user.png'"
+              [src]="user.photoURL || '/assets/img/user.png'"
               *ngIf="user.isActive">
           </span>
         </div>

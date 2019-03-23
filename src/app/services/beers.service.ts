@@ -48,7 +48,7 @@ export class BeersService {
       id: 'beer-' + title.replace(/[^A-Za-z0-9]/g, '').trim().toLowerCase(),
       title: title.trim(),
       description: description.trim(),
-      image: '',
+      image: this.beers[`${this.activeBeer.id}`].image,
       created: new Date(),
       edited: new Date(null),
       isActive: true
@@ -67,8 +67,11 @@ export class BeersService {
 
   public editBeerImage(image: String) {
     this.beers[`${this.activeBeer.id}`].image = image;
-    return this.updateBeers()
-      .then(() => this.notify.success('Image saved successfully'));
+    return this.updateBeers();
+  }
+
+  public resetActiveBeerImage() {
+    this.beers[`${this.activeBeer.id}`].image = '';
   }
 
   public removeBeer() {

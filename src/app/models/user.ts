@@ -1,5 +1,4 @@
 export interface IUser {
-  avatar?: String;
   created?: Date;
   lastLogin?: Date;
   displayName?: String;

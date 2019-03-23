@@ -17,22 +17,29 @@
     transition: $default-anim;
     border-bottom: 1px solid $offset-grey-color;
 
-    // &:last-of-type { border-bottom: none; }
+    @media (min-width: $md-screen) {
+      padding: 10px;
+    }
+  }
 
-    // @media (min-width: $md-screen) {
-    //   padding: 15px;
-    // }
+  .image {
+    min-width: 60px;
+
+    @media (min-width: $md-screen) {
+      min-width: 100px;
+    }
   }
 
   img {
     max-height: 60px;
     max-width: 60px;
-    margin-right: 10px;
 
-    // @media (min-width: $md-screen) {
-    //   max-height: 100px;
-    //   max-width: 100px;
-    // }
+    &.default { background: #F6F7F6; }
+
+    @media (min-width: $md-screen) {
+      max-height: 100px;
+      max-width: 100px;
+    }
   }
 }
 

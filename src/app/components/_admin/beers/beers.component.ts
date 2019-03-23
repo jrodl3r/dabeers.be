@@ -32,6 +32,7 @@ export class BeersComponent implements OnInit {
   isCreateModalActive: Boolean = false;
   isEditModalActive: Boolean = false;
   isRemoveModalActive: Boolean = false;
+  isImageUploadActive: Boolean = false;
   imageUploadTask: AngularFireUploadTask;
   imageUploadPercentage: Observable<number>;
   imageUploadSnapshot: Observable<any>;
@@ -73,25 +74,30 @@ export class BeersComponent implements OnInit {
   }
 
   uploadImage(files: FileList) {
-    const file = files[0];
-    const path = `${this.beersService.activeBeer.id}_${Date.now()}_${file.name}`;
-    const ref = this.storage.ref(path);
-    this.imageUploadTask = this.storage.upload(path, file);
-    this.imageUploadPercentage = this.imageUploadTask.percentageChanges();
-    this.imageUploadTask.snapshotChanges().pipe(
-      finalize(() => {
-        ref.getDownloadURL().subscribe(url => {
-          if (url) {
-            this.beersService.editBeerImage(url);
-          }
-        });
-      })
-    ).subscribe();
+    if (files[0].name) {
+      const file = files[0];
+      const path = `${this.beersService.activeBeer.id}_${Date.now()}_${file.name}`;
+      const ref = this.storage.ref(path);
+      this.imageUploadTask = this.storage.upload(path, file);
+      this.imageUploadPercentage = this.imageUploadTask.percentageChanges();
+      this.isImageUploadActive = true;
+      this.imageUploadTask.snapshotChanges().pipe(
+        finalize(() => {
+          ref.getDownloadURL().subscribe(url => {
+            if (url) {
+              this.beersService.editBeerImage(url);
+              setTimeout(() => this.isImageUploadActive = false, 2500);
+            }
+          });
+        })
+      ).subscribe();
+    }
   }
 
   showCreateBeerModal() {
     this.beersForm.setValue({ title: '', description: '' });
     this.beersForm.reset();
+    this.beersService.resetActiveBeerImage();
     this.isCreateModalActive = true;
   }
 
