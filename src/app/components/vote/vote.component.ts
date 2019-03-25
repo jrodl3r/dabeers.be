@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { AuthService } from '../../services/auth.service';
+import { HistoryService } from './../../services/history.service';
 import { BeersService } from '../../services/beers.service';
 
 @Component({
@@ -12,8 +13,11 @@ export class VoteComponent implements OnInit {
 
   constructor(
     public auth: AuthService,
+    public history: HistoryService,
     public beersService: BeersService) { }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.history.getActiveVote();
+  }
 
 }

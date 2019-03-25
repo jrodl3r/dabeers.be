@@ -56,13 +56,14 @@ export class AuthService {
           };
           return userRef
             .set(data)
-            .then(() => this.history.addUser(user.uid, user.email));
+            .then(() => this.history.addUser(user.uid, user.email, date));
         }
         return userRef
           .update({
             lastLogin: date,
             photoURL: user.photoURL || ''
-          });
+          })
+          .then(() => this.history.updateUserHistory(user.uid, date));
       });
   }
 
@@ -85,7 +86,8 @@ export class AuthService {
       sessionStorage.removeItem('login-pending');
       this.afAuth.auth.getRedirectResult()
         .then(response => {
-          if (response.user && response.user.email.indexOf('@lightspeedvt.com') !== -1) { // LightspeedVT email required
+          if (response.user) { // LightspeedVT email required
+          // if (response.user && response.user.email.indexOf('@lightspeedvt.com') !== -1) { // LightspeedVT email required
             this.saveUser(response.user);
             this.zone.run(async () => await this.router.navigate(['/']))
               .then(() => setTimeout(() => this.isLoading = false, 100));
