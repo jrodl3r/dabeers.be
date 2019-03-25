@@ -74,9 +74,10 @@ export class BeersComponent implements OnInit {
   }
 
   uploadImage(files: FileList) {
-    if (files[0].name) {
+    if (files[0] && files[0].name) {
       const file = files[0];
-      const path = `${this.beersService.activeBeer.id}_${Date.now()}_${file.name}`;
+      const ext = file.name.match(/\.[0-9a-z]+$/i)[0];
+      const path = `${this.beersService.activeBeer.id}_${Date.now()}${ext}`;
       const ref = this.storage.ref(path);
       this.imageUploadTask = this.storage.upload(path, file);
       this.imageUploadPercentage = this.imageUploadTask.percentageChanges();
@@ -119,6 +120,7 @@ export class BeersComponent implements OnInit {
     this.isEditModalActive = false;
     this.isCreateModalActive = false;
     this.isRemoveModalActive = false;
+    this.isImageUploadActive = false;
   }
 
   buildForm() {
