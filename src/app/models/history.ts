@@ -18,17 +18,12 @@ export interface IVoteHistoryItem {
 }
 
 export interface IVotes {
-  [key: string]: IVoteItem | IVoteInfo; // beer-id
-}
-
-export interface IVoteInfo {
-  created: Date;
-  finished: Date;
-  id: String;
+  [key: string]: IVoteItem; // beer-id
+  // info: IVoteInfo; // beer-id
 }
 
 export interface IVoteItem {
-  votes: Array<IVote>;
+  [key: string]: IVote;
 }
 
 export interface IVote {
@@ -36,4 +31,14 @@ export interface IVote {
   email: String;
   uid: String;
   vote: Boolean;
+}
+
+// export interface IVoteInfo {
+//   created: Date;
+//   finished: Date;
+//   id: String;
+// }
+
+export interface IBeerScores {
+  [key: string]: number; // beer-id
 }

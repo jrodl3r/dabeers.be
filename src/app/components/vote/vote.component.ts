@@ -17,7 +17,7 @@ export class VoteComponent implements OnInit {
     public beersService: BeersService) { }
 
   ngOnInit() {
-    this.history.getActiveVote();
+    this.history.getActiveVotes();
   }
 
 }

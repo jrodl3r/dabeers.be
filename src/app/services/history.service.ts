@@ -4,14 +4,15 @@ import { shareReplay } from 'rxjs/operators';
 
 import { NotifyService } from './notify.service';
 
-import { IUserHistory, IUserHistoryItem, IVotes } from '../models/history';
+import { IUserHistory, IUserHistoryItem, IVotes, IVote, IBeerScores } from '../models/history';
 
 @Injectable({
   providedIn: 'root'
 })
 export class HistoryService {
-  ActiveVote: IVotes;
-  ActiveVoteDoc: AngularFirestoreDocument;
+  beerScores: IBeerScores;
+  activeVotes: IVotes;
+  activeVotesDoc: AngularFirestoreDocument;
   userHistory: IUserHistory;
   userHistoryDoc: AngularFirestoreDocument;
   userHistoryIndex: Array<string>;
@@ -22,16 +23,36 @@ export class HistoryService {
     private notify: NotifyService
   ) { }
 
-  getActiveVote() {
+  getActiveVotes() {
     this.isLoading = true;
-    this.ActiveVoteDoc = this.ActiveVoteDoc || this.afs.doc<IVotes>('history/active');
-    this.ActiveVoteDoc.valueChanges()
+    this.activeVotesDoc = this.activeVotesDoc || this.afs.doc<IVotes>('history/active');
+    this.activeVotesDoc.valueChanges()
       .pipe(shareReplay(1))
       .subscribe(votes => {
-        this.ActiveVote = votes;
-        console.log(this.ActiveVote);
+        this.activeVotes = votes;
+        if (votes && Object.keys(votes).length) { // calc beer scores
+          Object.keys(votes).forEach((beer) => {
+            let score = 0;
+            Object.keys(votes[`${beer}`]).forEach((uid, index) => {
+              score = votes[`${beer}`][`${uid}`].vote ? score + 1 : score - 1;
+              if (index === Object.keys(votes[`${beer}`]).length - 1) {
+                this.beerScores = { ...this.beerScores, [`${beer}`]: score };
+              }
+            });
+          });
+        }
         this.isLoading = false;
       });
+  }
+
+  castVote(beerid: String, email: String, uid: String, vote: Boolean) {
+    if (uid) {
+      this.activeVotesDoc = this.activeVotesDoc || this.afs.doc<IVotes>('history/active');
+      const newVote: IVote = { created: new Date(), email, uid, vote };
+      this.activeVotesDoc
+        .set({ ...this.activeVotes, [`${beerid}`]: { [`${uid}`]: newVote }}, { merge: true })
+        .catch(error => this.notify.error('Error casting vote', error));
+    }
   }
 
   getUserHistory() {
@@ -46,20 +67,19 @@ export class HistoryService {
       });
   }
 
-  addUser(uid: String, email: String, date: Date) {
+  addUserHistoryItem(uid: String, email: String, date: Date) {
     this.userHistoryDoc = this.afs.doc<IUserHistory>('history/users');
     const userHistorySub = this.userHistoryDoc.valueChanges()
       .subscribe(userHistory => {
         const user: IUserHistoryItem = { uid, email, lastLogin: date };
-        userHistory = { ...userHistory, [`${uid}`]: { ...user }};
         this.userHistoryDoc
-          .set(userHistory)
+          .set({ ...userHistory, [`${uid}`]: { ...user }})
           .then(() => userHistorySub.unsubscribe())
           .catch(error => this.notify.error('Error saving user history', error));
     });
   }
 
-  updateUserHistory(uid: String, date: Date) {
+  updateUserHistoryItem(uid: String, date: Date) {
     this.userHistoryDoc = this.afs.doc<IUserHistory>('history/users');
     this.userHistoryDoc
       .set({ [`${uid}`]: { lastLogin: date }}, { merge: true })

@@ -56,14 +56,14 @@ export class AuthService {
           };
           return userRef
             .set(data)
-            .then(() => this.history.addUser(user.uid, user.email, date));
+            .then(() => this.history.addUserHistoryItem(user.uid, user.email, date));
         }
         return userRef
           .update({
             lastLogin: date,
             photoURL: user.photoURL || ''
           })
-          .then(() => this.history.updateUserHistory(user.uid, date));
+          .then(() => this.history.updateUserHistoryItem(user.uid, date));
       });
   }
 
@@ -126,6 +126,10 @@ export class AuthService {
 
   public getUserID(): String {
     return this.isLoggedIn() ? this.afAuth.auth.currentUser.uid : '';
+  }
+
+  public getUserEmail(): String {
+    return this.isLoggedIn() ? this.afAuth.auth.currentUser.email : '';
   }
 
 }
