@@ -32,11 +32,11 @@ export class HistoryService {
       });
   }
 
-  addUser(uid: String, email: String, date: Date) {
+  addUser(uid: String, email: String) {
     this.userHistoryDoc = this.afs.doc<IUserHistory>('history/users');
     const userHistorySub = this.userHistoryDoc.valueChanges()
       .subscribe(userHistory => {
-        const user: IUserHistoryItem = { email, lastLogin: date };
+        const user: IUserHistoryItem = { email, votes: [] };
         userHistory = { ...userHistory, [`${uid}`]: { ...user }};
         this.userHistoryDoc
           .set(userHistory)
@@ -45,11 +45,12 @@ export class HistoryService {
     });
   }
 
-  updateUserLoginDate(uid: String, date: Date) {
-    this.userHistoryDoc = this.afs.doc<IUserHistory>('history/users');
-    this.userHistoryDoc
-      .set({ [`${uid}`]: { lastLogin: date }}, { merge: true })
-      .catch(error => this.notify.error('Error updating user history', error));
-  }
+  // updateUserLoginDate(uid: String, date: Date) {
+  //   this.userHistoryDoc = this.afs.doc<IUserHistory>('history/users');
+  //   this.userHistoryDoc
+  //     .set({ [`${uid}`]: { lastLogin: date }}, { merge: true })
+  //     .catch(error => this.notify.error('Error updating user history', error));
+  // }
 
+  // TODO: Generate New Poll -> (+new Date).toString(36)
 }

@@ -1,6 +1,6 @@
 export interface IUserHistoryItem {
   email: String;
-  lastLogin: Date;
+  votes: Array<any>;
 }
 
 export interface IUserHistory {

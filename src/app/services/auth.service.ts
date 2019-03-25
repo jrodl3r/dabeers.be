@@ -56,14 +56,13 @@ export class AuthService {
           };
           return userRef
             .set(data)
-            .then(() => this.history.addUser(user.uid, user.email, date));
+            .then(() => this.history.addUser(user.uid, user.email));
         }
         return userRef
           .update({
             lastLogin: date,
             photoURL: user.photoURL || ''
-          })
-          .then(() => this.history.updateUserLoginDate(user.uid, date));
+          });
       });
   }
 
