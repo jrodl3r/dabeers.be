@@ -21,7 +21,6 @@ export class BeersService {
     edited: new Date(null),
     isActive: false
   };
-  activeBeerIndex: number;
   isLoading: Boolean = false;
 
   constructor(
@@ -90,6 +89,10 @@ export class BeersService {
 
   public hasBeers() {
     return Object.keys(this.beers).length;
+  }
+
+  public activeBeerCount() {
+    return Object.keys(this.beers).filter(id => this.beers[`${id}`].isActive).length;
   }
 
 }

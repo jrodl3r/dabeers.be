@@ -1,7 +1,5 @@
 <div class="card">
-  <div class="card-header text-center">LightSpeedVT Beers</div>
   <div class="card-body p-0">
-
     <div
       class="beers"
       *ngIf="!beersService.isLoading; else showLoading">
@@ -10,23 +8,27 @@
         <ng-container *ngFor="let beer of beersService.beers | keyvalue">
           <li *ngIf="beer.value.isActive">
             <div class="score">+20</div>
-            <div class="image mr-2 ml-2 text-center">
+            <div class="image mr-2 text-center">
               <img
                 [class.default]="!beer.value.image"
                 [src]="beer.value.image || '/assets/img/bottle.png'">
             </div>
             <div class="info">
-              <h6 class="title m-0">{{ beer.value.title }}</h6>
+              <h6 class="title m-0 mb-lg-2">{{ beer.value.title }}</h6>
               <p class="m-0">
                 <small>{{ beer.value.description }}</small>
               </p>
             </div>
             <div class="vote">
-              <i class="fa fa-thumbs-up"></i>
-              <i class="fa fa-thumbs-down"></i>
+              <i class="fa fa-thumbs-up text-success"></i>
+              <i class="fa fa-thumbs-down text-danger"></i>
             </div>
+            <div class="vote-menu-bg"></div>
           </li>
         </ng-container>
+        <li
+          class="blank"
+          *ngIf="beersService.activeBeerCount() % 2 !== 0"></li>
       </ul>
       <h3
         class="text-center mt-5 mb-5"
@@ -40,9 +42,8 @@
     </ng-template>
 
     <div class="bottom">
-      <span *ngIf="auth.isLoggedIn()">You have 6 beer votes to go...</span>
-      <span *ngIf="!auth.isLoggedIn()">You must have a LightSpeedVT account to vote</span>
+      <span *ngIf="auth.isLoggedIn()">3 votes left</span>
+      <span *ngIf="!auth.isLoggedIn()">Login to your LightSpeedVT account to vote!</span>
     </div>
-
   </div>
 </div>
