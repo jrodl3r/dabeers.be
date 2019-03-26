@@ -106,6 +106,7 @@
       display: none;
       font-size: 15px;
       line-height: 18px;
+      cursor: default;
 
       @media (min-width: $md-screen) {
         display: inline-block;
@@ -120,6 +121,7 @@
       font-family: $font-montserrat;
       font-weight: 700;
       font-size: 15px;
+      cursor: default;
 
       @media (min-width: $sm-screen) {
         font-size: 16px;
@@ -135,6 +137,7 @@
     font-family: $font-montserrat;
     font-size: 17px;
     font-weight: 700;
+    cursor: default;
 
     @media (min-width: $sm-screen) {
       padding: 10px;
@@ -160,7 +163,6 @@
       font-family: $font-roboto-slab;
       font-size: 12px;
       line-height: 30px;
-      color: $mid-grey-color;
     }
   }
 
@@ -194,9 +196,21 @@
     }
 
     &.disabled {
+      display: none;
+
+      @media (min-width: $sm-screen) {
+        display: flex;
+      }
+
       .fa-thumbs-up, .fa-thumbs-down {
         pointer-events: none;
       }
+    }
+
+    .vote-wrapper {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
     }
 
     .fa-thumbs-up, .fa-thumbs-down {
@@ -204,13 +218,16 @@
       transition: $default-anim;
       cursor: pointer;
 
-      &:hover {
+      &:hover { transform: scale(1.25); }
+
+      &.selected {
+        margin-right: 0;
         transform: scale(1.25);
       }
     }
 
     .fa-thumbs-up {
-      margin-right: 15px;
+      margin-right: 10px;
 
       @media (min-width: $sm-screen) {
         margin-right: 20px;
@@ -218,6 +235,24 @@
 
       @media (min-width: $lg-screen) {
         margin-right: 0;
+      }
+    }
+
+    .undo {
+      font-family: $font-roboto-slab;
+      font-size: 10px;
+      font-weight: 500;
+      text-transform: uppercase;
+      cursor: pointer;
+
+      &.text-success {
+        padding-top: 8px;
+        padding-right: 3px;
+      }
+
+      &.text-warning { 
+        padding-right: 3px;
+        margin-top: -3px;
       }
     }
   }

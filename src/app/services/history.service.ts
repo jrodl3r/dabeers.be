@@ -30,28 +30,44 @@ export class HistoryService {
       .pipe(shareReplay(1))
       .subscribe(votes => {
         this.activeVotes = votes;
-        if (votes && Object.keys(votes).length) { // calc beer scores
-          Object.keys(votes).forEach((beer) => {
-            let score = 0;
-            Object.keys(votes[`${beer}`]).forEach((uid, index) => {
-              score = votes[`${beer}`][`${uid}`].vote ? score + 1 : score - 1;
-              if (index === Object.keys(votes[`${beer}`]).length - 1) {
-                this.beerScores = { ...this.beerScores, [`${beer}`]: score };
-              }
-            });
-          });
-        }
+        this.calcBeerScores(votes);
         this.isLoading = false;
       });
   }
 
   castVote(beerid: String, email: String, uid: String, vote: Boolean) {
-    if (uid) {
-      this.activeVotesDoc = this.activeVotesDoc || this.afs.doc<IVotes>('history/active');
-      const newVote: IVote = { created: new Date(), email, uid, vote };
-      this.activeVotesDoc
-        .set({ ...this.activeVotes, [`${beerid}`]: { [`${uid}`]: newVote }}, { merge: true })
-        .catch(error => this.notify.error('Error casting vote', error));
+    const newVote: IVote = { created: new Date(), email, uid, vote };
+    this.activeVotesDoc
+      .set({ ...this.activeVotes, [`${beerid}`]: { [`${uid}`]: newVote }}, { merge: true })
+      .catch(error => this.notify.error('Error casting vote', error));
+  }
+
+  undoVote(beerid: String, uid: String, vote: Boolean) {
+    delete this.activeVotes[`${beerid}`][`${uid}`];
+    this.beerScores[`${beerid}`] = vote
+      ? this.beerScores[`${beerid}`] - 1
+      : this.beerScores[`${beerid}`] + 1;
+    if (this.beerScores[`${beerid}`] === 0 || Object.keys(this.activeVotes[`${beerid}`]).length === 0) {
+      delete this.beerScores[`${beerid}`];
+      delete this.activeVotes[`${beerid}`];
+      this.calcBeerScores(this.activeVotes);
+    }
+    this.activeVotesDoc
+      .set({ ...this.activeVotes })
+      .catch(error => this.notify.error('Error undoing vote', error));
+  }
+
+  calcBeerScores(votes: IVotes) {
+    if (votes && Object.keys(votes).length) {
+      Object.keys(votes).forEach((beerid) => {
+        let score = 0;
+        Object.keys(votes[`${beerid}`]).forEach((uid, index) => {
+          score = votes[`${beerid}`][`${uid}`].vote ? score + 1 : score - 1;
+          if (index === Object.keys(votes[`${beerid}`]).length - 1) {
+            this.beerScores = { ...this.beerScores, [`${beerid}`]: score };
+          }
+        });
+      });
     }
   }
 
