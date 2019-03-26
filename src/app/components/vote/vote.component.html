@@ -24,7 +24,6 @@
             </div>
             <div
               class="score"
-              [class.grey-text]="!auth.isLoggedIn()"
               *ngIf="history.scores && history.activeVotes[beer.value.id] && history.scores[beer.value.id] !== undefined && history.scores[beer.value.id] !== 0">
               {{ history.scores[beer.value.id] > 0 ? '+' : null }}{{ history.scores[beer.value.id] }}
               <span class="total-votes-divider ml-1 mr-1 grey-text">/</span>
