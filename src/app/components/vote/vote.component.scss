@@ -24,18 +24,25 @@
     display: flex;
     align-items: center;
     width: 100%;
-    padding: 5px;
-    transition: padding $default-anim;
-    // background: linear-gradient(180deg, rgba(0,0,0, .05) 0, transparent 3px);
+    padding: 5px 5px 5px 15px;
+    transition: padding $default-anim, background $default-anim;
+    background: linear-gradient(180deg, rgba(0,0,0, .015) 0, transparent 30px);
     border-bottom: 1px solid $offset-grey-color;
 
+    &:hover { background: transparent; }
+
+    @media (min-width: $sm-screen) {
+      padding: 5px 5px 5px 25px;
+    }
+
     @media (min-width: $md-screen) {
-      padding: 10px;
+      padding: 15px 10px 15px 35px;
     }
 
     @media (min-width: $lg-screen) {
       min-height: 180px;
       width: 50%;
+      padding: 15px 10px 15px 10px;
 
       &:nth-of-type(odd) {
         border-right: 1px solid $offset-grey-color;
@@ -58,10 +65,10 @@
   }
 
   .image {
-    min-width: 60px;
+    min-width: 50px;
 
-    @media (min-width: $md-screen) {
-      min-width: 100px;
+    @media (min-width: $sm-screen) {
+      min-width: 90px;
     }
 
     @media (min-width: $lg-screen) {
@@ -71,10 +78,15 @@
   }
 
   img {
-    max-height: 60px;
-    max-width: 60px;
+    max-height: 50px;
+    max-width: 50px;
 
     &.default { background: #F6F7F6; }
+
+    @media (min-width: $sm-screen) {
+      max-height: 70px;
+      max-width: 70px;
+    }
 
     @media (min-width: $md-screen) {
       max-height: 100px;
@@ -97,9 +109,10 @@
     }
 
     @media (min-width: $lg-screen) {
-      max-width: 200px;
-      margin-top: 10px;
+      max-width: 185px;
+      margin-top: 5px;
       margin-bottom: auto;
+      padding-bottom: 10px;
     }
 
     p {
@@ -120,7 +133,7 @@
     .title {
       font-family: $font-montserrat;
       font-weight: 700;
-      font-size: 15px;
+      font-size: 14px;
       cursor: default;
 
       @media (min-width: $sm-screen) {
@@ -132,11 +145,11 @@
   .score {
     display: flex;
     justify-content: center;
-    min-width: 40px;
-    padding: 5px 10px;
+    min-width: 60px;
     font-family: $font-montserrat;
     font-size: 17px;
     font-weight: 700;
+    color: #303E45;
     cursor: default;
 
     @media (min-width: $sm-screen) {
@@ -154,7 +167,7 @@
       z-index: 2;
       top: 0;
       right: 0;
-      width: 80px;
+      width: 100px;
       padding: 5px;
       text-align: center;
     }
@@ -162,7 +175,7 @@
     .no-votes {
       font-family: $font-roboto-slab;
       font-size: 12px;
-      line-height: 30px;
+      line-height: 35px;
     }
   }
 
@@ -171,12 +184,12 @@
     flex-direction: row;
     margin-right: 0;
     margin-left: auto;
-    padding: 10px;
+    padding: 5px 5px 5px 10px;
     font-size: 22px;
 
     @media (min-width: $sm-screen) {
       padding: 20px;
-      font-size: 24px;
+      font-size: 27px;
     }
 
     @media (min-width: $md-screen) {
@@ -186,11 +199,11 @@
     @media (min-width: $lg-screen) {
       position: absolute;
       z-index: 1;
-      top: 40px;
+      top: 42px;
       right: 0;
       display: flex;
       justify-content: center;
-      width: 80px;
+      width: 100px;
       padding: 0;
       font-size: 24px;
     }
@@ -211,6 +224,11 @@
       display: flex;
       flex-direction: row;
       align-items: center;
+
+      &:hover > .undo {
+        &.up-vote { color: $success-green; }
+        &.down-vote { color: $danger-color; }
+      }
     }
 
     .fa-thumbs-up, .fa-thumbs-down {
@@ -218,12 +236,9 @@
       transition: $default-anim;
       cursor: pointer;
 
-      &:hover { transform: scale(1.25); }
+      &:hover:not(.selected) { transform: scale(1.25); }
 
-      &.selected {
-        margin-right: 0;
-        transform: scale(1.25);
-      }
+      &.selected { margin-right: 0; }
     }
 
     .fa-thumbs-up {
@@ -239,21 +254,59 @@
     }
 
     .undo {
-      font-family: $font-roboto-slab;
-      font-size: 10px;
-      font-weight: 500;
+      font-family: $font-montserrat;
+      font-size: 9px;
+      font-weight: 700;
       text-transform: uppercase;
+      color: $grey-color;
+      transition: $default-anim;
       cursor: pointer;
 
-      &.text-success {
-        padding-top: 8px;
-        padding-right: 3px;
+      @media (min-width: $sm-screen) {
+        margin-left: 6px;
+        font-size: 11px;
       }
 
-      &.text-warning { 
-        padding-right: 3px;
-        margin-top: -3px;
+      &.up-vote {
+        padding-top: 7px;
+
+        &:hover { color: $success-green; }
       }
+
+      &.down-vote {
+        margin-top: -3px;
+
+        &:hover { color: $danger-color; }
+      }
+    }
+  }
+
+  .total-votes {
+    position: relative;
+    top: 11px;
+    left: -3px;
+    font-family: $font-roboto-slab;
+    font-size: 11px;
+
+    @media (min-width: $sm-screen) {
+      top: 16px;
+      font-size: 12px;
+    }
+
+    @media (min-width: $md-screen) {
+      top: 17px;
+      left: -2px;
+    }
+  }
+
+  .total-votes-divider {
+    position: relative;
+    top: 3px;
+    left: -1px;
+    font-family: $font-roboto-slab;
+
+    @media (min-width: $sm-screen) {
+      top: 5px;
     }
   }
 
@@ -265,7 +318,7 @@
       top: 0;
       right: 0;
       height: 80px;
-      width: 80px;
+      width: 100px;
       background: $light-grey-color-alt;
       border-bottom-left-radius: 0.25rem;
       box-shadow: inset 0 0 5px rgba(0,0,0, .05);
@@ -281,7 +334,7 @@
   padding: 10px 15px;
   font-family: $font-montserrat;
   font-size: 13px;
-  font-weight: 500;
+  font-weight: 700;
   color: $dark-grey-color;
   background-color: $offset-grey-color;
   // border-top: 1px solid $offset-grey-color;
@@ -289,7 +342,10 @@
   border-bottom-left-radius: 0.25rem;
 
   @media (min-width: $md-screen) {
-    justify-content: unset;
     font-size: 14px;
+  }
+
+  @media (min-width: $lg-screen) {
+    justify-content: unset;
   }
 }

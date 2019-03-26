@@ -1,20 +1,21 @@
 @import '../../../styles/colors';
+@import '../../../styles/typogrophy';
 
 footer {
   flex-shrink: 0;
-  height: 42px;
+  height: 80px;
+  margin-top: 20px;
+  font-family: $font-roboto-slab;
+  font-size: 15px;
+  font-weight: 700;
   line-height: 40px;
   text-align: center;
-  background: $light-grey-color;
-  border-top: 1px solid $offset-grey-color;
+  // background: linear-gradient(180deg, #FFF 18px, #EEE 100px);
+  cursor: default;
 
-  .logo-icon {
-    display: inline-flex;
+  .icon {
     position: relative;
-    top: 5px;
-    height: 25px;
-    width: 28px;
-    background-image: url(/assets/icons/icon-72x72.png);
-    background-size: 100%;
+    top: 1px;
+    font-size: 18px;
   }
 }

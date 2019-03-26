@@ -1,6 +1,7 @@
 @import '../../../styles/variables';
 @import '../../../styles/animation';
 @import '../../../styles/colors';
+@import '../../../styles/typogrophy';
 
 .nav {
   align-items: center;
@@ -22,6 +23,7 @@
   padding-left: 1rem;
   margin-right: 1rem;
   color: #FFF;
+  font-family: $font-roboto-slab;
   font-size: 1.25rem;
   line-height: inherit;
   white-space: nowrap;

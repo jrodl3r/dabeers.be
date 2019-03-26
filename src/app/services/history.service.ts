@@ -4,13 +4,14 @@ import { shareReplay } from 'rxjs/operators';
 
 import { NotifyService } from './notify.service';
 
-import { IUserHistory, IUserHistoryItem, IVotes, IVote, IBeerScores } from '../models/history';
+import { IUserHistory, IUserHistoryItem, IVotes, IVote } from '../models/history';
 
 @Injectable({
   providedIn: 'root'
 })
 export class HistoryService {
-  beerScores: IBeerScores;
+  scores: any;
+  counts: any;
   activeVotes: IVotes;
   activeVotesDoc: AngularFirestoreDocument;
   userHistory: IUserHistory;
@@ -30,7 +31,7 @@ export class HistoryService {
       .pipe(shareReplay(1))
       .subscribe(votes => {
         this.activeVotes = votes;
-        this.calcBeerScores(votes);
+        this.calcTotals(votes);
         this.isLoading = false;
       });
   }
@@ -44,27 +45,31 @@ export class HistoryService {
 
   undoVote(beerid: String, uid: String, vote: Boolean) {
     delete this.activeVotes[`${beerid}`][`${uid}`];
-    this.beerScores[`${beerid}`] = vote
-      ? this.beerScores[`${beerid}`] - 1
-      : this.beerScores[`${beerid}`] + 1;
-    if (this.beerScores[`${beerid}`] === 0 || Object.keys(this.activeVotes[`${beerid}`]).length === 0) {
-      delete this.beerScores[`${beerid}`];
+    this.scores[`${beerid}`] = vote
+      ? this.scores[`${beerid}`] - 1
+      : this.scores[`${beerid}`] + 1;
+    if (this.scores[`${beerid}`] === 0 || Object.keys(this.activeVotes[`${beerid}`]).length === 0) {
+      delete this.scores[`${beerid}`];
       delete this.activeVotes[`${beerid}`];
-      this.calcBeerScores(this.activeVotes);
+      this.calcTotals(this.activeVotes);
     }
     this.activeVotesDoc
       .set({ ...this.activeVotes })
       .catch(error => this.notify.error('Error undoing vote', error));
   }
 
-  calcBeerScores(votes: IVotes) {
+  calcTotals(votes: IVotes) {
     if (votes && Object.keys(votes).length) {
       Object.keys(votes).forEach((beerid) => {
         let score = 0;
+        if (Object.keys(votes[`${beerid}`]).length) {
+          this.counts = this.counts || {};
+          this.counts[`${beerid}`] = Object.keys(votes[`${beerid}`]).length;
+        }
         Object.keys(votes[`${beerid}`]).forEach((uid, index) => {
           score = votes[`${beerid}`][`${uid}`].vote ? score + 1 : score - 1;
           if (index === Object.keys(votes[`${beerid}`]).length - 1) {
-            this.beerScores = { ...this.beerScores, [`${beerid}`]: score };
+            this.scores = { ...this.scores, [`${beerid}`]: score };
           }
         });
       });

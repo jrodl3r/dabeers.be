@@ -38,7 +38,3 @@ export interface IVote {
 //   finished: Date;
 //   id: String;
 // }
-
-export interface IBeerScores {
-  [key: string]: number; // beer-id
-}

@@ -9,20 +9,30 @@
           <li *ngIf="beer.value.isActive">
             <div
               class="score"
-              *ngIf="!history.beerScores || !history.activeVotes[beer.value.id] || history.beerScores[beer.value.id] === undefined">
+              *ngIf="!history.scores || !history.activeVotes[beer.value.id] || history.scores[beer.value.id] === undefined">
               <span class="no-votes d-none d-lg-flex grey-text">no votes</span>
               <span class="d-flex d-lg-none">-</span>
             </div>
             <div
               class="score"
-              *ngIf="history.beerScores && history.activeVotes[beer.value.id] && history.beerScores[beer.value.id] !== undefined && history.beerScores[beer.value.id] === 0">-</div>
+              *ngIf="history.scores && history.activeVotes[beer.value.id] && history.scores[beer.value.id] !== undefined && history.scores[beer.value.id] === 0">
+              -
+              <span class="total-votes-divider ml-1 mr-1 grey-text">/</span>
+              <span
+                class="total-votes grey-text"
+                *ngIf="history.counts && history.counts[beer.value.id]">{{ history.counts[beer.value.id] }}</span>
+            </div>
             <div
               class="score"
               [class.grey-text]="!auth.isLoggedIn()"
-              *ngIf="history.beerScores && history.activeVotes[beer.value.id] && history.beerScores[beer.value.id] !== undefined && history.beerScores[beer.value.id] !== 0">
-              {{ history.beerScores[beer.value.id] > 0 ? '+' : null }}{{ history.beerScores[beer.value.id] }}
+              *ngIf="history.scores && history.activeVotes[beer.value.id] && history.scores[beer.value.id] !== undefined && history.scores[beer.value.id] !== 0">
+              {{ history.scores[beer.value.id] > 0 ? '+' : null }}{{ history.scores[beer.value.id] }}
+              <span class="total-votes-divider ml-1 mr-1 grey-text">/</span>
+              <span
+                class="total-votes grey-text"
+                *ngIf="history.counts && history.counts[beer.value.id]">{{ history.counts[beer.value.id] }}</span>
             </div>
-            <div class="image mr-2 text-center">
+            <div class="image text-center">
               <img
                 [class.default]="!beer.value.image"
                 [src]="beer.value.image || '/assets/img/bottle.png'">
@@ -41,8 +51,8 @@
                 *ngIf="history.activeVotes">
                 <div
                   class="undo"
-                  [class.text-success]="history.activeVotes[beer.value.id][user.uid].vote"
-                  [class.text-warning]="history.activeVotes[beer.value.id][user.uid].vote === false"
+                  [class.up-vote]="history.activeVotes[beer.value.id][user.uid].vote"
+                  [class.down-vote]="history.activeVotes[beer.value.id][user.uid].vote === false"
                   *ngIf="history.activeVotes[beer.value.id] && history.activeVotes[beer.value.id][user.uid] !== undefined">
                   <span
                     (click)="history.undoVote(beer.value.id, user.uid, history.activeVotes[beer.value.id][user.uid].vote)">Undo</span>
