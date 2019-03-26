@@ -1,8 +1,8 @@
 # dabeers.be 🍺
-Where LightSpeedVT Votes on Beer!
+A light-weight, cloud-based voting app for beers.
 
 ### Features
 - Angular Universal + Firebase
 - Server-Side Rendering
 - Progressive Web App
-- Exclusive to LightSpeedVT
+- Built with [ng-fire-universal](https://github.com/jrodl3r/ng-fire-universal)
