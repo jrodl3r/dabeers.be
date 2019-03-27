@@ -2,9 +2,8 @@
   class="nav"
   [class.offline]="system.isBrowser() && !system.isOnline()"
   (click)="nav.collapseHeader()">
-  <a class="logo" routerLink="/">
+  <a class="logo pr-4 pl-4" routerLink="/">
     <span class="logo-text">dabeers.be 🍺</span>
-    <!-- <span class="logo-icon"></span> -->
   </a>
   <div
     class="menu-container"
@@ -55,7 +54,7 @@
       </li>
       <li class="menu-item">
         <div
-          class="menu-link pr-3"
+          class="menu-link pr-4 pl-4"
           (click)="auth.googleLogin()">
           <i class="fa fa-sign-in mr-2"></i> Login</div>
       </li>

@@ -3,15 +3,19 @@
 
 footer {
   flex-shrink: 0;
-  height: 80px;
-  margin-top: 20px;
+  height: 60px;
   font-family: $font-roboto-slab;
   font-size: 15px;
   font-weight: 700;
-  line-height: 40px;
+  line-height: 20px;
   text-align: center;
   // background: linear-gradient(180deg, #FFF 18px, #EEE 100px);
   cursor: default;
+
+  @media (min-width: $md-screen) {
+    height: 80px;
+    margin-top: 20px;
+  }
 
   .icon {
     position: relative;
