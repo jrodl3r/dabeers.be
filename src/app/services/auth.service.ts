@@ -86,14 +86,13 @@ export class AuthService {
       sessionStorage.removeItem('login-pending');
       this.afAuth.auth.getRedirectResult()
         .then(response => {
-          if (response.user) { // LightspeedVT email required
-          // if (response.user && response.user.email.indexOf('@lightspeedvt.com') !== -1) { // LightspeedVT email required
+          if (response.user && response.user.email.indexOf('@lightspeedvt.com') !== -1) { // LightspeedVT email required
             this.saveUser(response.user);
             this.zone.run(async () => await this.router.navigate(['/']))
               .then(() => setTimeout(() => this.isLoading = false, 100));
           } else {
             this.logout();
-            this.notify.error('LightSpeedVT Personel Only - Take a hike');
+            this.notify.error('LightSpeedVT.com email required');
           }
         })
         .catch(error => {
