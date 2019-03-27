@@ -24,7 +24,7 @@
     display: flex;
     align-items: center;
     width: 100%;
-    padding: 5px 5px 5px 15px;
+    padding: 5px 5px 5px 10px;
     transition: padding $default-anim, background $default-anim;
     background: linear-gradient(180deg, rgba(0,0,0, .015) 0, transparent 30px);
     border-bottom: 1px solid $offset-grey-color;
@@ -145,7 +145,7 @@
   .score {
     display: flex;
     justify-content: center;
-    min-width: 60px;
+    min-width: 55px;
     font-family: $font-montserrat;
     font-size: 17px;
     font-weight: 700;
@@ -199,7 +199,7 @@
     @media (min-width: $lg-screen) {
       position: absolute;
       z-index: 1;
-      top: 42px;
+      top: 44px;
       right: 0;
       display: flex;
       justify-content: center;
@@ -225,41 +225,42 @@
       display: flex;
       flex-direction: row;
       align-items: center;
-
-      &:hover > .undo {
-        &.up-vote { color: $success-green; }
-        &.down-vote { color: $danger-color; }
-      }
     }
 
-    .fa-thumbs-up, .fa-thumbs-down {
-      padding: 5px;
-      transition: $default-anim;
-      cursor: pointer;
+    .levers {
+      display: flex;
+      flex-direction: row;
 
-      &:hover:not(.selected) { transform: scale(1.25); }
+      .fa-thumbs-up, .fa-thumbs-down {
+        padding: 5px;
+        transition: $default-anim;
+        cursor: pointer;
 
-      &.selected { margin-right: 0; }
-    }
-
-    .fa-thumbs-up {
-      margin-right: 10px;
-
-      @media (min-width: $sm-screen) {
-        margin-right: 20px;
+        &:hover { transform: scale(1.25); }
       }
 
-      @media (min-width: $lg-screen) {
-        margin-right: 0;
+      .fa-thumbs-up {
+        margin-right: 10px;
+
+        @media (min-width: $sm-screen) {
+          margin-right: 20px;
+        }
+
+        @media (min-width: $lg-screen) {
+          margin-right: 0;
+        }
       }
     }
 
     .undo {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
       font-family: $font-montserrat;
-      font-size: 9px;
+      font-size: 10px;
       font-weight: 700;
       text-transform: uppercase;
-      color: $grey-color;
+      opacity: .25;
       transition: $default-anim;
       cursor: pointer;
 
@@ -268,16 +269,43 @@
         font-size: 11px;
       }
 
-      &.up-vote {
-        padding-top: 7px;
+      @media (min-width: $lg-screen) {
+        margin-top: 6px;
+        margin-left: 10px;
+      }
 
-        &:hover { color: $success-green; }
+      &:hover {
+        opacity: 1;
+
+        &.up-vote { color: $success-green; }
+        &.down-vote { color: $danger-color; }
+      }
+
+      .label { margin-right: 8px; }
+
+      i {
+        margin-right: 10px;
+        font-size: 22px;
+
+        @media (min-width: $sm-screen) {
+          font-size: 27px;
+        }
+
+        @media (min-width: $md-screen) {
+          font-size: 28px;
+        }
+    
+        @media (min-width: $lg-screen) {
+          font-size: 24px;
+        }
+      }
+
+      &.up-vote {
+        .label { margin-top: 6px; }
       }
 
       &.down-vote {
-        margin-top: -3px;
-
-        &:hover { color: $danger-color; }
+        .label { margin-top: -2px; }
       }
     }
   }
@@ -318,7 +346,7 @@
       position: absolute;
       top: 0;
       right: 0;
-      height: 80px;
+      height: 85px;
       width: 100px;
       background: $light-grey-color-alt;
       border-bottom-left-radius: 0.25rem;
@@ -334,7 +362,7 @@
   align-items: center;
   padding: 10px 15px;
   font-family: $font-montserrat;
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 700;
   color: $dark-grey-color;
   background-color: $offset-grey-color;

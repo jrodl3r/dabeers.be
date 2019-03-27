@@ -9,23 +9,14 @@
           <li *ngIf="beer.value.isActive">
             <div
               class="score"
-              *ngIf="!history.scores || !history.activeVotes[beer.value.id] || history.scores[beer.value.id] === undefined">
-              <span class="no-votes d-none d-lg-flex grey-text">no votes</span>
-              <span class="d-flex d-lg-none">-</span>
-            </div>
+              *ngIf="history.scores && !history.activeVotes[beer.value.id] && !history.scores[beer.value.id]">-</div>
             <div
               class="score"
-              *ngIf="history.scores && history.activeVotes[beer.value.id] && history.scores[beer.value.id] !== undefined && history.scores[beer.value.id] === 0">
-              -
-              <span class="total-votes-divider ml-1 mr-1 grey-text">/</span>
-              <span
-                class="total-votes grey-text"
-                *ngIf="history.counts && history.counts[beer.value.id]">{{ history.counts[beer.value.id] }}</span>
-            </div>
-            <div
-              class="score"
-              *ngIf="history.scores && history.activeVotes[beer.value.id] && history.scores[beer.value.id] !== undefined && history.scores[beer.value.id] !== 0">
-              {{ history.scores[beer.value.id] > 0 ? '+' : null }}{{ history.scores[beer.value.id] }}
+              *ngIf="history.scores && history.activeVotes[beer.value.id] && history.scores[beer.value.id] !== undefined">
+              <span *ngIf="history.scores[beer.value.id] !== 0">
+                {{ history.scores[beer.value.id] > 0 ? '+' : null }}{{ history.scores[beer.value.id] }}
+              </span>
+              <span *ngIf="history.scores[beer.value.id] === 0">-</span>
               <span class="total-votes-divider ml-1 mr-1 grey-text">/</span>
               <span
                 class="total-votes grey-text"
@@ -52,30 +43,40 @@
                   class="undo"
                   [class.up-vote]="history.activeVotes[beer.value.id][user.uid].vote"
                   [class.down-vote]="history.activeVotes[beer.value.id][user.uid].vote === false"
+                  [class.text-success]="history.activeVotes[beer.value.id][user.uid].vote"
+                  [class.text-danger]="history.activeVotes[beer.value.id][user.uid].vote === false"
+                  (click)="history.undoVote(beer.value.id, user.uid, history.activeVotes[beer.value.id][user.uid].vote)"
                   *ngIf="history.activeVotes[beer.value.id] && history.activeVotes[beer.value.id][user.uid] !== undefined">
-                  <span
-                    (click)="history.undoVote(beer.value.id, user.uid, history.activeVotes[beer.value.id][user.uid].vote)">Undo</span>
+                    <span class="label">Undo</span>
+                    <span
+                      class="up-vote"
+                      *ngIf="history.activeVotes[beer.value.id][user.uid].vote">
+                        <i class="fa fa-thumbs-up"></i>
+                    </span>
+                    <span
+                      class="down-vote"
+                      *ngIf="history.activeVotes[beer.value.id][user.uid].vote === false">
+                        <i class="fa fa-thumbs-down"></i>
+                    </span>
                 </div>
-                <i
-                  class="fa fa-thumbs-up text-success"
-                  [class.d-none]="history.activeVotes[beer.value.id] && history.activeVotes[beer.value.id][user.uid] && history.activeVotes[beer.value.id][user.uid].vote === false"
-                  [class.selected]="history.activeVotes[beer.value.id] && history.activeVotes[beer.value.id][user.uid] && history.activeVotes[beer.value.id][user.uid].vote === true"
-                  (click)="history.activeVotes[beer.value.id] && history.activeVotes[beer.value.id][user.uid] !== undefined
-                    ? history.undoVote(beer.value.id, user.uid, true)
-                    : history.castVote(beer.value.id, user.email, user.uid, true)"></i>
-                <i
-                  class="fa fa-thumbs-down text-danger"
-                  [class.d-none]="history.activeVotes[beer.value.id] && history.activeVotes[beer.value.id][user.uid] && history.activeVotes[beer.value.id][user.uid].vote === true"
-                  [class.selected]="history.activeVotes[beer.value.id] && history.activeVotes[beer.value.id][user.uid] && history.activeVotes[beer.value.id][user.uid].vote === false"
-                  (click)="history.activeVotes[beer.value.id] && history.activeVotes[beer.value.id][user.uid] !== undefined && history.activeVotes[beer.value.id][user.uid].vote === false
-                    ? history.undoVote(beer.value.id, user.uid, false)
-                    : history.castVote(beer.value.id, user.email, user.uid, false)"></i>
+                <div
+                  class="levers"
+                  *ngIf="history.activeVotes[beer.value.id] === undefined || history.activeVotes[beer.value.id][user.uid] === undefined">
+                  <i
+                    class="fa fa-thumbs-up text-success"
+                    (click)="history.castVote(beer.value.id, user.email, user.uid, true)"></i>
+                  <i
+                    class="fa fa-thumbs-down text-danger"
+                    (click)="history.castVote(beer.value.id, user.email, user.uid, false)"></i>
+                </div>
               </div>
             </div>
             <ng-template #isStatic>
               <div class="vote disabled grey-text">
-                <i class="fa fa-thumbs-up"></i>
-                <i class="fa fa-thumbs-down"></i>
+                <div class="levers">
+                  <i class="fa fa-thumbs-up"></i>
+                  <i class="fa fa-thumbs-down"></i>
+                </div>
               </div>
             </ng-template>
             <div class="vote-menu-bg"></div>
@@ -98,7 +99,7 @@
 
     <div class="bottom">
       <span *ngIf="auth.isLoggedIn()">3 votes left</span>
-      <span *ngIf="!auth.isLoggedIn()">Login to your LightSpeedVT account to vote</span>
+      <span *ngIf="!auth.isLoggedIn()">Login with your LightSpeedVT email to vote</span>
     </div>
   </div>
 </div>
