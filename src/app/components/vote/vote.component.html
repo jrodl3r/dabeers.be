@@ -61,6 +61,7 @@
                 </div>
                 <div
                   class="levers"
+                  [class.disabled]="history.getUserVoteCount(user.uid) === history.userVoteMax"
                   *ngIf="history.activeVotes[beer.value.id] === undefined || history.activeVotes[beer.value.id][user.uid] === undefined">
                   <i
                     class="fa fa-thumbs-up text-success"
@@ -98,8 +99,17 @@
     </ng-template>
 
     <div class="bottom">
-      <span *ngIf="auth.isLoggedIn()">3 votes left</span>
-      <span *ngIf="!auth.isLoggedIn()">Login with your LightSpeedVT email to vote</span>
+      <span *ngIf="(auth.user | async) as user; else isOffline">
+        <span
+          *ngIf="history.getUserVoteCount(user.uid) < history.userVoteMax">
+            {{ history.userVoteMax - history.getUserVoteCount(user.uid) }} vote{{ history.userVoteMax - history.getUserVoteCount(user.uid) !== 1 ? 's' : null }} left
+        </span>
+        <span
+          *ngIf="history.getUserVoteCount(user.uid) === history.userVoteMax">You've used all your votes, Cheers!</span>
+      </span>
+      <ng-template #isOffline>
+        <span>Login with your LightSpeedVT email to vote</span>
+      </ng-template>
     </div>
   </div>
 </div>

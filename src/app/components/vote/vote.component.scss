@@ -231,6 +231,15 @@
       display: flex;
       flex-direction: row;
 
+      &.disabled {
+        pointer-events: none;
+
+        i {
+          color: $grey-text !important;
+          opacity: .35;
+        }
+      }
+
       .fa-thumbs-up, .fa-thumbs-down {
         padding: 5px;
         transition: $default-anim;
@@ -371,7 +380,6 @@
   font-weight: 700;
   color: $dark-grey-color;
   background-color: $offset-grey-color;
-  // border-top: 1px solid $offset-grey-color;
   border-bottom-right-radius: 0.25rem;
   border-bottom-left-radius: 0.25rem;
 

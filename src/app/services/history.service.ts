@@ -12,6 +12,7 @@ import { IUserHistory, IUserHistoryItem, IVotes, IVote } from '../models/history
 export class HistoryService {
   scores: any;
   counts: any;
+  userVoteMax = 6;
   activeVotes: IVotes;
   activeVotesDoc: AngularFirestoreDocument;
   userHistory: IUserHistory;
@@ -60,7 +61,7 @@ export class HistoryService {
 
   calcTotals(votes: IVotes) {
     if (votes && Object.keys(votes).length) {
-      Object.keys(votes).forEach((beerid) => {
+      Object.keys(votes).forEach(beerid => {
         let score = 0;
         if (Object.keys(votes[`${beerid}`]).length) {
           this.counts = this.counts || {};
@@ -74,6 +75,22 @@ export class HistoryService {
         });
       });
     }
+  }
+
+  getUserVoteCount(uid: String) {
+    if (this.activeVotes && Object.keys(this.activeVotes).length) {
+      let count = 0;
+      Object.keys(this.activeVotes).forEach(beerid => {
+        Object.keys(this.activeVotes[`${beerid}`]).forEach((userId, index) => {
+          if (uid === userId) {
+            count = count + 1;
+            return;
+          }
+        });
+      });
+      return count;
+    }
+    return 0;
   }
 
   getUserHistory() {
