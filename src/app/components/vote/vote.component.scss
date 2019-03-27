@@ -281,31 +281,36 @@
         &.down-vote { color: $danger-color; }
       }
 
-      .label { margin-right: 8px; }
+      .label {
+        margin-right: 8px;
+
+        @media (min-width: $lg-screen) { margin-right: 5px; }
+      }
 
       i {
         margin-right: 10px;
         font-size: 22px;
 
-        @media (min-width: $sm-screen) {
-          font-size: 27px;
-        }
-
-        @media (min-width: $md-screen) {
-          font-size: 28px;
-        }
-    
-        @media (min-width: $lg-screen) {
-          font-size: 24px;
-        }
+        @media (min-width: $sm-screen) { font-size: 27px; }
+        @media (min-width: $md-screen) { font-size: 28px; }
+        @media (min-width: $lg-screen) { font-size: 24px; }
       }
 
       &.up-vote {
-        .label { margin-top: 6px; }
+        .label {
+          margin-top: 6px;
+
+          @media (min-width: $sm-screen) { margin-top: 7px; }
+          @media (min-width: $md-screen) { margin-top: 9px; }
+          @media (min-width: $lg-screen) { margin-top: 7px; }
+        }
       }
 
       &.down-vote {
-        .label { margin-top: -2px; }
+        .label { margin-top: -3px; }
+
+        @media (min-width: $sm-screen) { margin-top: -3px; }
+        @media (min-width: $md-screen) { margin-top: 7px; }
       }
     }
   }
