@@ -38,7 +38,7 @@ export class BeersService {
   }
 
   private updateBeers() {
-    return this.beersDoc.set(this.beers)
+    return this.beersDoc.set(this.beers, { merge: true })
       .catch(error => this.notify.error('Error updating beer', error));
   }
 
