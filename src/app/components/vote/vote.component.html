@@ -8,20 +8,27 @@
         <ng-container *ngFor="let beer of beersService.beers | keyvalue">
           <li *ngIf="beer.value.isActive">
             <div
-              class="score pt-lg-2"
-              *ngIf="history.scores && !history.activeVotes[beer.value.id] && !history.scores[beer.value.id]">-</div>
-            <div
               class="score"
-              *ngIf="history.scores && history.activeVotes[beer.value.id] && history.scores[beer.value.id] !== undefined">
-              <span *ngIf="history.scores[beer.value.id] !== 0">
-                {{ history.scores[beer.value.id] > 0 ? '+' : null }}{{ history.scores[beer.value.id] }}
-              </span>
-              <span *ngIf="history.scores[beer.value.id] === 0">-</span>
-              <span class="total-votes-divider ml-1 mr-1 grey-text">/</span>
-              <span
-                class="total-votes grey-text"
-                *ngIf="history.counts && history.counts[beer.value.id]">{{ history.counts[beer.value.id] }}</span>
+              *ngIf="history.counts && history.counts[beer.value.id]">
+                <span *ngIf="!history.scores[beer.value.id] || history.scores[beer.value.id] === 0">-</span>
+                <span *ngIf="history.scores[beer.value.id] !== 0">
+                  {{ history.scores[beer.value.id] > 0 ? '+' : null }}{{ history.scores[beer.value.id] }}
+                </span>
+                <span class="total-votes-divider ml-1 mr-1 grey-text">/</span>
+                <span
+                  class="total-votes grey-text"
+                  *ngIf="history.counts && history.counts[beer.value.id]">{{ history.counts[beer.value.id] }}</span>
+                <div
+                  class="score-card"
+                  *ngIf="history.voters && history.voters[beer.value.id] !== 0">
+                  <div *ngFor="let vote of history.voters[beer.value.id]">
+                    {{vote}}
+                  </div>
+                </div>
             </div>
+            <div
+              class="score no-votes"
+              *ngIf="!history.counts || !history.counts[beer.value.id]">-</div>
             <div class="image text-center">
               <img
                 [class.default]="!beer.value.image"
@@ -61,7 +68,7 @@
                 </div>
                 <div
                   class="levers"
-                  [class.disabled]="history.getUserVoteCount(user.uid) === history.userVoteMax"
+                  [class.disabled]="history.getVoteCount(user.uid) === history.voteMax"
                   *ngIf="history.activeVotes[beer.value.id] === undefined || history.activeVotes[beer.value.id][user.uid] === undefined">
                   <i
                     class="fa fa-thumbs-up text-success"
@@ -101,11 +108,11 @@
     <div class="bottom">
       <span *ngIf="(auth.user | async) as user; else isOffline">
         <span
-          *ngIf="history.getUserVoteCount(user.uid) < history.userVoteMax">
-            {{ history.userVoteMax - history.getUserVoteCount(user.uid) }} vote{{ history.userVoteMax - history.getUserVoteCount(user.uid) !== 1 ? 's' : null }} left
+          *ngIf="history.getVoteCount(user.uid) < history.voteMax">
+            {{ history.voteMax - history.getVoteCount(user.uid) }} vote{{ history.voteMax - history.getVoteCount(user.uid) !== 1 ? 's' : null }} left
         </span>
         <span
-          *ngIf="history.getUserVoteCount(user.uid) === history.userVoteMax">You've used all your votes, Cheers!</span>
+          *ngIf="history.getVoteCount(user.uid) === history.voteMax">You've used all your votes, Cheers!</span>
       </span>
       <ng-template #isOffline>
         <span>Login with your LightSpeedVT email to vote</span>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 import { AuthService } from '../../services/auth.service';
 import { HistoryService } from './../../services/history.service';
@@ -9,15 +9,11 @@ import { BeersService } from '../../services/beers.service';
   templateUrl: './vote.component.html',
   styleUrls: ['./vote.component.scss']
 })
-export class VoteComponent implements OnInit {
+export class VoteComponent {
 
   constructor(
     public auth: AuthService,
     public history: HistoryService,
     public beersService: BeersService) { }
-
-  ngOnInit() {
-    this.history.getActiveVotes();
-  }
 
 }
