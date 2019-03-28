@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { HistoryService } from '../../../services/history.service';
+import { ProfileService } from '../../../services/profile.service';
 
 @Component({
   selector: 'app-users',
@@ -10,11 +10,11 @@ import { HistoryService } from '../../../services/history.service';
 export class UsersComponent implements OnInit {
 
   constructor(
-    public history: HistoryService
+    public profileService: ProfileService
   ) { }
 
   ngOnInit() {
-    this.history.getUserHistory();
+    this.profileService.getUsers();
   }
 
 }

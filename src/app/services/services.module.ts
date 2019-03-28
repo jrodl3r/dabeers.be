@@ -8,7 +8,8 @@ import { NotifyService } from './notify.service';
 import { AuthService } from './auth.service';
 import { NavService } from './nav.service';
 import { SeoService } from './seo.service';
-import { HistoryService } from './history.service';
+import { VoteService } from './vote.service';
+import { ProfileService } from './profile.service';
 
 @NgModule({
   declarations: [],
@@ -29,7 +30,8 @@ import { HistoryService } from './history.service';
     AuthService,
     NavService,
     SeoService,
-    HistoryService
+    VoteService,
+    ProfileService
   ]
 })
 export class ServicesModule { }

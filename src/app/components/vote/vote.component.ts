@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 import { AuthService } from '../../services/auth.service';
-import { HistoryService } from './../../services/history.service';
+import { VoteService } from '../../services/vote.service';
 import { BeersService } from '../../services/beers.service';
 
 @Component({
@@ -13,7 +13,7 @@ export class VoteComponent {
 
   constructor(
     public auth: AuthService,
-    public history: HistoryService,
+    public voteService: VoteService,
     public beersService: BeersService) { }
 
 }

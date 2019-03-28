@@ -8,3 +8,13 @@ export interface IUser {
   isAdmin?: Boolean;
   uid: String;
 }
+
+export interface IUserProfiles {
+  [key: string]: IUserProfile;
+}
+
+export interface IUserProfile {
+  email: String;
+  lastLogin: Date;
+  uid: String;
+}

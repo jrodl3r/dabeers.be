@@ -7,7 +7,7 @@
         *ngIf="beersService.hasBeers()">
         <li
           app-vote-item
-          [beer]="beer"
+          [beer]="beer.value"
           *ngFor="let beer of beersService.beers | keyvalue | activeItemsPipe"></li>
         <li
           class="blank"
@@ -27,11 +27,12 @@
     <div class="bottom">
       <span *ngIf="(auth.user | async) as user; else isOffline">
         <span
-          *ngIf="history.getVoteCount(user.uid) < history.voteMax">
-            {{ history.voteMax - history.getVoteCount(user.uid) }} vote{{ history.voteMax - history.getVoteCount(user.uid) !== 1 ? 's' : null }} left
+          *ngIf="voteService.getVoteCount(user.uid) < voteService.voteMax">
+            {{ voteService.voteMax - voteService.getVoteCount(user.uid) }}
+            vote{{ voteService.voteMax - voteService.getVoteCount(user.uid) !== 1 ? 's' : null }} left
         </span>
         <span
-          *ngIf="history.getVoteCount(user.uid) === history.voteMax">You've used all your votes, Cheers!</span>
+          *ngIf="voteService.getVoteCount(user.uid) === voteService.voteMax">You've used all your votes, Cheers! 🍻</span>
       </span>
       <ng-template #isOffline>
         <span>Login with your LightSpeedVT email to vote</span>

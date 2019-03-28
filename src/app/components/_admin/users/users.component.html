@@ -1,14 +1,14 @@
 <div class="mt-4 mt-md-2 pr-3 pl-3 pb-3 pr-sm-0 pl-sm-0">
   <h3>Users</h3>
   <hr>
-  <div *ngIf="!history.isLoading; else showLoading">
-    <ul *ngIf="history.userHistory">
-      <li *ngFor="let user of history.userHistoryIndex | SortUserHistoryPipe: history.userHistory : 'desc'">
-        <strong>{{ history.userHistory[user].email }}</strong>
-        (Last Login: {{ history.userHistory[user].lastLogin.toDate() | date: 'h:mm:ss a - MM/dd/yyyy' }})
+  <div *ngIf="!profileService.isLoading; else showLoading">
+    <ul *ngIf="profileService.userProfiles">
+      <li *ngFor="let uid of profileService.userIndex | SortUserPipe: profileService.userProfiles : 'desc'">
+        <strong>{{ profileService.userProfiles[uid].email }}</strong>
+        (Last Login: {{ profileService.userProfiles[uid].lastLogin.toDate() | date: 'h:mm:ss a - MM/dd/yyyy' }})
       </li>
     </ul>
-    <div *ngIf="!history.userHistory">No Users</div>
+    <div *ngIf="!profileService.userProfiles">No Users</div>
   </div>
   <!-- Loading -->
   <ng-template #showLoading>
