@@ -5,91 +5,10 @@
       *ngIf="!beersService.isLoading; else showLoading">
       <ul
         *ngIf="beersService.hasBeers()">
-        <ng-container *ngFor="let beer of beersService.beers | keyvalue">
-          <li *ngIf="beer.value.isActive">
-            <div
-              class="score"
-              *ngIf="history.counts && history.counts[beer.value.id]">
-                <span *ngIf="!history.scores[beer.value.id] || history.scores[beer.value.id] === 0">-</span>
-                <span *ngIf="history.scores[beer.value.id] !== 0">
-                  {{ history.scores[beer.value.id] > 0 ? '+' : null }}{{ history.scores[beer.value.id] }}
-                </span>
-                <span class="total-votes-divider ml-1 mr-1 grey-text">/</span>
-                <span
-                  class="total-votes grey-text"
-                  *ngIf="history.counts && history.counts[beer.value.id]">{{ history.counts[beer.value.id] }}</span>
-                <div
-                  class="score-card"
-                  *ngIf="history.voters && history.voters[beer.value.id] !== 0">
-                  <div *ngFor="let vote of history.voters[beer.value.id]">
-                    {{vote}}
-                  </div>
-                </div>
-            </div>
-            <div
-              class="score no-votes"
-              *ngIf="!history.counts || !history.counts[beer.value.id]">-</div>
-            <div class="image text-center">
-              <img
-                [class.default]="!beer.value.image"
-                [src]="beer.value.image || '/assets/img/bottle.png'">
-            </div>
-            <div class="info">
-              <h6 class="title m-0 mb-lg-2">{{ beer.value.title }}</h6>
-              <p class="m-0">
-                <small>{{ beer.value.description }}</small>
-              </p>
-            </div>
-            <div
-              class="vote"
-              *ngIf="(auth.user | async) as user; else isStatic">
-              <div
-                class="vote-wrapper"
-                *ngIf="history.activeVotes">
-                <div
-                  class="undo"
-                  [class.up-vote]="history.activeVotes[beer.value.id][user.uid].vote"
-                  [class.down-vote]="history.activeVotes[beer.value.id][user.uid].vote === false"
-                  [class.text-success]="history.activeVotes[beer.value.id][user.uid].vote"
-                  [class.text-danger]="history.activeVotes[beer.value.id][user.uid].vote === false"
-                  (click)="history.undoVote(beer.value.id, user.uid, history.activeVotes[beer.value.id][user.uid].vote)"
-                  *ngIf="history.activeVotes[beer.value.id] && history.activeVotes[beer.value.id][user.uid] !== undefined">
-                    <span class="label">Undo</span>
-                    <span
-                      class="up-vote"
-                      *ngIf="history.activeVotes[beer.value.id][user.uid].vote">
-                        <i class="fa fa-thumbs-up"></i>
-                    </span>
-                    <span
-                      class="down-vote"
-                      *ngIf="history.activeVotes[beer.value.id][user.uid].vote === false">
-                        <i class="fa fa-thumbs-down"></i>
-                    </span>
-                </div>
-                <div
-                  class="levers"
-                  [class.disabled]="history.getVoteCount(user.uid) === history.voteMax"
-                  *ngIf="history.activeVotes[beer.value.id] === undefined || history.activeVotes[beer.value.id][user.uid] === undefined">
-                  <i
-                    class="fa fa-thumbs-up text-success"
-                    (click)="history.castVote(beer.value.id, user.email, user.uid, true)"></i>
-                  <i
-                    class="fa fa-thumbs-down text-danger"
-                    (click)="history.castVote(beer.value.id, user.email, user.uid, false)"></i>
-                </div>
-              </div>
-            </div>
-            <ng-template #isStatic>
-              <div class="vote disabled grey-text">
-                <div class="levers">
-                  <i class="fa fa-thumbs-up"></i>
-                  <i class="fa fa-thumbs-down"></i>
-                </div>
-              </div>
-            </ng-template>
-            <div class="vote-menu-bg"></div>
-          </li>
-        </ng-container>
+        <li
+          app-vote-item
+          [beer]="beer"
+          *ngFor="let beer of beersService.beers | keyvalue | activeItemsPipe"></li>
         <li
           class="blank"
           *ngIf="beersService.activeBeerCount() % 2 !== 0"></li>

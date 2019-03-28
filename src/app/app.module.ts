@@ -12,8 +12,11 @@ import { AppRoutingModule } from './app-routing.module';
 import { ServicesModule } from './services/services.module';
 import { NavModule } from './components/_nav/nav.module';
 
+import { ActiveItemsPipe } from './services/pipes/active-items.pipe';
+
 import { HomeComponent } from './components/home/home.component';
 import { VoteComponent } from './components/vote/vote.component';
+import { VoteItemComponent } from './components/vote/vote-item/vote-item.component';
 import { ErrorComponent } from './components/error/error.component';
 import { LoadingComponent } from './components/loading/loading.component';
 
@@ -24,8 +27,10 @@ import { environment } from '../environments/environment';
     AppComponent,
     HomeComponent,
     VoteComponent,
+    VoteItemComponent,
     ErrorComponent,
-    LoadingComponent
+    LoadingComponent,
+    ActiveItemsPipe
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-fire-universal' }),
