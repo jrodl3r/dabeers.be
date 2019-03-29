@@ -1,6 +1,6 @@
 <div
   class="score"
-  *ngIf="voteService.counts && voteService.counts[beer.id]">
+  *ngIf="voteService.counts && voteService.counts[beer.id.toString()]">
     <span *ngIf="!voteService.scores[beer.id] || voteService.scores[beer.id] === 0">-</span>
     <span *ngIf="voteService.scores[beer.id] !== 0">
       {{ voteService.scores[beer.id] > 0 ? '+' : null }}{{ voteService.scores[beer.id] }}
@@ -19,7 +19,7 @@
 </div>
 <div
   class="score no-votes"
-  *ngIf="!voteService.counts || !voteService.counts[beer.id]">-</div>
+  *ngIf="!voteService.counts || !voteService.counts[beer.id.toString()]">-</div>
 <div class="image text-center">
   <img
     [class.default]="!beer.image"

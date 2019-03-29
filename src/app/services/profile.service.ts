@@ -41,15 +41,19 @@ export class ProfileService implements OnDestroy {
       error => this.notify.error('Error fetching user history', error));
   }
 
-  addUserProfile(uid: String, email: String, date: Date) {
+  addUser(uid: String, email: String, date: Date) {
     const user: IUserProfile = { uid, email, lastLogin: date };
+    console.log('addUser()', { [`${uid}`]: user });
+
     this.userProfilesDoc = this.afs.doc<IUserProfiles>('profiles/users');
     this.userProfilesDoc
-      .set({ [`${uid}`]: { ...user }})
+      .set({ [`${uid}`]: user }, { merge: true })
       .catch(error => this.notify.error('Error saving user profile', error));
   }
 
-  updateUserProfile(uid: String, date: Date) {
+  updateUser(uid: String, date: Date) {
+    console.log('updateUser()', { [`${uid}`]: { uid, lastLogin: date }});
+
     this.userProfilesDoc = this.afs.doc<IUserProfiles>('profiles/users');
     this.userProfilesDoc
       .set({ [`${uid}`]: { lastLogin: date }}, { merge: true })

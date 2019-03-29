@@ -54,15 +54,11 @@ export class AuthService {
             isActive: true,
             uid: user.uid
           };
-          return userRef.set(data)
-            .then(() => this.profile.addUserProfile(user.uid, user.email, date));
+          return userRef.set(data);
+            // .then(() => this.profile.addUser(user.uid, user.email, date));
         }
-        return userRef
-          .update({
-            lastLogin: date,
-            photoURL: user.photoURL || ''
-          })
-          .then(() => this.profile.updateUserProfile(user.uid, date));
+        return userRef.update({ lastLogin: date, photoURL: user.photoURL || '' });
+          // .then(() => this.profile.updateUser(user.uid, date));
       });
   }
 

@@ -1,5 +1,5 @@
 export interface IBeer {
-  id: string;
+  id: String;
   title: String;
   description: String;
   image: String;

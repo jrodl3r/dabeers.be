@@ -94,11 +94,11 @@ export class BeersService implements OnDestroy {
   }
 
   public hasBeers() {
-    return Object.keys(this.beers).length;
+    return this.beers ? Object.keys(this.beers).length : false;
   }
 
   public activeBeerCount() {
-    return Object.keys(this.beers).filter(id => this.beers[`${id}`].isActive).length;
+    return this.beers ? Object.keys(this.beers).filter(id => this.beers[`${id}`].isActive).length : 0;
   }
 
 }
