@@ -8,12 +8,16 @@
 //   id: String;
 // }
 
+// export interface IPoll {
+//   id: String;
+//   votes: IVotes;
+// }
+
 export interface IPoll {
-  id: String;
-  votes: IVotes;
+  [key: string]: IVoteList; // beer-id
 }
 
-export interface IVotes {
+export interface IVoteList {
   [key: string]: IVote; // user-id
 }
 

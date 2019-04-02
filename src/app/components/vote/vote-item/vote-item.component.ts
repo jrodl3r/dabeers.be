@@ -12,13 +12,18 @@ import { IBeer } from '../../../models/beers';
 })
 export class VoteItemComponent {
   @Input() beer: IBeer;
+  @Input() isLoggedIn: Boolean;
 
   constructor(
-    public auth: AuthService,
+    private auth: AuthService,
     public voteService: VoteService) { }
 
-  undoVote(beer, uid) {
-    // this.voteService.undoVote(beer, uid, this.voteService.activePoll[beer][uid].vote);
+  castVote(beer, vote) {
+    this.voteService.castVote(beer, this.auth.getUserEmail(), this.auth.getUserID(), vote);
+  }
+
+  undoVote(beer) {
+    this.voteService.undoVote(beer, this.auth.getUserID());
   }
 
 }

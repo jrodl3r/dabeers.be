@@ -3,6 +3,7 @@
 
 .image {
   min-width: 50px;
+  user-select: none;
 
   @media (min-width: $sm-screen) {
     min-width: 90px;
@@ -87,6 +88,7 @@ img {
   font-size: 17px;
   font-weight: 700;
   color: #303E45;
+  user-select: none;
   cursor: default;
 
   @media (min-width: $sm-screen) {
@@ -232,6 +234,7 @@ img {
     text-transform: uppercase;
     opacity: .25;
     transition: $default-anim;
+    user-select: none;
     cursor: pointer;
 
     @media (min-width: $sm-screen) {

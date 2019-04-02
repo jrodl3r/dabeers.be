@@ -1,37 +1,45 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 import * as firebase from 'firebase/app';
-import { shareReplay } from 'rxjs/operators';
+import { shareReplay, take } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
 
+import { AuthService } from './auth.service';
 import { NotifyService } from './notify.service';
 
-import { IPoll, IVote } from '../models/vote';
+import { IPoll, IVote, IVoteList } from '../models/vote';
 
 @Injectable({
   providedIn: 'root'
 })
 export class VoteService implements OnDestroy {
-  private votesCollection: AngularFirestoreCollection<IPoll>;
-  votesSub: Subscription;
-  polls: Array<IPoll>;
-  voters: any = {};
-  counts: any = {};
-  scores: any = {};
-  voteMax = 6;
+  private votesCollection: AngularFirestoreCollection<IVoteList>;
+  votesSubscription: Subscription;
+  polls: IPoll;
+  voters: any = {};           // list of voters
+  counts: any = {};           // total # of votes
+  scores: any = {};           // votes tallied
+  voteMax = 6;                // max # of user votes
+  activeUserVotes = { count: 0 };   // active user's vote summary
   isLoading: Boolean = false;
 
   constructor(
     private afs: AngularFirestore,
+    private auth: AuthService,
     private notify: NotifyService
   ) {
     this.isLoading = true;
-    this.votesCollection = this.afs.collection<IPoll>('votes');
-    this.votesSub = this.votesCollection.valueChanges()
+    this.votesCollection = this.afs.collection<IVoteList>('votes');
+    this.votesSubscription = this.votesCollection.valueChanges()
       .pipe(shareReplay(1))
       .subscribe(polls => {
+        console.log(polls[0]);
+        
         this.polls = polls;
-        this.calcTotals(polls);
+        // Object.keys(polls).forEach(id => {
+        //   this.polls[`${id}`] = polls[`${id}`];
+        // });
+        // this.calcTotals(polls);
         this.isLoading = false;
       },
       error => (() => {
@@ -40,69 +48,67 @@ export class VoteService implements OnDestroy {
       }));
   }
 
-  // copyVotes() {
-    // let activePoll = {};
-    // const activePollDoc = this.afs.doc('polls/active');
-    // const activePollSub = activePollDoc.valueChanges()
-    //   .pipe(take(1))
-    //   .subscribe(votes => {
-    //     activePoll = votes;
-    //     Object.keys(activePoll).forEach(id => {
-    //       const beer = { id, votes: activePoll[`${id}`] };
-    //       this.votesCollection.doc(id).set(beer);
-    //     });
-    //   },
-    //   error => (() => {
-    //     this.notify.error('Error fetching poll', error);
-    //     this.isLoading = false;
-    //   }));
-  // }
-
   ngOnDestroy() {
-    this.votesSub.unsubscribe();
+    this.votesSubscription.unsubscribe();
   }
 
   calcTotals(polls: IPoll[]) {
-    polls.forEach(beer => {
+    Object.keys(polls).forEach(beer => {
+      console.log(beer);
+      
       let score = 0;
-      this.voters[`${beer.id}`] = [];
-      Object.keys(beer.votes).forEach(uid => {
-        const email = /(.*)?\.(.*)?@/.exec(beer.votes[`${uid}`].email.toString()) || [];
+      this.voters[`${beer}`] = [];
+      Object.keys(polls[`${beer}`]).forEach(uid => {
+        const email = /(.*)?\.(.*)?@/.exec(polls[`${beer}`][`${uid}`].email.toString()) || [];
         if (email.length) {
           const fname = `${email[1].toUpperCase().charAt(0)}${email[1].toLowerCase().substring(1, email[1].length)}`;
           const lname = ` ${email[2].toUpperCase().charAt(0)}.`;
-          this.voters[`${beer.id}`].push(fname + lname);
+          this.voters[`${beer}`].push(fname + lname);
         }
-        score = beer.votes[`${uid}`].vote ? score + 1 : score - 1;
+        if (this.auth.getUserID() === uid) {
+          this.activeUserVotes[`${beer}`] = polls[`${beer}`][`${uid}`].vote;
+          this.activeUserVotes.count = this.activeUserVotes.count + 1;
+        } else {
+          delete this.activeUserVotes[`${beer}`];
+        }
+        score = polls[`${beer}`][`${uid}`].vote ? score + 1 : score - 1;
       });
-      this.counts[`${beer.id}`] = Object.keys(beer.votes).length || 0;
-      this.scores[`${beer.id}`] = score;
+      this.counts[`${beer}`] = Object.keys(polls[`${beer}`]).length || 0;
+      this.scores[`${beer}`] = score;
     });
+    console.log(this.polls, this.voters, this.counts);
   }
 
   castVote(id: String, email: String, uid: String, vote: Boolean) {
-    // const ballot: IVote = { created: new Date(), email, uid, vote };
-    // this.activePollDoc
-    //   .set({ ...this.activePoll, [`${id}`]: { [`${uid}`]: ballot }}, { merge: true })
-    //   .catch(error => this.notify.error('Error casting vote', error));
+    const ballot: IVote = { created: new Date(), email, uid, vote };
+    this.votesCollection.doc(`${id}`)
+      .set({ votes: { [`${uid}`]: ballot }}, { merge: true })
+      .catch(error => this.notify.error('Error casting vote', error));
   }
 
-  undoVote(id: String, uid: String, vote: Boolean) {
-    // this.activePollDoc
-    //   .update({ [`${id}.${uid}`]: firebase.firestore.FieldValue.delete() })
-    //   .catch(error => this.notify.error('Error undoing vote', error));
+  undoVote(id: String, uid: String) {
+    this.votesCollection.doc(`${id}`)
+      .update({ [`votes.${uid}`]: firebase.firestore.FieldValue.delete() })
+      // .then(() => {
+        // this.activeUserVotes.count = this.activeUserVotes.count - 1;
+        // delete this.activeUserVotes[`${id}`];
+      // })
+      .catch(error => this.notify.error('Error undoing vote', error));
   }
 
-  getVoteCount(uid: String) {
-    // if (this.activePoll && Object.keys(this.activePoll).length) {
-    //   let count = 0;
-    //   Object.keys(this.activePoll).forEach(beerid => {
-    //     Object.keys(this.activePoll[`${beerid}`]).forEach(id => count = id === uid ? count + 1 : count);
-    //   });
-    //   return count;
-    // }
-    return 0;
-  }
+  // copyVotes() {
+  //   let activePoll = {};
+  //   const activePollDoc = this.afs.doc('polls/active');
+  //   const activePollSub = activePollDoc.valueChanges()
+  //     .pipe(take(1))
+  //     .subscribe(votes => {
+  //       activePoll = votes;
+  //       Object.keys(activePoll).forEach(id => {
+  //         this.votesCollection.doc(id).set(activePoll[`${id}`]);
+  //       });
+  //     },
+  //     error => this.notify.error('Error fetching poll', error));
+  // }
 
   // TODO: Generate New Poll -> (+new Date).toString(36)
 

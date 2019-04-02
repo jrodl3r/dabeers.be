@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs';
 
 import { AuthService } from '../../services/auth.service';
 import { VoteService } from '../../services/vote.service';
@@ -9,11 +10,20 @@ import { BeersService } from '../../services/beers.service';
   templateUrl: './vote.component.html',
   styleUrls: ['./vote.component.scss']
 })
-export class VoteComponent {
+export class VoteComponent implements OnDestroy {
+  user: Subscription;
+  isLoggedIn: Boolean = false;
 
   constructor(
-    public auth: AuthService,
+    private auth: AuthService,
     public voteService: VoteService,
-    public beersService: BeersService) { }
+    public beersService: BeersService
+  ) {
+    this.user = this.auth.user.subscribe(user => this.isLoggedIn = true);
+  }
+
+  ngOnDestroy() {
+    this.user.unsubscribe();
+  }
 
 }
