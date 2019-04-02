@@ -2,7 +2,7 @@
   <div class="card-body p-0">
     <div
       class="beers"
-      *ngIf="!beersService.isLoading; else showLoading">
+      *ngIf="!voteService.isLoading && !beersService.isLoading; else showLoading">
       <ul
         *ngIf="beersService.hasBeers()">
         <li

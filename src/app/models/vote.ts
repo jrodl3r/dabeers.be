@@ -1,14 +1,19 @@
+// export interface IPoll {
+//   [key: string]: IVoteList; // beer-id
+// }
+
+// export interface IPollInfo {
+//   created: Date;
+//   finished: Date;
+//   id: String;
+// }
+
 export interface IPoll {
-  [key: string]: IVoteList; // beer-id
-}
-
-export interface IPollInfo {
-  created: Date;
-  finished: Date;
   id: String;
+  votes: IVotes;
 }
 
-export interface IVoteList {
+export interface IVotes {
   [key: string]: IVote; // user-id
 }
 

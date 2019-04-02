@@ -18,7 +18,7 @@ export class VoteItemComponent {
     public voteService: VoteService) { }
 
   undoVote(beer, uid) {
-    this.voteService.undoVote(beer, uid, this.voteService.activePoll[beer][uid].vote);
+    // this.voteService.undoVote(beer, uid, this.voteService.activePoll[beer][uid].vote);
   }
 
 }
