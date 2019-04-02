@@ -7,13 +7,13 @@ import { map } from 'rxjs/operators';
 import { AuthService } from './auth.service';
 import { NotifyService } from './notify.service';
 
-import { IPoll, IVoteList, IVote } from '../models/vote';
+import { IPoll, IVotes, IVote } from '../models/vote';
 
 @Injectable({
   providedIn: 'root'
 })
 export class VoteService implements OnDestroy {
-  votesCollection: AngularFirestoreCollection<IVoteList>;
+  votesCollection: AngularFirestoreCollection<IVotes>;
   votesSub: Subscription;
   polls: IPoll = {};
   voters: any = {};     // list of user names
@@ -29,11 +29,11 @@ export class VoteService implements OnDestroy {
     private notify: NotifyService
   ) {
     this.isLoading = true;
-    this.votesCollection = this.afs.collection<IVoteList>('votes');
+    this.votesCollection = this.afs.collection<IVotes>('votes');
     this.votesSub = this.votesCollection.snapshotChanges()
       .pipe(
         map(actions => actions.map(a => {
-          const votes = a.payload.doc.data() as IVoteList;
+          const votes = a.payload.doc.data() as IVotes;
           const id = a.payload.doc.id;
           return { id, votes };
         }))

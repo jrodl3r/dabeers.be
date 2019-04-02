@@ -9,10 +9,10 @@ export interface IPollResult extends IPollInfo {
 }
 
 export interface IPoll {
-  [key: string]: IVoteList; // beer-id
+  [key: string]: IVotes; // beer-id
 }
 
-export interface IVoteList {
+export interface IVotes {
   [key: string]: IVote; // user-id
 }
 

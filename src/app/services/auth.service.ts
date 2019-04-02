@@ -8,7 +8,6 @@ import { switchMap, shareReplay, startWith, tap } from 'rxjs/operators';
 
 import { SystemService } from './system.service';
 import { NotifyService } from './notify.service';
-import { ProfileService } from './profile.service';
 
 import { IUser } from '../models/user';
 
@@ -22,7 +21,6 @@ export class AuthService {
   constructor(
     private system: SystemService,
     private notify: NotifyService,
-    private profile: ProfileService,
     private router: Router,
     private zone: NgZone,
     private afAuth: AngularFireAuth,
@@ -55,10 +53,8 @@ export class AuthService {
             uid: user.uid
           };
           return userRef.set(data);
-            // .then(() => this.profile.addUser(user.uid, user.email, date));
         }
         return userRef.update({ lastLogin: date, photoURL: user.photoURL || '' });
-          // .then(() => this.profile.updateUser(user.uid, date));
       });
   }
 
