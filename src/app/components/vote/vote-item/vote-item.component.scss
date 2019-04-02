@@ -248,9 +248,9 @@ img {
     }
 
     &:hover {
-      opacity: 1;
+      opacity: .75;
 
-      &.up-vote { color: $success-green; }
+      &.up-vote { color: $success-color; }
       &.down-vote { color: $danger-color; }
     }
 
@@ -263,6 +263,7 @@ img {
     i {
       margin-right: 10px;
       font-size: 22px;
+      transition: none;
 
       @media (min-width: $sm-screen) { font-size: 27px; }
       @media (min-width: $md-screen) { font-size: 28px; }

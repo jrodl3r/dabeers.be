@@ -11,19 +11,18 @@ import { IBeer } from '../../../models/beers';
   styleUrls: ['./vote-item.component.scss']
 })
 export class VoteItemComponent {
-  @Input() beer: IBeer;
+  @Input() uid: String;
   @Input() isLoggedIn: Boolean;
+  @Input() beer: IBeer;
 
-  constructor(
-    private auth: AuthService,
-    public voteService: VoteService) { }
+  constructor(public voteService: VoteService) { }
 
   castVote(beer, vote) {
-    this.voteService.castVote(beer, this.auth.getUserEmail(), this.auth.getUserID(), vote);
+    this.voteService.castVote(beer, vote);
   }
 
   undoVote(beer) {
-    this.voteService.undoVote(beer, this.auth.getUserID());
+    this.voteService.undoVote(beer);
   }
 
 }

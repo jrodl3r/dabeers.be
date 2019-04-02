@@ -11,7 +11,7 @@
       *ngIf="voteService.counts[beer.id]">{{ voteService.counts[beer.id] }}</span>
     <!-- <div
       class="score-card"
-      *ngIf="voteService.voters && voteService.voters[beer.id] !== 0">
+      *ngIf="isLoggedIn && voteService.voters[beer.id].length">
       <div *ngFor="let vote of voteService.voters[beer.id]">
         {{vote}}
       </div>
@@ -36,33 +36,29 @@
   *ngIf="isLoggedIn; else isStatic">
   <div class="vote-wrapper">
     <div
-      class="undo"
-      [class.up-vote]="voteService.activeUserVotes[beer.id]"
-      [class.down-vote]="voteService.activeUserVotes[beer.id] === false"
-      (click)="undoVote(beer.id)"
-      *ngIf="voteService.activeUserVotes[beer.id] !== undefined">
-        <span class="label">Undo</span>
-        <span
-          class="up-vote"
-          *ngIf="voteService.activeUserVotes[beer.id]">
-            <i class="fa fa-thumbs-up"></i>
-        </span>
-        <span
-          class="down-vote"
-          *ngIf="voteService.activeUserVotes[beer.id] === false">
-            <i class="fa fa-thumbs-down"></i>
-        </span>
-    </div>
-    <div
       class="levers"
-      [class.disabled]="voteService.activeUserVotes.count === voteService.voteMax"
-      *ngIf="voteService.activeUserVotes[beer.id] === undefined">
+      [class.disabled]="voteService.userVoteCount === voteService.userVoteMax"
+      *ngIf="!voteService.polls[beer.id][uid]">
       <i
         class="fa fa-thumbs-up text-success"
         (click)="castVote(beer.id, true)"></i>
       <i
         class="fa fa-thumbs-down text-danger"
         (click)="castVote(beer.id, false)"></i>
+    </div>
+    <div
+      class="undo"
+      [class.up-vote]="voteService.polls[beer.id][uid].vote"
+      [class.down-vote]="voteService.polls[beer.id][uid].vote === false"
+      (click)="undoVote(beer.id)"
+      *ngIf="voteService.polls[beer.id][uid]">
+        <span class="label">Undo</span>
+        <i
+          class="fa fa-thumbs-up"
+          *ngIf="voteService.polls[beer.id][uid].vote === true"></i>
+        <i
+          class="fa fa-thumbs-down"
+          *ngIf="voteService.polls[beer.id][uid].vote === false"></i>
     </div>
   </div>
 </div>

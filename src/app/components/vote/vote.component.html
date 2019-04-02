@@ -3,13 +3,14 @@
 
     <div
       class="beers"
-      *ngIf="!beersService.isLoading && !voteService.isLoading; else showLoading">
+      *ngIf="!beersService.isLoading; else showLoading">
       <ul
         *ngIf="beersService.hasBeers()">
         <li
           app-vote-item
-          [beer]="beer.value"
+          [uid]="uid"
           [isLoggedIn]="isLoggedIn"
+          [beer]="beer.value"
           *ngFor="let beer of beersService.beers | keyvalue | activeItemsPipe"></li>
         <li
           class="blank"
@@ -29,12 +30,12 @@
     <div class="bottom">
       <span *ngIf="isLoggedIn; else isOffline">
         <span
-          *ngIf="voteService.activeUserVotes.count < voteService.voteMax">
-            {{ voteService.voteMax - voteService.activeUserVotes.count }}
-            vote{{ voteService.voteMax - voteService.activeUserVotes.count !== 1 ? 's' : null }} left
+          *ngIf="voteService.userVoteCount < voteService.userVoteMax">
+            {{ voteService.userVoteMax - voteService.userVoteCount }}
+            vote{{ voteService.userVoteMax - voteService.userVoteCount !== 1 ? 's' : null }} left
         </span>
         <span
-          *ngIf="voteService.activeUserVotes.count === voteService.voteMax">You've used all your votes, Cheers! 🍻</span>
+          *ngIf="voteService.userVoteCount === voteService.userVoteMax">You've used all your votes, Cheers! 🍻</span>
       </span>
       <ng-template #isOffline>
         <span>Login with your LightSpeedVT email to vote</span>

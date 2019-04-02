@@ -11,19 +11,23 @@ import { BeersService } from '../../services/beers.service';
   styleUrls: ['./vote.component.scss']
 })
 export class VoteComponent implements OnDestroy {
-  user: Subscription;
+  userSub: Subscription;
   isLoggedIn: Boolean = false;
+  uid: String;
 
   constructor(
-    private auth: AuthService,
+    public auth: AuthService,
     public voteService: VoteService,
     public beersService: BeersService
   ) {
-    this.user = this.auth.user.subscribe(user => this.isLoggedIn = true);
+    this.userSub = this.auth.user.subscribe(user => {
+      this.uid = user ? user.uid : '';
+      this.isLoggedIn = user ? true : false;
+    });
   }
 
   ngOnDestroy() {
-    this.user.unsubscribe();
+    this.userSub.unsubscribe();
   }
 
 }
