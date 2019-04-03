@@ -24,7 +24,6 @@ export class NotifyService {
     if (this.system.isBrowser()) {
       this.toastr.success(msg);
     }
-    this.log(msg);
   }
 
   error(msg: string, err: string = '') {

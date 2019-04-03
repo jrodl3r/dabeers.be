@@ -1,6 +1,15 @@
 @import '../../../styles/animation';
 @import '../../../styles/variables';
 
+:host(li) {
+  &:hover .score-card-trigger {
+    opacity: .75;
+    height: auto;
+    width: auto;
+    transition: .15s ease-in-out;
+  }
+}
+
 .image {
   min-width: 50px;
   user-select: none;
@@ -109,16 +118,6 @@ img {
     width: 100px;
     padding: 5px;
     text-align: center;
-
-    &:hover {
-      .score-card {
-        height: auto;
-        min-height: 160px;
-        width: 250px;
-        padding: 15px 30px;
-        opacity: 1;
-      }
-    }
   }
 
   .no-votes {
@@ -126,19 +125,67 @@ img {
     font-size: 12px;
     line-height: 35px;
   }
+}
 
-  .score-card {
+.score-card-trigger {
+  display: none;
+  flex-direction: column;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  height: 0;
+  width: 0;
+  padding: 10px 15px;
+  font-family: $font-roboto-slab;
+  font-size: 11px;
+  font-weight: 700;
+  color: $grey-text;
+  opacity: 0;
+  user-select: none;
+  transition: 0s;
+
+  @media (min-width: $lg-screen) {
     display: flex;
-    flex-direction: column;
-    position: absolute;
-    top: 10px;
-    right: 100px;
-    height: 0;
-    width: 0;
-    padding: 0;
-    font-size: 12px;
-    background: #FFF;
-    opacity: 0;
+  }
+
+  &:hover + .score-card {
+    height: auto;
+    max-height: 120px;
+    padding: 10px 110px 10px 15px;
+    opacity: 1;
+    transition: opacity .25s .1s ease-in-out, max-height $default-anim;
+  }
+}
+
+.score-card {
+  display: flex;
+  // flex-direction: column;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  max-height: 0;
+  width: 100%;
+  padding: 0;
+  font-family: $font-roboto-slab;
+  font-size: 11px;
+  font-weight: 700;
+  background: rgba(255,255,255, .75);
+  border-top: 1px solid rgba(0,0,0, .05);
+  opacity: 0;
+  transition: opacity .15s, max-height 0s .15s, padding 0s .15s;
+  overflow: hidden;
+
+  &:hover {
+    max-height: 120px;
+    padding: 10px 110px 10px 15px;
+    opacity: 1;
+    transition: opacity .25s .1s ease-in-out, max-height $default-anim;
+  }
+
+  li {
+    white-space: nowrap;
+
+    i { font-size: 13px; }
   }
 }
 

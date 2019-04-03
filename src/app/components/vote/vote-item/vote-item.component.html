@@ -1,6 +1,6 @@
 <div
   class="score"
-  *ngIf="voteService.counts[beer.id]">
+  *ngIf="voteService.counts[beer.id.toString()]">
     <span *ngIf="!voteService.scores[beer.id] || voteService.scores[beer.id] === 0">-</span>
     <span *ngIf="voteService.scores[beer.id] !== 0">
       {{ voteService.scores[beer.id] > 0 ? '+' : null }}{{ voteService.scores[beer.id] }}
@@ -9,14 +9,25 @@
     <span
       class="total-votes grey-text"
       *ngIf="voteService.counts[beer.id]">{{ voteService.counts[beer.id] }}</span>
-    <!-- <div
-      class="score-card"
-      *ngIf="isLoggedIn && voteService.voters[beer.id].length">
-      <div *ngFor="let vote of voteService.voters[beer.id]">
-        {{vote}}
-      </div>
-    </div> -->
 </div>
+<div
+  class="score-card-trigger"
+  *ngIf="isLoggedIn && voteService.voters[beer.id.toString()].length">
+  <span class="label">See Votes</span>
+</div>
+<ul
+  class="score-card"
+  *ngIf="isLoggedIn && voteService.voters[beer.id.toString()].length">
+  <li *ngFor="let voter of voteService.voters[beer.id]">
+    {{ voter.name }}
+    <i
+      class="fa fa-thumbs-up text-success ml-1 mr-2"
+      *ngIf="voter.vote"></i>
+    <i
+      class="fa fa-thumbs-down text-danger ml-1 mr-2"
+      *ngIf="!voter.vote"></i>
+  </li>
+</ul>
 <div
   class="score no-votes"
   *ngIf="!voteService.counts[beer.id.toString()]">-</div>

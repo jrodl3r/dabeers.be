@@ -63,7 +63,8 @@ export class VoteService implements OnDestroy {
         if (email.length) {
           const fname = `${email[1].toUpperCase().charAt(0)}${email[1].toLowerCase().substring(1, email[1].length)}`;
           const lname = ` ${email[2].toUpperCase().charAt(0)}.`;
-          this.voters[`${beer}`].push(fname + lname);
+          const name = fname + lname;
+          this.voters[`${beer}`].push({ vote: this.polls[`${beer}`][`${uid}`].vote, name });
         }
         this.userVoteCount = this.auth.getUserID() === uid ? this.userVoteCount + 1 : this.userVoteCount;
         score = this.polls[`${beer}`][`${uid}`].vote ? score + 1 : score - 1;
