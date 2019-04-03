@@ -49,23 +49,23 @@ export class BeersComponent implements OnInit {
   }
 
   createBeer() {
-    this.beersService
-      .createBeer(this.beersForm.getRawValue().title, this.beersForm.getRawValue().description)
-      .then(() => this.hideModals());
+    // this.beersService
+    //   .createBeer(this.beersForm.getRawValue().title, this.beersForm.getRawValue().description)
+    //   .then(() => this.hideModals());
   }
 
   editBeer() {
-    this.beersService
-      .editBeer(this.beersForm.getRawValue().title, this.beersForm.getRawValue().description)
-      .then(() => this.hideModals());
+    // this.beersService
+    //   .editBeer(this.beersForm.getRawValue().title, this.beersForm.getRawValue().description)
+    //   .then(() => this.hideModals());
   }
 
   removeBeer() {
-    this.beersService.removeBeer().then(() => this.hideModals());
+    // this.beersService.removeBeer().then(() => this.hideModals());
   }
 
   restoreBeer(id: String) {
-    this.beersService.restoreBeer(id);
+    // this.beersService.restoreBeer(id);
   }
 
   changeImage(event: Event) {

@@ -11,33 +11,33 @@
   <div *ngIf="!beersService.isLoading; else showLoading">
     <ul
       class="beers"
-      *ngIf="beersService.hasBeers()">
+      *ngIf="beersService.beers">
       <li
         class="mb-2 pt-2 pb-3"
-        [class.inactive]="!beer.value.isActive"
-        *ngFor="let beer of beersService.beers | keyvalue">
-        <strong>{{ beer.value.title }} {{ beer.value.isActive ? '' : '(Inactive)'}}</strong>
+        [class.inactive]="!beer.isActive"
+        *ngFor="let beer of beersService.beers">
+        <strong>{{ beer.title }} {{ beer.isActive ? '' : '(Inactive)'}}</strong>
         <button
           type="button"
           class="btn btn-sm btn-primary shadow-none mt-1 mb-1 mr-2 ml-auto"
-          [class.d-none]="!beer.value.isActive"
-          (click)="showEditBeerModal(beer.value.id)">
+          [class.d-none]="!beer.isActive"
+          (click)="showEditBeerModal(beer.id)">
           <i class="fa fa-edit mr-1"></i> Edit</button>
         <button
           type="button"
           class="btn btn-sm btn-danger shadow-none mt-1 mb-1 mr-2 ml-2"
-          [class.d-none]="!beer.value.isActive"
-          (click)="showRemoveBeerModal(beer.value.id)">
+          [class.d-none]="!beer.isActive"
+          (click)="showRemoveBeerModal(beer.id)">
           <i class="fa fa-remove mr-1"></i> Remove</button>
         <button
           type="button"
           class="btn btn-sm btn-warning shadow-none mt-1 mb-1 mr-2 ml-auto"
-          [class.d-none]="beer.value.isActive"
-          (click)="restoreBeer(beer.value.id)">
+          [class.d-none]="beer.isActive"
+          (click)="restoreBeer(beer.id)">
           <i class="fa fa-undo mr-1"></i> Restore</button>
       </li>
     </ul>
-    <div *ngIf="!beersService.hasBeers()">No Beers On Tap!</div>
+    <div *ngIf="!beersService.beers">No Beers On Tap!</div>
   </div>
 </div>
 
