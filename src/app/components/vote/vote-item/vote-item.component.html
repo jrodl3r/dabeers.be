@@ -33,7 +33,7 @@
 </div>
 <div
   class="vote"
-  *ngIf="isLoggedIn; else isStatic">
+  *ngIf="isLoggedIn && !voteService.isLoading; else isStatic">
   <div class="vote-wrapper">
     <div
       class="levers"

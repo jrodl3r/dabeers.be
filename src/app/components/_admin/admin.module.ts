@@ -7,6 +7,7 @@ import { NavModule } from '../_nav/nav.module';
 
 import { AdminComponent } from './admin.component';
 import { BeersComponent } from './beers/beers.component';
+import { BeerItemComponent } from './beers/beer-item/beer-item.component';
 import { UsersComponent } from './users/users.component';
 import { HistoryComponent } from './history/history.component';
 
@@ -24,6 +25,7 @@ import { SortUserPipe } from '../../services/pipes/sort-user.pipe';
   declarations: [
     AdminComponent,
     BeersComponent,
+    BeerItemComponent,
     UsersComponent,
     HistoryComponent,
     SortUserPipe

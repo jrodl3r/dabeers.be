@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { ITabs } from '../../models/tabs';
+import { ITabs } from '../../models/tab';
 
 @Component({
   selector: 'app-admin',
@@ -13,7 +13,4 @@ export class AdminComponent {
     { label: 'Users', routerLink: '/admin/users' },
     { label: 'History', routerLink: '/admin/history' }
   ];
-
-  constructor() { }
-
 }

@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 
-import { ITabs } from '../../../models/tabs';
+import { ITabs } from '../../../models/tab';
 
 @Component({
   selector: 'app-tabs',
@@ -12,7 +12,4 @@ export class TabsComponent {
   @Input() flexMdColumn: Boolean = false;
   @Input() justifySmCenter: Boolean = false;
   @Input() verticalDesktop: Boolean = false;
-
-  constructor() { }
-
 }

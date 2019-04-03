@@ -33,13 +33,13 @@ export class VoteService implements OnDestroy {
     this.votesSub = this.votesCollection.snapshotChanges()
       .pipe(
         map(actions => actions.map(a => {
-          const votes = a.payload.doc.data() as IVotes;
+          const data = a.payload.doc.data() as IVotes;
           const id = a.payload.doc.id;
-          return { id, votes };
+          return { id, data };
         }))
       )
       .subscribe(beers => {
-        beers.forEach(beer => this.polls[`${beer.id}`] = beer.votes);
+        beers.forEach(beer => this.polls[`${beer.id}`] = beer.data);
         this.calcTotals();
         this.isLoading = false;
       },

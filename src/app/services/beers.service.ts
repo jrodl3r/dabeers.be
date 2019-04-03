@@ -1,20 +1,19 @@
 import { Injectable, OnDestroy } from '@angular/core';
-import { AngularFirestoreDocument, AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
-import { shareReplay, take } from 'rxjs/operators';
+import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 import { Subscription } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 import { NotifyService } from './notify.service';
 
-import { IBeers, IBeer } from '../models/beers';
+import { IBeers, IBeer } from '../models/beer';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BeersService implements OnDestroy {
   beersCollection: AngularFirestoreCollection<IBeer>;
-  beers: Array<IBeer>;
   beersSub: Subscription;
-  beersDoc: AngularFirestoreDocument<IBeer>;
+  beers: IBeers = {};
   activeBeer: IBeer = {
     id: '',
     title: '',
@@ -32,9 +31,16 @@ export class BeersService implements OnDestroy {
   ) {
     this.isLoading = true;
     this.beersCollection = this.afs.collection<IBeer>('beers');
-    this.beersSub = this.beersCollection.valueChanges()
+    this.beersSub = this.beersCollection.snapshotChanges()
+      .pipe(
+        map(actions => actions.map(a => {
+          const data = a.payload.doc.data() as IBeer;
+          const id = a.payload.doc.id;
+          return { id, data };
+        }))
+      )
       .subscribe(beers => {
-        this.beers = beers;
+        beers.forEach(beer => this.beers[`${beer.id}`] = beer.data );
         this.isLoading = false;
       },
       error => (() => {
@@ -94,15 +100,15 @@ export class BeersService implements OnDestroy {
   }
 
   public setActiveBeer(id: String) {
-    // this.activeBeer = this.beers[`${id}`];
+    this.activeBeer = this.beers[`${id}`];
   }
 
   public hasBeers() {
-    // return this.beers ? Object.keys(this.beers).length : false;
+    return this.beers ? Object.keys(this.beers).length : false;
   }
 
-  public activeBeerCount() {
-    // return this.beers ? Object.keys(this.beers).filter(id => this.beers[`${id}`].isActive).length : 0;
+  public isCountOdd() {
+    return this.beers ? Object.keys(this.beers).length % 2 === 0 : false;
   }
 
 }

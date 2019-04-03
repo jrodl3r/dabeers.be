@@ -1,3 +1,7 @@
+export interface IPoll {
+  [key: string]: IVotes; // beer-id
+}
+
 export interface IPollInfo {
   created: Date;
   finished: Date;
@@ -6,10 +10,6 @@ export interface IPollInfo {
 
 export interface IPollResult extends IPollInfo {
   poll: IPoll;
-}
-
-export interface IPoll {
-  [key: string]: IVotes; // beer-id
 }
 
 export interface IVotes {

@@ -1,9 +1,8 @@
 import { Component, Input } from '@angular/core';
 
-import { AuthService } from '../../../services/auth.service';
 import { VoteService } from '../../../services/vote.service';
 
-import { IBeer } from '../../../models/beers';
+import { IBeer } from '../../../models/beer';
 
 @Component({
   selector: '[app-vote-item]',

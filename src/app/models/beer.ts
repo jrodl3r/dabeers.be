@@ -1,3 +1,7 @@
+export interface IBeers {
+  [key: string]: IBeer;
+}
+
 export interface IBeer {
   id: String;
   title: String;
@@ -6,8 +10,4 @@ export interface IBeer {
   created: Date;
   edited: Date;
   isActive: Boolean;
-}
-
-export interface IBeers {
-  [key: string]: IBeer;
 }
