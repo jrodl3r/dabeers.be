@@ -53,25 +53,30 @@ export class BeersService implements OnDestroy {
       description: description.trim(),
       image: '',
       created: new Date(),
-      edited: new Date(null),
+      edited: new Date(),
       isActive: true
     };
     return this.beersCollection.doc(`${beer.id}`)
       .set(beer)
       .catch(error => this.notify.error('Error creating beer', error));
+      // TODO: add beer to votes collection
   }
 
   public editBeer(title: String, description: String) {
-    // this.beers[`${this.activeBeer.id}`].title = title;
-    // this.beers[`${this.activeBeer.id}`].description = description;
-    // this.beers[`${this.activeBeer.id}`].edited = new Date();
-    // return this.updateBeers()
-    //   .then(() => this.notify.success('Beer updated successfully'));
+    return this.beersCollection.doc(`${this.activeBeer.id}`)
+      .set({ title, description, edited: new Date() }, { merge: true })
+      .then(() => {
+        this.resetActiveBeer();
+        this.notify.success('Beer updated successfully');
+      })
+      .catch(error => this.notify.error('Error removing beer', error));
   }
 
   public editBeerImage(image: String) {
-    // this.beers[`${this.activeBeer.id}`].image = image;
-    // return this.updateBeers();
+    this.beersCollection.doc(`${this.activeBeer.id}`)
+      .set({ image }, { merge: true })
+      .then(() => this.notify.success('Beer updated successfully'))
+      .catch(error => this.notify.error('Error removing beer', error));
   }
 
   public removeBeer(id: String) {
@@ -87,8 +92,7 @@ export class BeersService implements OnDestroy {
   }
 
   public setActiveBeer(id: String) {
-    this.activeBeer.id = id;
-    this.activeBeer.isActive = true;
+    this.activeBeer = this.beers[`${id}`];
   }
 
   public resetActiveBeer() {

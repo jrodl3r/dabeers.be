@@ -55,9 +55,9 @@ export class BeersComponent implements OnInit {
   }
 
   editBeer() {
-    // this.beersService
-    //   .editBeer(this.beersForm.getRawValue().title, this.beersForm.getRawValue().description)
-    //   .then(() => this.hideModals());
+    this.beersService
+      .editBeer(this.beersForm.getRawValue().title, this.beersForm.getRawValue().description)
+      .then(() => this.hideModals());
   }
 
   removeBeer() {
@@ -75,25 +75,25 @@ export class BeersComponent implements OnInit {
   }
 
   uploadImage(files: FileList) {
-    // if (files[0] && files[0].name) {
-    //   const file = files[0];
-    //   const ext = file.name.match(/\.[0-9a-z]+$/i)[0];
-    //   const path = `${this.beersService.activeBeer.id}_${Date.now()}${ext}`;
-    //   const ref = this.storage.ref(path);
-    //   this.imageUploadTask = this.storage.upload(path, file);
-    //   this.imageUploadPercentage = this.imageUploadTask.percentageChanges();
-    //   this.isImageUploadActive = true;
-    //   this.imageUploadTask.snapshotChanges().pipe(
-    //     finalize(() => {
-    //       ref.getDownloadURL().subscribe(url => {
-    //         if (url) {
-    //           this.beersService.editBeerImage(url);
-    //           setTimeout(() => this.isImageUploadActive = false, 2500);
-    //         }
-    //       });
-    //     })
-    //   ).subscribe();
-    // }
+    if (files[0] && files[0].name) {
+      const file = files[0];
+      const ext = file.name.match(/\.[0-9a-z]+$/i)[0];
+      const path = `${this.beersService.activeBeer.id}_${Date.now()}${ext}`;
+      const ref = this.storage.ref(path);
+      this.imageUploadTask = this.storage.upload(path, file);
+      this.imageUploadPercentage = this.imageUploadTask.percentageChanges();
+      this.isImageUploadActive = true;
+      this.imageUploadTask.snapshotChanges().pipe(
+        finalize(() => {
+          ref.getDownloadURL().subscribe(url => {
+            if (url) {
+              this.beersService.editBeerImage(url);
+              setTimeout(() => this.isImageUploadActive = false, 2500);
+            }
+          });
+        })
+      ).subscribe();
+    }
   }
 
   showCreateBeerModal() {
@@ -118,6 +118,7 @@ export class BeersComponent implements OnInit {
   }
 
   hideModals() {
+    this.beersService.resetActiveBeer();
     this.isEditModalActive = false;
     this.isCreateModalActive = false;
     this.isRemoveModalActive = false;
