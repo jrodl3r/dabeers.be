@@ -49,9 +49,9 @@ export class BeersComponent implements OnInit {
   }
 
   createBeer() {
-    // this.beersService
-    //   .createBeer(this.beersForm.getRawValue().title, this.beersForm.getRawValue().description)
-    //   .then(() => this.hideModals());
+    this.beersService
+      .createBeer(this.beersForm.getRawValue().title, this.beersForm.getRawValue().description)
+      .then(() => this.hideModals());
   }
 
   editBeer() {
@@ -61,11 +61,12 @@ export class BeersComponent implements OnInit {
   }
 
   removeBeer() {
-    // this.beersService.removeBeer().then(() => this.hideModals());
+    this.beersService.removeBeer(this.beersService.activeBeer.id)
+      .then(() => this.hideModals());
   }
 
   restoreBeer(id: String) {
-    // this.beersService.restoreBeer(id);
+    this.beersService.restoreBeer(id);
   }
 
   changeImage(event: Event) {
@@ -74,39 +75,39 @@ export class BeersComponent implements OnInit {
   }
 
   uploadImage(files: FileList) {
-    if (files[0] && files[0].name) {
-      const file = files[0];
-      const ext = file.name.match(/\.[0-9a-z]+$/i)[0];
-      const path = `${this.beersService.activeBeer.id}_${Date.now()}${ext}`;
-      const ref = this.storage.ref(path);
-      this.imageUploadTask = this.storage.upload(path, file);
-      this.imageUploadPercentage = this.imageUploadTask.percentageChanges();
-      this.isImageUploadActive = true;
-      this.imageUploadTask.snapshotChanges().pipe(
-        finalize(() => {
-          ref.getDownloadURL().subscribe(url => {
-            if (url) {
-              this.beersService.editBeerImage(url);
-              setTimeout(() => this.isImageUploadActive = false, 2500);
-            }
-          });
-        })
-      ).subscribe();
-    }
+    // if (files[0] && files[0].name) {
+    //   const file = files[0];
+    //   const ext = file.name.match(/\.[0-9a-z]+$/i)[0];
+    //   const path = `${this.beersService.activeBeer.id}_${Date.now()}${ext}`;
+    //   const ref = this.storage.ref(path);
+    //   this.imageUploadTask = this.storage.upload(path, file);
+    //   this.imageUploadPercentage = this.imageUploadTask.percentageChanges();
+    //   this.isImageUploadActive = true;
+    //   this.imageUploadTask.snapshotChanges().pipe(
+    //     finalize(() => {
+    //       ref.getDownloadURL().subscribe(url => {
+    //         if (url) {
+    //           this.beersService.editBeerImage(url);
+    //           setTimeout(() => this.isImageUploadActive = false, 2500);
+    //         }
+    //       });
+    //     })
+    //   ).subscribe();
+    // }
   }
 
   showCreateBeerModal() {
+    this.beersService.resetActiveBeer();
     this.beersForm.setValue({ title: '', description: '' });
     this.beersForm.reset();
-    this.beersService.resetActiveBeerImage();
     this.isCreateModalActive = true;
   }
 
   showEditBeerModal(id: String) {
     this.beersService.setActiveBeer(id);
     this.beersForm.setValue({
-      title: this.beersService.activeBeer.title,
-      description: this.beersService.activeBeer.description
+      title: this.beersService.beers[`${id}`].title,
+      description: this.beersService.beers[`${id}`].description
     });
     this.isEditModalActive = true;
   }

@@ -11,15 +11,18 @@
   <div *ngIf="!beersService.isLoading; else showLoading">
     <ul
       class="beers"
-      *ngIf="beersService.hasBeers()">
+      *ngIf="beersService.beerCount()">
       <li
         app-beer-item
         class="mb-2 pt-2 pb-3"
         [class.inactive]="!beer.value.isActive"
         [beer]="beer.value"
+        (editBeer)="showEditBeerModal($event)"
+        (removeBeer)="showRemoveBeerModal($event)"
+        (restoreBeer)="restoreBeer($event)"
         *ngFor="let beer of beersService.beers | keyvalue"></li>
     </ul>
-    <div *ngIf="!beersService.hasBeers()">No Beers On Tap!</div>
+    <div *ngIf="!beersService.beerCount()">No Beers On Tap!</div>
   </div>
 </div>
 
@@ -78,12 +81,14 @@
               placeholder="Beer Description"
               formControlName="description"></textarea>
             <div *ngIf="formErrors.description" class="text-danger p-2 pb-3">{{ formErrors.description }}</div>
-            <div class="row align-items-center pr-2 pl-2 pb-3">
+            <div
+              class="row align-items-center pr-2 pl-2 pb-3"
+              *ngIf="beersService.activeBeer.isActive">
               <a
                 href=""
                 class="mr-auto ml-2"
                 [class.disabled]="isImageUploadActive"
-                (click)="changeImage($event)">{{ beersService.activeBeer.image ? 'Edit' : 'Add' }} Image</a>
+                (click)="changeImage($event)">Change Image</a>
               <input
                 id="changeImage"
                 type="file"

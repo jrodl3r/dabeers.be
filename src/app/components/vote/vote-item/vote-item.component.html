@@ -38,7 +38,7 @@
     <div
       class="levers"
       [class.disabled]="voteService.userVoteCount === voteService.userVoteMax"
-      *ngIf="!voteService.polls[beer.id][uid]">
+      *ngIf="voteService.polls[beer.id] && !voteService.polls[beer.id][uid]">
       <i
         class="fa fa-thumbs-up text-success"
         (click)="castVote(beer.id, true)"></i>
@@ -51,7 +51,7 @@
       [class.up-vote]="voteService.polls[beer.id][uid].vote"
       [class.down-vote]="voteService.polls[beer.id][uid].vote === false"
       (click)="undoVote(beer.id)"
-      *ngIf="voteService.polls[beer.id][uid]">
+      *ngIf="voteService.polls[beer.id] && voteService.polls[beer.id][uid]">
         <span class="label">Undo</span>
         <i
           class="fa fa-thumbs-up"

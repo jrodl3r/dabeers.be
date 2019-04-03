@@ -2,18 +2,18 @@
 <button
   type="button"
   class="btn btn-sm btn-primary shadow-none mt-1 mb-1 mr-2 ml-auto"
-  [class.d-none]="!beer.isActive">
-  <!-- (click)="showEditBeerModal(beer.id)"> -->
+  [class.d-none]="!beer.isActive"
+  (click)="emitEditBeer(beer.id)">
   <i class="fa fa-edit mr-1"></i> Edit</button>
 <button
   type="button"
   class="btn btn-sm btn-danger shadow-none mt-1 mb-1 mr-2 ml-2"
-  [class.d-none]="!beer.isActive">
-  <!-- (click)="showRemoveBeerModal(beer.id)"> -->
+  [class.d-none]="!beer.isActive"
+  (click)="emitRemoveBeer(beer.id)">
   <i class="fa fa-remove mr-1"></i> Remove</button>
 <button
   type="button"
   class="btn btn-sm btn-warning shadow-none mt-1 mb-1 mr-2 ml-auto"
-  [class.d-none]="beer.isActive">
-  <!-- (click)="restoreBeer(beer.id)"> -->
+  [class.d-none]="beer.isActive"
+  (click)="emitRestoreBeer(beer.id)">
   <i class="fa fa-undo mr-1"></i> Restore</button>

@@ -10,9 +10,9 @@ import { IBeer } from '../../../models/beer';
   styleUrls: ['./vote-item.component.scss']
 })
 export class VoteItemComponent {
+  @Input() beer: IBeer;
   @Input() uid: String;
   @Input() isLoggedIn: Boolean;
-  @Input() beer: IBeer;
 
   constructor(public voteService: VoteService) { }
 
