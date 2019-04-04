@@ -15,6 +15,7 @@ import { IPoll, IVotes, IVote } from '../models/vote';
 export class VoteService implements OnDestroy {
   votesCollection: AngularFirestoreCollection<IVotes>;
   votesSub: Subscription;
+  userSub: Subscription;
   polls: IPoll = {};
   voters: any = {};     // list of user names
   counts: any = {};     // total # of votes
@@ -47,10 +48,12 @@ export class VoteService implements OnDestroy {
         this.notify.error('Error fetching votes', error);
         this.isLoading = false;
       }));
+    this.userSub = this.auth.user.subscribe(user => { if (user) { this.calcTotals(); }});
   }
 
   ngOnDestroy() {
     this.votesSub.unsubscribe();
+    this.userSub.unsubscribe();
   }
 
   calcTotals() {

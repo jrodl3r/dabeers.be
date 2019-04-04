@@ -109,9 +109,7 @@ export class AuthService {
   }
 
   public isLoggedIn(): Boolean {
-    return this.system.isBrowser()
-      ? !!sessionStorage.getItem('user') && sessionStorage.getItem('user') !== 'null'
-      : this.afAuth.auth.currentUser !== null;
+    return this.afAuth.auth.currentUser !== null;
   }
 
   public getUserID(): String {

@@ -9,8 +9,7 @@ footer {
   font-weight: 700;
   line-height: 20px;
   text-align: center;
-  // background: linear-gradient(180deg, #FFF 18px, #EEE 100px);
-  cursor: default;
+  user-select: none;
 
   @media (min-width: $md-screen) {
     height: 80px;

@@ -1,5 +1,7 @@
 <div
   class="score"
+  [class.text-success]="voteService.polls[beer.id] && voteService.polls[beer.id][uid] && voteService.polls[beer.id][uid].vote === true"
+  [class.text-danger]="voteService.polls[beer.id] && voteService.polls[beer.id][uid] && voteService.polls[beer.id][uid].vote === false"
   *ngIf="voteService.counts[beer.id.toString()]">
     <span *ngIf="!voteService.scores[beer.id] || voteService.scores[beer.id] === 0">-</span>
     <span *ngIf="voteService.scores[beer.id] !== 0">
@@ -45,39 +47,42 @@
 <div
   class="vote"
   *ngIf="isLoggedIn && !voteService.isLoading; else isStatic">
-  <div class="vote-wrapper">
+  <div class="vote-wrapper tooltip">
+    <div
+      class="tooltip-text tooltip-text-undo"
+      *ngIf="voteService.polls[beer.id] && voteService.polls[beer.id][uid]">Undo vote</div>
+    <div
+      class="tooltip-text"
+      *ngIf="!voteService.polls[beer.id][uid] && voteService.userVoteCount === voteService.userVoteMax">No votes left</div>
     <div
       class="levers"
-      [class.disabled]="voteService.userVoteCount === voteService.userVoteMax"
-      *ngIf="voteService.polls[beer.id] && !voteService.polls[beer.id][uid]">
+      [class.has-vote]="voteService.polls[beer.id][uid]"
+      [class.max-votes]="voteService.userVoteCount === voteService.userVoteMax"
+      (click)="voteService.polls[beer.id][uid] ? undoVote($event, beer.id) : null"
+      *ngIf="voteService.polls[beer.id]">
       <i
-        class="fa fa-thumbs-up text-success"
+        class="fa fa-thumbs-up"
+        [class.text-success]="!voteService.polls[beer.id][uid] || voteService.polls[beer.id][uid].vote === true"
+        [class.disabled]="voteService.polls[beer.id][uid] && voteService.polls[beer.id][uid].vote === false"
+        [class.selected]="voteService.polls[beer.id][uid] && voteService.polls[beer.id][uid].vote === true"
         (click)="castVote(beer.id, true)"></i>
       <i
-        class="fa fa-thumbs-down text-danger"
+        class="fa fa-thumbs-down"
+        [class.text-danger]="!voteService.polls[beer.id][uid] || voteService.polls[beer.id][uid].vote === false"
+        [class.disabled]="voteService.polls[beer.id][uid] && voteService.polls[beer.id][uid].vote === true"
+        [class.selected]="voteService.polls[beer.id][uid] && voteService.polls[beer.id][uid].vote === false"
         (click)="castVote(beer.id, false)"></i>
-    </div>
-    <div
-      class="undo"
-      [class.up-vote]="voteService.polls[beer.id][uid].vote"
-      [class.down-vote]="voteService.polls[beer.id][uid].vote === false"
-      (click)="undoVote(beer.id)"
-      *ngIf="voteService.polls[beer.id] && voteService.polls[beer.id][uid]">
-        <span class="label">Undo</span>
-        <i
-          class="fa fa-thumbs-up"
-          *ngIf="voteService.polls[beer.id][uid].vote === true"></i>
-        <i
-          class="fa fa-thumbs-down"
-          *ngIf="voteService.polls[beer.id][uid].vote === false"></i>
     </div>
   </div>
 </div>
 <ng-template #isStatic>
-  <div class="vote disabled grey-text">
-    <div class="levers">
-      <i class="fa fa-thumbs-up"></i>
-      <i class="fa fa-thumbs-down"></i>
+  <div class="vote static">
+    <div class="vote-wrapper tooltip">
+      <div class="tooltip-text">Login to vote</div>
+      <div class="levers">
+        <i class="fa fa-thumbs-up"></i>
+        <i class="fa fa-thumbs-down"></i>
+      </div>
     </div>
   </div>
 </ng-template>

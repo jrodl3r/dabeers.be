@@ -20,7 +20,8 @@ export class VoteItemComponent {
     this.voteService.castVote(beer, vote);
   }
 
-  undoVote(beer) {
+  undoVote(event, beer) {
+    event.stopPropagation();
     this.voteService.undoVote(beer);
   }
 

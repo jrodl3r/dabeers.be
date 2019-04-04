@@ -1,0 +1,72 @@
+@import 'variables';
+
+.tooltip {
+  position: relative;
+  font-size: inherit;
+  opacity: 1;
+}
+
+.tooltip .tooltip-text {
+  display: none;
+  justify-content: center;
+  position: absolute;
+  z-index: 1;
+  top: 3px;
+  left: 0;
+  min-width: 80px;
+  padding: 3px 8px;
+  font-family: $font-montserrat;
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  white-space: nowrap;
+  border: 7px solid #FFF;
+  color: #FFF;
+  background-color: #555;
+  border-radius: 10px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateX(-110%);
+  transition: opacity .25s;
+  pointer-events: none;
+
+  @media (min-width: $sm-screen) {
+    display: flex;
+  }
+
+  @media (min-width: $lg-screen) {
+    border: 0;
+    border-radius: 4px;
+    transform: translateX(-13px) translateY(43px);
+
+    &.tooltip-text-undo { transform: translateX(-8px) translateY(43px); }
+  }
+}
+
+.tooltip .tooltip-text:after {
+  display: none;
+  content: '';
+  position: absolute;
+  top: -9px;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+  transform: rotate(180deg);
+
+  @media (min-width: $lg-screen) {
+    display: flex;
+  }
+}
+
+@media (hover: hover) {
+  .tooltip:hover .tooltip-text {
+    visibility: visible;
+    opacity: .9;
+
+    @media (min-width: $lg-screen) {
+      opacity: .75;
+    }
+  }
+}

@@ -1,15 +1,6 @@
 @import '../../../styles/animation';
 @import '../../../styles/variables';
 
-:host(li) {
-  &:hover .score-card-trigger {
-    opacity: .75;
-    height: auto;
-    width: auto;
-    transition: .15s ease-in-out;
-  }
-}
-
 .image {
   min-width: 50px;
   user-select: none;
@@ -133,33 +124,38 @@ img {
   position: absolute;
   bottom: 0;
   right: 0;
-  height: 0;
-  width: 0;
+  height: auto;
+  width: auto;
   padding: 10px 15px;
   font-family: $font-roboto-slab;
   font-size: 11px;
   font-weight: 700;
   color: $grey-text;
-  opacity: 0;
+  opacity: .5;
   user-select: none;
-  transition: 0s;
+  transition: .15s ease-in-out;
 
   @media (min-width: $lg-screen) {
     display: flex;
   }
 
-  &:hover + .score-card {
-    height: auto;
-    max-height: 120px;
-    padding: 10px 110px 10px 15px;
-    opacity: 1;
-    transition: opacity .25s .1s ease-in-out, max-height $default-anim;
+  &:hover {
+    opacity: .25;
+
+    & + .score-card {
+      height: auto;
+      max-height: 120px;
+      padding: 10px 110px 10px 15px;
+      opacity: 1;
+      transition: opacity .25s .1s ease-in-out, max-height $default-anim;
+    }
   }
 }
 
 .score-card {
-  display: flex;
-  // flex-direction: column;
+  display: none;
+  flex-direction: row;
+  flex-wrap: wrap;
   position: absolute;
   bottom: 0;
   left: 0;
@@ -175,6 +171,10 @@ img {
   transition: opacity .15s, max-height 0s .15s, padding 0s .15s;
   overflow: hidden;
 
+  @media (min-width: $lg-screen) {
+    display: flex;
+  }
+
   &:hover {
     max-height: 120px;
     padding: 10px 110px 10px 15px;
@@ -183,13 +183,15 @@ img {
   }
 
   li {
+    line-height: 22px;
     white-space: nowrap;
 
-    i { font-size: 13px; }
+    i { font-size: 14px; }
   }
 }
 
 .vote {
+  position: relative;
   display: flex;
   flex-direction: row;
   margin-right: 0;
@@ -218,16 +220,13 @@ img {
     font-size: 24px;
   }
 
-  &.disabled {
-    display: none;
+  &.static {
 
-    @media (min-width: $sm-screen) {
-      display: flex;
-      opacity: .35;
-    }
+    .levers { cursor: default; }
 
-    .fa-thumbs-up, .fa-thumbs-down {
+    i {
       pointer-events: none;
+      opacity: .5;
     }
   }
 
@@ -240,22 +239,26 @@ img {
   .levers {
     display: flex;
     flex-direction: row;
+    color: $grey-text;
+    cursor: pointer;
 
-    &.disabled {
-      pointer-events: none;
+    &.max-votes {
+      cursor: default;
 
-      i {
-        color: $grey-text !important;
-        opacity: .35;
-      }
+      &.has-vote { cursor: pointer; }
+      &:not(.has-vote) { opacity: .5; }
+      i:not(.selected):not(.disabled) { color: $grey-text !important; }
+      * { pointer-events: none; }
     }
 
-    .fa-thumbs-up, .fa-thumbs-down {
+    i {
       padding: 5px;
       transition: $default-anim;
       cursor: pointer;
 
-      &:hover { transform: scale(1.25); }
+      &:hover { transform: scale(1.15); }
+      &.selected { pointer-events: none; }
+      &.disabled { opacity: .5; }
     }
 
     .fa-thumbs-up {
@@ -268,70 +271,6 @@ img {
       @media (min-width: $lg-screen) {
         margin-right: 0;
       }
-    }
-  }
-
-  .undo {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    font-family: $font-montserrat;
-    font-size: 10px;
-    font-weight: 700;
-    text-transform: uppercase;
-    opacity: .25;
-    transition: $default-anim;
-    user-select: none;
-    cursor: pointer;
-
-    @media (min-width: $sm-screen) {
-      margin-left: 6px;
-      font-size: 11px;
-    }
-
-    @media (min-width: $lg-screen) {
-      margin-top: 6px;
-      margin-left: 10px;
-    }
-
-    &:hover {
-      opacity: .75;
-
-      &.up-vote { color: $success-color; }
-      &.down-vote { color: $danger-color; }
-    }
-
-    .label {
-      margin-right: 8px;
-
-      @media (min-width: $lg-screen) { margin-right: 5px; }
-    }
-
-    i {
-      margin-right: 10px;
-      font-size: 22px;
-      transition: none;
-
-      @media (min-width: $sm-screen) { font-size: 27px; }
-      @media (min-width: $md-screen) { font-size: 28px; }
-      @media (min-width: $lg-screen) { font-size: 24px; }
-    }
-
-    &.up-vote {
-      .label {
-        margin-top: 6px;
-
-        @media (min-width: $sm-screen) { margin-top: 7px; }
-        @media (min-width: $md-screen) { margin-top: 9px; }
-        @media (min-width: $lg-screen) { margin-top: 7px; }
-      }
-    }
-
-    &.down-vote {
-      .label { margin-top: -3px; }
-
-      @media (min-width: $sm-screen) { margin-top: -3px; }
-      @media (min-width: $md-screen) { margin-top: 7px; }
     }
   }
 }

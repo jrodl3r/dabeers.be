@@ -5,7 +5,6 @@ import { Subscription } from 'rxjs';
 import { NotifyService } from '../../services/notify.service';
 
 import { IUser } from '../../models/user';
-import { take } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
