@@ -10,11 +10,11 @@
   <hr>
   <div *ngIf="!beersService.isLoading; else showLoading">
     <ul
-      class="beers"
+      class="beers list"
       *ngIf="beersService.beerCount()">
       <li
         app-beer-item
-        class="mb-2 pt-2 pb-3"
+        class="list-item mb-2 pt-2 pb-3"
         [class.inactive]="!beer.value.isActive"
         [beer]="beer.value"
         (editBeer)="showEditBeerModal($event)"

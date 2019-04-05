@@ -5,12 +5,15 @@
   </h3>
   <hr>
   <div *ngIf="!adminService.isLoading; else showLoading">
-    <ul *ngIf="adminService.users">
+    <ul
+      class="list"
+      *ngIf="adminService.users">
       <li
-        class="mb-3"
+        class="list-item mb-2 pt-2 pb-3"
         *ngFor="let user of adminService.users | SortUserPipe: 'desc'">
+        <img [src]="user.photoURL">
         <strong>{{ user.email }}</strong><br>
-        <small>
+        <small class="mr-0 ml-auto">
           <span>Last Login: {{ user.lastLogin.toDate() | date: 'h:mm:ss a - MM/dd/yyyy' }}</span><br>
           <span>Last Active: {{ user.lastActive.toDate() | date: 'h:mm:ss a - MM/dd/yyyy' }}</span>
         </small>

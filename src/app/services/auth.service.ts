@@ -95,7 +95,7 @@ export class AuthService {
             isActive: true,
             uid: user.uid
           };
-          this.userDoc.set(data);
+          return this.userDoc.set(data);
         }
         this.userDoc.update({
           lastActive: date,

@@ -1,3 +1,25 @@
+@import '../../../styles/variables';
+
 ul {
   list-style: none;
+}
+
+img {
+  width: 42px;
+  height: 42px;
+  margin-right: 20px;
+  margin-left: 5px;
+  background: rgba(255, 255, 255, 0.25);
+  border: 1px solid #CCC;
+  border-radius: 21px;
+  overflow: hidden;
+}
+
+small {
+  display: none;
+  font-size: 12px;
+
+  @media (min-width: $lg-screen) {
+    display: inline;
+  }
 }

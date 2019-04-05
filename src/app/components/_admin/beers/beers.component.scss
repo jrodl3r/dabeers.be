@@ -7,29 +7,6 @@ h3 {
   .btn.btn-sm { font-size: 11px; }
 }
 
-.beers {
-
-  li {
-    display: flex;
-    align-items: center;
-    border-bottom: 1px solid $offset-grey-color;
-    transition: $default-anim;
-
-    &:last-of-type { border-bottom: none; }
-
-    &.inactive {
-      color: $mid-grey-color;
-      
-      & * {
-        opacity: .5;
-        transition: $default-anim;
-      }
-
-      &:hover * { opacity: 1; }
-    }
-  }
-}
-
 .modal a {
   text-decoration: underline;
 
