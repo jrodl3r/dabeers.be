@@ -1,5 +1,6 @@
 export interface IUser {
   created?: Date;
+  lastActive?: any;
   lastLogin?: any;
   displayName?: String;
   photoURL?: String;

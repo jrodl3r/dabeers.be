@@ -83,6 +83,7 @@ export class VoteService implements OnDestroy {
     const ballot: IVote = { created: new Date(), email, uid, vote };
     this.votesCollection.doc(`${id}`)
       .set({ [`${uid}`]: ballot }, { merge: true })
+      .then(() => this.auth.saveActivity())
       .catch(error => this.notify.error('Error casting vote', error));
   }
 
@@ -90,6 +91,7 @@ export class VoteService implements OnDestroy {
     const uid = this.auth.getUserID();
     this.votesCollection.doc(`${id}`)
       .update({ [`${uid}`]: firebase.firestore.FieldValue.delete() })
+      .then(() => this.auth.saveActivity())
       .catch(error => this.notify.error('Error undoing vote', error));
   }
 

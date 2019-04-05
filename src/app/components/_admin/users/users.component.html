@@ -6,9 +6,14 @@
   <hr>
   <div *ngIf="!adminService.isLoading; else showLoading">
     <ul *ngIf="adminService.users">
-      <li *ngFor="let user of adminService.users | SortUserPipe: 'desc'">
-        <strong>{{ user.email }}</strong>
-        (Last Login: {{ user.lastLogin.toDate() | date: 'h:mm:ss a - MM/dd/yyyy' }})
+      <li
+        class="mb-3"
+        *ngFor="let user of adminService.users | SortUserPipe: 'desc'">
+        <strong>{{ user.email }}</strong><br>
+        <small>
+          <span>Last Login: {{ user.lastLogin.toDate() | date: 'h:mm:ss a - MM/dd/yyyy' }}</span><br>
+          <span>Last Active: {{ user.lastActive.toDate() | date: 'h:mm:ss a - MM/dd/yyyy' }}</span>
+        </small>
       </li>
     </ul>
     <div *ngIf="!adminService.users">No Users</div>

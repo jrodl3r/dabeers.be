@@ -15,6 +15,7 @@ import { IUser } from '../models/user';
   providedIn: 'root'
 })
 export class AuthService {
+  userDoc: AngularFirestoreDocument<IUser>;
   user: Observable<IUser | null>;
   isLoading: Boolean = false;
 
@@ -37,25 +38,10 @@ export class AuthService {
     ) : afAuth.authState;
   }
 
-  private saveUser(user: IUser) {
-    const userRef: AngularFirestoreDocument<IUser> = this.afs.doc<IUser>(`users/${user.uid}`);
-    const date = new Date();
-    return userRef.ref.get()
-      .then(userDoc => {
-        if (!userDoc.exists) {
-          const data: IUser = {
-            created: date,
-            lastLogin: date,
-            displayName: user.displayName || '',
-            photoURL: user.photoURL || '',
-            email: user.email,
-            isActive: true,
-            uid: user.uid
-          };
-          return userRef.set(data);
-        }
-        return userRef.update({ lastLogin: date, photoURL: user.photoURL || '' });
-      });
+  public googleLogin() {
+    const provider = new auth.GoogleAuthProvider();
+    provider.setCustomParameters({ prompt: 'select_account' });
+    this.oAuthLogin(provider);
   }
 
   private oAuthLogin(provider: any) {
@@ -93,10 +79,39 @@ export class AuthService {
     }
   }
 
-  public googleLogin() {
-    const provider = new auth.GoogleAuthProvider();
-    provider.setCustomParameters({ prompt: 'select_account' });
-    this.oAuthLogin(provider);
+  private saveUser(user: IUser) {
+    const date = new Date();
+    this.userDoc = this.afs.doc<IUser>(`users/${user.uid}`);
+    this.userDoc.ref.get()
+      .then(userRef => {
+        if (!userRef.exists) {
+          const data: IUser = {
+            created: date,
+            lastActive: date,
+            lastLogin: date,
+            displayName: user.displayName || '',
+            photoURL: user.photoURL || '',
+            email: user.email,
+            isActive: true,
+            uid: user.uid
+          };
+          this.userDoc.set(data);
+        }
+        this.userDoc.update({
+          lastActive: date,
+          lastLogin: date,
+          photoURL: user.photoURL || ''
+        });
+      });
+  }
+
+  public saveActivity() {
+    this.userDoc = this.afs.doc<IUser>(`users/${this.getUserID()}`);
+    this.userDoc.ref.get().then(user => {
+      if (user.exists) {
+        this.userDoc.update({ lastActive: new Date() });
+      }
+    });
   }
 
   public logout() {
