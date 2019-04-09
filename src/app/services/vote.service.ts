@@ -23,6 +23,7 @@ export class VoteService implements OnDestroy {
   userVoteMax = 6;
   userVoteCount = 0;
   sortFlag = 'score';
+  pipeWiggle: Boolean = true;
   isLoading: Boolean = false;
 
   constructor(
@@ -76,6 +77,7 @@ export class VoteService implements OnDestroy {
       this.counts[`${beer}`] = Object.keys(this.polls[`${beer}`]).length || 0;
       this.scores[`${beer}`] = score;
     });
+    this.pipeWiggle = !this.pipeWiggle;
   }
 
   castVote(id: String, vote: Boolean) {

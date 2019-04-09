@@ -49,7 +49,7 @@
           [isLoggedIn]="isLoggedIn"
           [beer]="beer.value"
           *ngFor="let beer of beersService.beers | keyvalue | activeItemsPipe
-            | sortItemsPipe: voteService.sortFlag : voteService.scores : voteService.counts"></li>
+            | sortItemsPipe: voteService.sortFlag : voteService.scores : voteService.counts : voteService.pipeWiggle"></li>
         <li
           class="blank"
           *ngIf="beersService.activeBeerCount() % 2 !== 0"></li>
