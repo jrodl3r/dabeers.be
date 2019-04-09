@@ -4,10 +4,22 @@
   position: relative;
   font-size: inherit;
   opacity: 1;
+
+  @media (hover: hover) {
+    &:hover .tooltip-text {
+      visibility: visible;
+      opacity: .9;
+
+      @media (min-width: $lg-screen) {
+        opacity: .75;
+      }
+    }
+  }
 }
 
 .tooltip .tooltip-text {
   display: none;
+  visibility: hidden;
   justify-content: center;
   position: absolute;
   z-index: 1;
@@ -25,9 +37,8 @@
   background-color: #555;
   border-radius: 10px;
   opacity: 0;
-  visibility: hidden;
   transform: translateX(-110%);
-  transition: opacity .25s;
+  transition: opacity .25s .25s;
   pointer-events: none;
 
   @media (min-width: $sm-screen) {
@@ -57,16 +68,5 @@
 
   @media (min-width: $lg-screen) {
     display: flex;
-  }
-}
-
-@media (hover: hover) {
-  .tooltip:hover .tooltip-text {
-    visibility: visible;
-    opacity: .9;
-
-    @media (min-width: $lg-screen) {
-      opacity: .75;
-    }
   }
 }
