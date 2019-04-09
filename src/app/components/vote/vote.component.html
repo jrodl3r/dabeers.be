@@ -1,6 +1,21 @@
 <div class="card">
   <div class="card-body p-0">
 
+    <div class="control-bar">
+      <span *ngIf="isLoggedIn; else isOffline">
+        <span
+          *ngIf="voteService.userVoteCount < voteService.userVoteMax">
+            You have {{ voteService.userVoteMax - voteService.userVoteCount }}
+            vote{{ voteService.userVoteMax - voteService.userVoteCount !== 1 ? 's' : null }} left
+        </span>
+        <span
+          *ngIf="voteService.userVoteCount === voteService.userVoteMax">You've used all your votes, Cheers! 🍻</span>
+      </span>
+      <ng-template #isOffline>
+        <span>Login with your LightSpeedVT email to vote!</span>
+      </ng-template>
+    </div>
+
     <div
       class="beers"
       *ngIf="!beersService.isLoading; else showLoading">
@@ -26,21 +41,6 @@
         <i class="fa fa-refresh"></i>
       </div>
     </ng-template>
-
-    <div class="bottom">
-      <span *ngIf="isLoggedIn; else isOffline">
-        <span
-          *ngIf="voteService.userVoteCount < voteService.userVoteMax">
-            {{ voteService.userVoteMax - voteService.userVoteCount }}
-            vote{{ voteService.userVoteMax - voteService.userVoteCount !== 1 ? 's' : null }} left
-        </span>
-        <span
-          *ngIf="voteService.userVoteCount === voteService.userVoteMax">You've used all your votes, Cheers! 🍻</span>
-      </span>
-      <ng-template #isOffline>
-        <span>Login with your LightSpeedVT email to vote</span>
-      </ng-template>
-    </div>
 
   </div>
 </div>
