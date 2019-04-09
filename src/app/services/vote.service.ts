@@ -22,6 +22,7 @@ export class VoteService implements OnDestroy {
   scores: any = {};     // votes tallied
   userVoteMax = 6;
   userVoteCount = 0;
+  sortFlag = 'score';
   isLoading: Boolean = false;
 
   constructor(
@@ -93,6 +94,11 @@ export class VoteService implements OnDestroy {
       .update({ [`${uid}`]: firebase.firestore.FieldValue.delete() })
       .then(() => this.auth.saveActivity())
       .catch(error => this.notify.error('Error undoing vote', error));
+  }
+
+  setSortFlag(event: Event, flag: String) {
+    event.preventDefault();
+    this.sortFlag = flag.toString();
   }
 
 }

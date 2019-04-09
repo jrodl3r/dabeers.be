@@ -13,6 +13,7 @@ import { ServicesModule } from './services/services.module';
 import { NavModule } from './components/_nav/nav.module';
 
 import { ActiveItemsPipe } from './services/pipes/active-items.pipe';
+import { SortItemsPipe } from './services/pipes/sort-items.pipe';
 
 import { HomeComponent } from './components/home/home.component';
 import { VoteComponent } from './components/vote/vote.component';
@@ -30,7 +31,8 @@ import { environment } from '../environments/environment';
     VoteItemComponent,
     ErrorComponent,
     LoadingComponent,
-    ActiveItemsPipe
+    ActiveItemsPipe,
+    SortItemsPipe
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-fire-universal' }),

@@ -67,12 +67,11 @@
   font-family: $font-montserrat;
   font-size: 11px;
   font-weight: 700;
-  text-shadow: 0 0 2px rgba(0,0,0, .32);
   color: #FFF;
-  background-color: $special-grey-color;
+  background-color: $special-dark-color;
   border-top-right-radius: 0.25rem;
   border-top-left-radius: 0.25rem;
-  box-shadow: inset 0 -2px 5px rgba(0,0,0, .25);
+  box-shadow: inset 0 -2px 5px rgba(0,0,0, .5);
 
   @media (min-width: $sm-screen) {
     font-size: 12px;
@@ -84,5 +83,61 @@
 
   @media (min-width: $lg-screen) {
     justify-content: unset;
+  }
+
+  .inner {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+
+    span {
+      text-shadow: 0 0 2px rgba(0,0,0, .32);
+      user-select: none;
+    }
+  }
+
+  .sort-menu {
+    display: none;
+    flex-direction: row;
+    align-items: center;
+    margin-right: 0;
+    margin-left: auto;
+
+    @media (min-width: $md-screen) {
+      display: flex;
+    }
+  }
+
+  .label {
+    font-size: 12px;
+    opacity: .5;
+  }
+
+  li {
+    &:first-of-type a { margin-left: 15px; }
+    &:last-of-type a { margin-right: -5px; }
+
+    a {
+      margin: 0 0 0 5px;
+      padding: 5px 10px;
+      font-size: 12px;
+      font-weight: 500;
+      color: rgba(255,255,255, .75);
+      border-radius: 0.25rem;
+      user-select: none;
+
+      &.active {
+        color: $elegant-dark-color;
+        background: rgba(255,255,255, .3);
+        pointer-events: none;
+      }
+
+      &:hover:not(.active) {
+        color: #FFF;
+        background: rgba(255,255,255, .1);
+      }
+    }
   }
 }
