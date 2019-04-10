@@ -19,7 +19,9 @@ export class LoadingComponent implements OnInit {
   ngOnInit() {
     if (this.system.isBrowser()) {
       this.auth.user.subscribe(user => {
-        if (user === null && !this.auth.isLoggedIn() || typeof user === 'object' && user.hasOwnProperty('isActive') && user.isActive) {
+        if (user === undefined ||
+            user === null && !this.auth.isLoggedIn() ||
+            typeof user === 'object' && user.hasOwnProperty('isActive') && user.isActive) {
           setTimeout(() => this.isDisabled = true, 500);
           return;
         }
