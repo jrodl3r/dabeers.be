@@ -12,7 +12,9 @@ import { UsersComponent } from './users/users.component';
 import { HistoryComponent } from './history/history.component';
 
 import { AdminService } from './admin.service';
+
 import { SortUserPipe } from '../../services/pipes/sort-user.pipe';
+import { EmailToNamePipe } from '../../services/pipes/email-to-name.pipe';
 
 @NgModule({
   imports: [
@@ -28,7 +30,8 @@ import { SortUserPipe } from '../../services/pipes/sort-user.pipe';
     BeerItemComponent,
     UsersComponent,
     HistoryComponent,
-    SortUserPipe
+    SortUserPipe,
+    EmailToNamePipe
   ],
   providers: [AdminService]
 })

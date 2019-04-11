@@ -3,7 +3,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { IUser } from '../../models/user';
 
 @Pipe({
-  name: 'SortUserPipe'
+  name: 'sortUserPipe'
 })
 export class SortUserPipe implements PipeTransform {
 

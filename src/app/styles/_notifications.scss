@@ -3,6 +3,7 @@
 
 #toast-container {
   width: 100% !important;
+  animation: fade-in .5s ease-in linear;
 
   & > div {
     width: 100% !important;

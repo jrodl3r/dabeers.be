@@ -18,3 +18,8 @@ $default-anim: .25s ease-in-out;
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}

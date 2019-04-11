@@ -21,4 +21,12 @@
 
     &:hover * { opacity: 1; }
   }
+
+  &.action-item:hover {
+    background: linear-gradient(to top, rgba(0,0,0, .01), transparent);
+    cursor: pointer;
+
+    &:last-of-type { background: linear-gradient(to bottom, rgba(0,0,0, .01), transparent); }
+    i { opacity: .5; }
+  }
 }

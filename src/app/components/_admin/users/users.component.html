@@ -1,30 +1,78 @@
 <div class="mt-4 mt-md-2 pr-3 pl-3 pb-3 pr-sm-0 pl-sm-0">
-  <h3>
+  <h3 class="d-none d-md-block">
     Users
     <span *ngIf="adminService.users.length">({{ adminService.users.length }})</span>
   </h3>
-  <hr>
+  <hr class="d-none d-md-block">
   <div *ngIf="!adminService.isLoading; else showLoading">
     <ul
       class="list"
       *ngIf="adminService.users">
       <li
-        class="list-item mb-2 pt-2 pb-3"
-        *ngFor="let user of adminService.users | SortUserPipe: 'desc'">
+        class="list-item action-item pt-3 pb-3"
+        *ngFor="let user of adminService.users | sortUserPipe: 'desc'"
+        (mousedown)="showUserModal(user.uid)">
         <img [src]="user.photoURL">
-        <strong>{{ user.email }}</strong><br>
-        <small class="mr-0 ml-auto">
-          <span>Last Login: {{ user.lastLogin.toDate() | date: 'h:mm:ss a - MM/dd/yyyy' }}</span><br>
-          <span>Last Active: {{ user.lastActive.toDate() | date: 'h:mm:ss a - MM/dd/yyyy' }}</span>
-        </small>
+        <span class="name ml-0">{{ user.email | emailToNamePipe }}</span>
+        <div class="trigger ml-auto mr-3">
+          <i class="fa fa-chevron-right text-black-50"></i>
+        </div>
       </li>
     </ul>
     <div *ngIf="!adminService.users">No Users</div>
   </div>
+
   <!-- Loading -->
   <ng-template #showLoading>
     <div class="loading-spinner mt-4">
       <i class="fa fa-refresh"></i>
     </div>
   </ng-template>
+
+</div>
+
+<!-- User Modal -->
+<div
+  [class.modal-open]="isUserModalActive">
+  <!-- (mousedown)="hideModal($event)"> -->
+  <div
+    class="modal fade"
+    [class.show]="isUserModalActive"
+    id="userModal"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="userModal"
+    aria-hidden="true">
+    <div
+      role="document"
+      class="modal-dialog modal-notify"
+      (click)="$event.stopPropagation()">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5
+            class="modal-title"
+            *ngIf="activeUser?.email">{{ activeUser.email | emailToNamePipe }}</h5>
+          <button
+            type="button"
+            class="close"
+            data-dismiss="modal"
+            aria-label="Close"
+            (click)="hideModal($event)">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body pt-4 pr-4 pl-4 pb-0">
+          <span>Last Login: {{ activeUser?.lastLogin?.toDate() | date: 'MM/dd/yyyy (h:mm:ss a)' }}</span><br>
+          <span>Last Active: {{ activeUser?.lastActive?.toDate() | date: 'MM/dd/yyyy (h:mm:ss a)' }}</span>
+        </div>
+        <div class="modal-footer p-2">
+          <button
+            type="button"
+            class="btn btn-sm btn-grey mr-2"
+            data-dismiss="modal"
+            (click)="hideModal($event)">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

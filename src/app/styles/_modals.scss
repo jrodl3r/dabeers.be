@@ -16,5 +16,11 @@
   }
 }
 
-.modal-header { background-color: rgba(0,0,0, .03); }
+.modal-header {
+  background-color: rgba(0,0,0, .03);
+  user-select: none;
+
+  .close { outline: none; }
+}
+
 .modal-title { font-weight: 700; }
