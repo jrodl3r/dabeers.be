@@ -14,7 +14,7 @@
       *ngIf="beersService.beerCount()">
       <li
         app-beer-item
-        class="list-item mb-2 pt-2 pb-3"
+        class="list-item pt-3 pb-3"
         [class.inactive]="!beer.value.isActive"
         [beer]="beer.value"
         (editBeer)="showEditBeerModal($event)"
