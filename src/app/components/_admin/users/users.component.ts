@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 
 import { AdminService } from '../admin.service';
+import { BeersService } from '../../../services/beers.service';
+import { VoteService } from '../../../services/vote.service';
 
 import { IUser } from '../../../models/user';
 
@@ -11,22 +13,27 @@ import { IUser } from '../../../models/user';
 })
 export class UsersComponent {
   activeUser: IUser;
+  activeUserVotes: Array<any>;
   isUserModalActive: Boolean = false;
 
-  constructor(public adminService: AdminService) {
+  constructor(
+    public voteService: VoteService,
+    public beersService: BeersService,
+    public adminService: AdminService) {
     this.resetActiveUser();
   }
 
-  setActiveUser(id: String) {
-    this.activeUser = this.adminService.users.filter(user => user.uid === id)[0];
+  setActiveUser(uid: String) {
+    this.activeUser = this.adminService.users.filter(user => user.uid === uid)[0];
   }
 
   resetActiveUser() {
     this.activeUser = null;
   }
 
-  showUserModal(id: String) {
-    this.setActiveUser(id);
+  showUserModal(uid: String) {
+    this.setActiveUser(uid);
+    this.activeUserVotes = this.voteService.getActiveUserVotes(uid);
     this.isUserModalActive = true;
   }
 

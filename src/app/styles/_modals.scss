@@ -4,7 +4,7 @@
 }
 
 .modal-open {
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
   height: 100%;
@@ -12,6 +12,7 @@
 
   .modal.show {
     display: initial;
+    min-width: 320px;
     opacity: 1;
   }
 }
@@ -21,6 +22,11 @@
   user-select: none;
 
   .close { outline: none; }
+}
+
+.modal-body {
+  max-height: 50vh;
+  overflow: scroll;
 }
 
 .modal-title { font-weight: 700; }

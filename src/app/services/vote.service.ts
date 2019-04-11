@@ -45,6 +45,7 @@ export class VoteService implements OnDestroy {
         beers.forEach(beer => this.polls[`${beer.id}`] = beer.data);
         this.calcTotals();
         this.isLoading = false;
+
       },
       error => (() => {
         this.notify.error('Error fetching votes', error);
@@ -69,7 +70,7 @@ export class VoteService implements OnDestroy {
           const fname = `${email[1].toUpperCase().charAt(0)}${email[1].toLowerCase().substring(1, email[1].length)}`;
           const lname = ` ${email[2].toUpperCase().charAt(0)}.`;
           const name = fname + lname;
-          this.voters[`${beer}`].push({ vote: this.polls[`${beer}`][`${uid}`].vote, name });
+          this.voters[`${beer}`].push({ name, uid, vote: this.polls[`${beer}`][`${uid}`].vote });
         }
         this.userVoteCount = this.auth.getUserID() === uid ? this.userVoteCount + 1 : this.userVoteCount;
         score = this.polls[`${beer}`][`${uid}`].vote ? score + 1 : score - 1;
@@ -101,6 +102,18 @@ export class VoteService implements OnDestroy {
   setSortFlag(event: Event, flag: String) {
     event.preventDefault();
     this.sortFlag = flag.toString();
+  }
+
+  getActiveUserVotes(uid: String) {
+    const votes = [];
+    Object.keys(this.voters).forEach(beer => {
+      this.voters[beer].forEach(user => {
+        if (user.uid === uid) {
+          votes.push({ beer, vote: user.vote });
+        }
+      });
+    });
+    return votes;
   }
 
 }

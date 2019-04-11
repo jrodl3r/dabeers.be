@@ -32,9 +32,7 @@
 </div>
 
 <!-- User Modal -->
-<div
-  [class.modal-open]="isUserModalActive">
-  <!-- (mousedown)="hideModal($event)"> -->
+<div [class.modal-open]="isUserModalActive">
   <div
     class="modal fade"
     [class.show]="isUserModalActive"
@@ -45,13 +43,15 @@
     aria-hidden="true">
     <div
       role="document"
-      class="modal-dialog modal-notify"
-      (click)="$event.stopPropagation()">
-      <div class="modal-content">
+      class="modal-dialog modal-notify">
+      <div
+        class="modal-content"
+        *ngIf="activeUser">
         <div class="modal-header">
-          <h5
-            class="modal-title"
-            *ngIf="activeUser?.email">{{ activeUser.email | emailToNamePipe }}</h5>
+          <div class="avatar">
+            <img [src]="activeUser.photoURL">
+          </div>
+          <h5 class="modal-title">{{ activeUser.email | emailToNamePipe }}</h5>
           <button
             type="button"
             class="close"
@@ -61,9 +61,88 @@
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-        <div class="modal-body pt-4 pr-4 pl-4 pb-0">
-          <span>Last Login: {{ activeUser?.lastLogin?.toDate() | date: 'MM/dd/yyyy (h:mm:ss a)' }}</span><br>
-          <span>Last Active: {{ activeUser?.lastActive?.toDate() | date: 'MM/dd/yyyy (h:mm:ss a)' }}</span>
+        <div class="modal-body pt-4 pr-3 pl-3 pb-4">
+          <div class="info">
+            <div class="item">
+              <span class="label">Last Login:</span>
+              <span class="value">{{ activeUser.lastLogin.toDate() | date: 'MM/dd/yyyy @ h:mm:ss a' }}</span>
+            </div>
+            <div class="item">
+              <span class="label">Last Active:</span>
+              <span class="value">{{ activeUser.lastActive.toDate() | date: 'MM/dd/yyyy @ h:mm:ss a' }}</span>
+            </div>
+            <div class="item">
+              <span class="label">Email:</span>
+              <span class="value">{{ activeUser.email }}</span>
+            </div>
+            <div class="item">
+              <span class="label">UID:</span>
+              <span class="value uid">{{ activeUser.uid }}</span>
+            </div>
+          </div>
+          <div class="history">
+            <h5>Vote History</h5>
+            <div class="round">
+              <span class="badge bg-secondary-dark ml-2 mr-3">Active Poll</span>
+              <ul class="record">
+                <li *ngFor="let item of activeUserVotes">
+                  {{ beersService.beers[item.beer].title }}
+                  <i
+                    class="fa fa-thumbs-up text-success ml-1 mr-2"
+                    *ngIf="item.vote === true"></i>
+                  <i
+                    class="fa fa-thumbs-down text-danger ml-1 mr-2"
+                    *ngIf="item.vote === false"></i>
+                </li>
+              </ul>
+            </div>
+            <div class="round">
+              <span class="badge bg-default-dark ml-2 mr-3">Round #1</span>
+              <ul class="record">
+                <li>
+                  Blue Moon <i class="fa fa-thumbs-up text-success ml-1 mr-2"></i>
+                </li>
+                <li>
+                  Magic Hat #9 <i class="fa fa-thumbs-down text-danger ml-1 mr-2"></i>
+                </li>
+                <li>
+                  805 <i class="fa fa-thumbs-up text-success ml-1 mr-2"></i>
+                </li>
+                <li>
+                  Corona <i class="fa fa-thumbs-down text-danger ml-1 mr-2"></i>
+                </li>
+                <li>
+                  Stella Artoise <i class="fa fa-thumbs-up text-success ml-1 mr-2"></i>
+                </li>
+                <li>
+                  Singha <i class="fa fa-thumbs-down text-danger ml-1 mr-2"></i>
+                </li>
+              </ul>
+            </div>
+            <div class="round">
+              <span class="badge bg-default-dark ml-2 mr-3">Round #2</span>
+              <ul class="record">
+                <li>
+                  Magic Hat #9 <i class="fa fa-thumbs-down text-danger ml-1 mr-2"></i>
+                </li>
+                <li>
+                  805 <i class="fa fa-thumbs-up text-success ml-1 mr-2"></i>
+                </li>
+                <li>
+                  Corona <i class="fa fa-thumbs-down text-danger ml-1 mr-2"></i>
+                </li>
+                <li>
+                  Blue Moon <i class="fa fa-thumbs-down text-success ml-1 mr-2"></i>
+                </li>
+                <li>
+                  Stella Artoise <i class="fa fa-thumbs-up text-success ml-1 mr-2"></i>
+                </li>
+                <li>
+                  Singha <i class="fa fa-thumbs-down text-danger ml-1 mr-2"></i>
+                </li>
+              </ul>
+            </div>
+          </div>
         </div>
         <div class="modal-footer p-2">
           <button

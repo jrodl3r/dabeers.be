@@ -10,6 +10,7 @@ $orange-lighten-2:    #FFB74D;
 $success-color:       #00C851;
 $blue-color:          #007BFF;
 $blue-color-alt:      #4285F4;
+$bg-default-dark:     #26A598;
 $bg-secondary-dark:   #9933CC;
 $light-grey-color:    #FAFAFA;
 $light-grey-color-alt:#F8F9FA;
@@ -22,4 +23,5 @@ $mdb-color:           #59698D;
 
 $grey-text:           #9E9E9E;
 
+.bg-default-dark { background-color: $bg-default-dark; }
 .bg-secondary-dark { background-color: $bg-secondary-dark; }

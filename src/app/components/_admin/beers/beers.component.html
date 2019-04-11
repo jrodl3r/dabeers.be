@@ -34,9 +34,7 @@
 </ng-template>
 
 <!-- Modals -->
-<div
-  [class.modal-open]="isCreateModalActive || isEditModalActive || isRemoveModalActive"
-  (click)="hideModals()">
+<div [class.modal-open]="isCreateModalActive || isEditModalActive || isRemoveModalActive">
 
   <!-- Create / Edit Beer -->
   <div
@@ -47,10 +45,7 @@
     role="dialog"
     aria-labelledby="editBeerModal"
     aria-hidden="true">
-    <div
-      role="document"
-      class="modal-dialog modal-notify"
-      (click)="$event.stopPropagation()">
+    <div role="document" class="modal-dialog modal-notify">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title">{{ isEditModalActive ? 'Edit' : 'Add New' }} Beer</h5>
@@ -153,10 +148,7 @@
     role="dialog"
     aria-labelledby="removeBeerModal"
     aria-hidden="true">
-    <div
-      role="document"
-      class="modal-dialog modal-sm modal-notify modal-danger"
-      (click)="$event.stopPropagation()">
+    <div role="document" class="modal-dialog modal-sm modal-notify modal-danger">
       <div class="modal-content text-center">
         <div class="modal-header d-flex justify-content-center">
           <p class="heading">Are you sure?</p>
