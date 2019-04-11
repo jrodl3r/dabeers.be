@@ -11,6 +11,7 @@ export class AdminComponent {
   tabs: ITabs[] = [
     { label: 'Beers', routerLink: '/admin/beers' },
     { label: 'Users', routerLink: '/admin/users' },
-    { label: 'History', routerLink: '/admin/history' }
+    { label: 'Polls', routerLink: '/admin/polls' },
+    { label: 'Settings', routerLink: '/admin/settings' }
   ];
 }

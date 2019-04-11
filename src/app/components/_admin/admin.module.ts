@@ -9,7 +9,8 @@ import { AdminComponent } from './admin.component';
 import { BeersComponent } from './beers/beers.component';
 import { BeerItemComponent } from './beers/beer-item/beer-item.component';
 import { UsersComponent } from './users/users.component';
-import { HistoryComponent } from './history/history.component';
+import { PollsComponent } from './polls/polls.component';
+import { SettingsComponent } from './settings/settings.component';
 
 import { AdminService } from './admin.service';
 
@@ -29,7 +30,8 @@ import { EmailToNamePipe } from '../../services/pipes/email-to-name.pipe';
     BeersComponent,
     BeerItemComponent,
     UsersComponent,
-    HistoryComponent,
+    PollsComponent,
+    SettingsComponent,
     SortUserPipe,
     EmailToNamePipe
   ],
