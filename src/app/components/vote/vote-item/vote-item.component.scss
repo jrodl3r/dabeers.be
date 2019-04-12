@@ -19,8 +19,6 @@ img {
   max-height: 50px;
   max-width: 50px;
 
-  &.default { background: #F6F7F6; }
-
   @media (min-width: $sm-screen) {
     max-height: 70px;
     max-width: 70px;
