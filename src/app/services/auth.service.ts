@@ -72,9 +72,7 @@ export class AuthService {
               this.notify.error('LightSpeedVT.com email required');
               this.logout();
             }
-          } else {
-            this.notify.error('Error fetching user account');
-          }
+          } else { this.notify.error('Error fetching user account'); }
         })
         .catch(error => {
           this.isLoading = false;
@@ -106,25 +104,30 @@ export class AuthService {
           lastLogin: date,
           photoURL: user.photoURL || ''
         });
-      });
+      })
+      .catch(error => this.notify.error('Error saving user account', error));
   }
 
   public saveActivity() {
     this.userDoc = this.afs.doc<IUser>(`users/${this.getUserID()}`);
-    this.userDoc.ref.get().then(user => {
-      if (user.exists) {
-        this.userDoc.update({ lastActive: new Date() });
-      }
-    });
+    this.userDoc.ref.get()
+      .then(user => {
+        if (user.exists) {
+          this.userDoc.update({ lastActive: new Date() });
+        }
+      })
+      .catch(error => this.notify.error('Error saving user activity', error));
   }
 
   public logout() {
-    this.afAuth.auth.signOut().then(() => {
-      if (this.system.isBrowser) {
-        sessionStorage.clear();
-      }
-      this.zone.run(async () => await this.router.navigate(['/']));
-    });
+    this.afAuth.auth.signOut()
+      .then(() => {
+        if (this.system.isBrowser) {
+          sessionStorage.clear();
+        }
+        this.zone.run(async () => await this.router.navigate(['/']));
+      })
+      .catch(error => this.notify.error('Error logging out', error));
   }
 
   public isLoggedIn(): Boolean {
