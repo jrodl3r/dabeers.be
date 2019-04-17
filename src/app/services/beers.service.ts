@@ -78,9 +78,14 @@ export class BeersService implements OnDestroy {
   }
 
   public editBeerImage(image: String) {
-    //   .set({ image }, { merge: true })
-    //   .then(() => this.notify.success('Beer updated successfully'))
-    //   .catch(error => this.notify.error('Error removing beer', error));
+    return this.beersDoc.ref.get()
+      .then(response => {
+        const beers = response.data();
+        beers[`${this.activeBeer.id}`].image = image;
+        return this.updateBeers(beers)
+          .then(() => this.notify.success('Image updated successfully'));
+      })
+      .catch(error => this.notify.error('Error updating image', error));
   }
 
   public removeBeer(id: String) {

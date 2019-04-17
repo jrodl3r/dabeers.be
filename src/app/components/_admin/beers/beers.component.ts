@@ -36,6 +36,7 @@ export class BeersComponent implements OnInit {
   imageUploadTask: AngularFireUploadTask;
   imageUploadPercentage: Observable<number>;
   imageUploadSnapshot: Observable<any>;
+  imageMetadata: any;
 
   constructor(
     public beersService: BeersService,
@@ -75,25 +76,29 @@ export class BeersComponent implements OnInit {
   }
 
   uploadImage(files: FileList) {
-    // if (files[0] && files[0].name) {
-    //   const file = files[0];
-    //   const ext = file.name.match(/\.[0-9a-z]+$/i)[0];
-    //   const path = `${this.beersService.activeBeer.id}_${Date.now()}${ext}`;
-    //   const ref = this.storage.ref(path);
-    //   this.imageUploadTask = this.storage.upload(path, file);
-    //   this.imageUploadPercentage = this.imageUploadTask.percentageChanges();
-    //   this.isImageUploadActive = true;
-    //   this.imageUploadTask.snapshotChanges().pipe(
-    //     finalize(() => {
-    //       ref.getDownloadURL().subscribe(url => {
-    //         if (url) {
-    //           this.beersService.editBeerImage(url);
-    //           setTimeout(() => this.isImageUploadActive = false, 2500);
-    //         }
-    //       });
-    //     })
-    //   ).subscribe();
-    // }
+    if (files[0] && files[0].name) {
+      const file = files[0];
+      const ext = file.name.match(/\.[0-9a-z]+$/i)[0];
+      const path = `${Date.now()}${ext}`;
+      const ref = this.storage.ref(path);
+      this.imageMetadata = {
+        cacheControl: 'public,max-age=100000',
+        contentType: 'image/png'
+      };
+      this.imageUploadTask = this.storage.upload(path, file, { customMetadata: this.imageMetadata });
+      this.imageUploadPercentage = this.imageUploadTask.percentageChanges();
+      this.isImageUploadActive = true;
+      this.imageUploadTask.snapshotChanges().pipe(
+        finalize(() => {
+          ref.getDownloadURL().subscribe(url => {
+            if (url) {
+              this.beersService.editBeerImage(url);
+              setTimeout(() => this.isImageUploadActive = false, 2500);
+            }
+          });
+        })
+      ).subscribe();
+    }
   }
 
   showCreateBeerModal() {

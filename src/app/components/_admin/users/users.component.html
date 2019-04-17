@@ -1,9 +1,9 @@
 <div class="mt-4 mt-md-2 pr-3 pl-3 pb-3 pr-sm-0 pl-sm-0">
-  <h3 class="d-none d-md-block">
+  <h3>
     Users
     <span *ngIf="adminService.users.length">({{ adminService.users.length }})</span>
   </h3>
-  <hr class="d-none d-md-block">
+  <hr>
   <div *ngIf="!adminService.isLoading; else showLoading">
     <ul
       class="list"
@@ -12,8 +12,8 @@
         class="list-item action-item pt-3 pb-3"
         *ngFor="let user of adminService.users | sortUserPipe: 'desc'"
         (mousedown)="showUserModal(user.uid)">
-        <img [src]="user.photoURL">
-        <span class="name ml-0">{{ user.email | emailToNamePipe }}</span>
+        <img class="photo" [src]="user.photoURL">
+        <span class="title ml-0">{{ user.email | emailToNamePipe }}</span>
         <div class="trigger ml-auto mr-3">
           <i class="fa fa-chevron-right text-black-50"></i>
         </div>

@@ -5,19 +5,19 @@
         type="button"
         class="btn btn-sm btn-success shadow-none m-0 ml-auto mr-2"
         (click)="showCreateBeerModal()">
-        <i class="fa fa-plus mr-1"></i> Add New Beer</button>
+        <i class="fa fa-plus mr-1"></i> Add Beer</button>
   </h3>
   <hr>
   <div *ngIf="!beersService.isLoading; else showLoading">
     <ul
-      class="beers list"
+      class="list"
       *ngIf="beersService.beerCount()">
       <li
         app-beer-item
-        class="list-item pt-3 pb-3"
+        class="list-item action-item pt-3 pb-3"
         [class.inactive]="!beer.value.isActive"
         [beer]="beer.value"
-        (editBeer)="showEditBeerModal($event)"
+        (click)="showEditBeerModal(beer.value.id)"
         (removeBeer)="showRemoveBeerModal($event)"
         (restoreBeer)="restoreBeer($event)"
         *ngFor="let beer of beersService.beers | keyvalue"></li>

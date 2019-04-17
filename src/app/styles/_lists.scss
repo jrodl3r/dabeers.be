@@ -1,6 +1,7 @@
 .list {
   margin: 0;
   padding: 0;
+  list-style: none;
 }
 
 .list-item {
@@ -29,4 +30,26 @@
     &:last-of-type { background: linear-gradient(to bottom, rgba(0,0,0, .01), transparent); }
     i { opacity: .5; }
   }
+
+  .photo {
+    flex-shrink: 0;
+    width: 42px;
+    height: 42px;
+    margin-right: 20px;
+    margin-left: 5px;
+    border-radius: 21px;
+    overflow: hidden;
+    pointer-events: none;
+  }
+
+  .title {
+    font-weight: 700;
+    text-transform: capitalize;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    pointer-events: none;
+  }
+
+  .trigger { flex-shrink: 0; }
 }

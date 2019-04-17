@@ -1,32 +1,6 @@
 @import '../../../styles/variables';
 @import '../../../styles/colors';
 
-ul {
-  list-style: none;
-
-  img {
-    flex-shrink: 0;
-    width: 42px;
-    height: 42px;
-    margin-right: 20px;
-    margin-left: 5px;
-    border-radius: 21px;
-    overflow: hidden;
-    pointer-events: none;
-  }
-
-  .name {
-    font-weight: 700;
-    text-transform: capitalize;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
-    pointer-events: none;
-  }
-
-  .trigger { flex-shrink: 0; }
-}
-
 .modal-header {
   flex-direction: column;
 
