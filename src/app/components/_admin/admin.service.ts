@@ -19,7 +19,6 @@ export class AdminService implements OnDestroy {
     private afs: AngularFirestore,
     private notify: NotifyService
   ) {
-    this.users = [];
     this.isLoading = true;
     this.usersCollection = this.afs.collection<IUser>('users');
     this.usersSub = this.usersCollection.valueChanges()

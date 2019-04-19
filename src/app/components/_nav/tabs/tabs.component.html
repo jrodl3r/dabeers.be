@@ -11,7 +11,9 @@
         class="tab-link"
         routerLink="{{ tab.routerLink }}"
         routerLinkActive="active"
-        [routerLinkActiveOptions]="{exact: true}">{{ tab.label }}</a>
+        [routerLinkActiveOptions]="{exact: true}">
+          {{ tab.label }} <span *ngIf="tab.count">({{ tab.count }})</span>
+        </a>
     </li>
   </ul>
 </div>

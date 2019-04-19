@@ -2,7 +2,7 @@
   class="score"
   [class.text-success]="voteService.polls[beer.id] && voteService.polls[beer.id][uid] && voteService.polls[beer.id][uid].vote === true"
   [class.text-danger]="voteService.polls[beer.id] && voteService.polls[beer.id][uid] && voteService.polls[beer.id][uid].vote === false"
-  *ngIf="voteService.counts[beer.id]">
+  *ngIf="voteService.counts[beer.id.toString()]">
     <span *ngIf="!voteService.scores[beer.id] || voteService.scores[beer.id] === 0">-</span>
     <span *ngIf="voteService.scores[beer.id] !== 0">
       {{ voteService.scores[beer.id] > 0 ? '+' : null }}{{ voteService.scores[beer.id] }}
@@ -14,12 +14,12 @@
 </div>
 <div
   class="score-card-trigger"
-  *ngIf="isLoggedIn && voteService.voters[beer.id] && voteService.voters[beer.id].length">
+  *ngIf="isLoggedIn && voteService.voters[beer.id.toString()] && voteService.voters[beer.id.toString()].length">
   <span class="label">See Votes</span>
 </div>
 <ul
   class="score-card"
-  *ngIf="isLoggedIn && voteService.voters[beer.id] && voteService.voters[beer.id].length">
+  *ngIf="isLoggedIn && voteService.voters[beer.id.toString()] && voteService.voters[beer.id.toString()].length">
   <li *ngFor="let voter of voteService.voters[beer.id]">
     {{ voter.name }}
     <i
@@ -32,7 +32,7 @@
 </ul>
 <div
   class="score no-votes"
-  *ngIf="!voteService.counts[beer.id]">-</div>
+  *ngIf="!voteService.counts[beer.id.toString()]">-</div>
 <div class="image text-center">
   <img
     [class.default]="!beer.image"
