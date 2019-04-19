@@ -21,3 +21,14 @@ h2 {
     line-height: 1.2;
   }
 }
+
+h3.heading {
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid $offset-grey-color;
+
+  @media (min-width: $md-screen) {
+    margin-top: 0;
+  }
+}

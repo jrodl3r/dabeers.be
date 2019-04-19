@@ -1,13 +1,11 @@
 <div class="mt-4 mt-md-2 pr-3 pl-3 pb-3 pr-sm-0 pl-sm-0">
-  <h3>
-    Beers
+  <h3 class="heading">Beers
     <button
         type="button"
         class="btn btn-sm btn-success shadow-none m-0 ml-auto mr-2"
         (click)="showCreateBeerModal()">
-        <i class="fa fa-plus mr-1"></i> Add Beer</button>
+        <i class="fa fa-plus mr-1"></i> Add New Beer</button>
   </h3>
-  <hr>
   <div *ngIf="!beersService.isLoading; else showLoading">
     <ul
       class="list"
