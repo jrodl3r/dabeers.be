@@ -3,9 +3,9 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { IUser } from '../../models/user';
 
 @Pipe({
-  name: 'sortUserPipe'
+  name: 'sortUsersPipe'
 })
-export class SortUserPipe implements PipeTransform {
+export class SortUsersPipe implements PipeTransform {
 
   transform(users: Array<IUser>, direction: String) {
     if (direction === 'asc') {

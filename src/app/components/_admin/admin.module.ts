@@ -14,8 +14,7 @@ import { SettingsComponent } from './settings/settings.component';
 
 import { AdminService } from './admin.service';
 
-import { SortUserPipe } from '../../services/pipes/sort-user.pipe';
-import { EmailToNamePipe } from '../../services/pipes/email-to-name.pipe';
+import { SortUsersPipe } from '../../services/pipes/sort-users.pipe';
 
 @NgModule({
   imports: [
@@ -32,8 +31,7 @@ import { EmailToNamePipe } from '../../services/pipes/email-to-name.pipe';
     UsersComponent,
     PollsComponent,
     SettingsComponent,
-    SortUserPipe,
-    EmailToNamePipe
+    SortUsersPipe
   ],
   providers: [AdminService]
 })
