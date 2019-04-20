@@ -1,31 +1,75 @@
+@import '../../../styles/variables';
 @import '../../../styles/animation';
 
 h3 {
   display: flex;
-  align-items: center;
 
   .btn.btn-sm { font-size: 11px; }
 }
 
-.modal a {
-  text-decoration: underline;
+.modal-header {
 
-  &.disabled {
-    opacity: .25;
-    pointer-events: none;
+  .avatar {
+    position: relative;
+
+    button {
+      position: absolute;
+      margin: 0 auto;
+      padding: 5px 15px;
+      font-size: 11px;
+      opacity: .75;
+
+      @media (min-width: $sm-screen) {
+        padding: .5rem 1.6rem;
+        font-size: 13px;
+      }
+
+      &:hover { opacity: 1; }
+    }
+
+    img {
+      background: #FFF;
+      border: 1px solid #EEE;
+    }
+  }
+
+  .progress-indicator {
+    position: absolute;
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 80px;
+    margin-left: auto;
+    margin-right: auto;
+
+    @media (min-width: $sm-screen) {
+      width: 120px;
+    }
+
+    .progress {
+      width: 100%;
+      margin-top: 10px;
+    }
+
+    // .text-success {
+    //   position: relative;
+    //   left: 120%;
+    // }
+  }
+
+  input#changeImage {
+    height: 0;
+    width: 0;
+    visibility: hidden;
+    opacity: 0;
   }
 }
 
-.progress-indicator {
-  display: flex;
-  flex: 1;
-  align-items: center;
-  max-width: 160px;
-}
-
-input#changeImage {
-  height: 0;
-  width: 0;
-  visibility: hidden;
-  opacity: 0;
+.modal-body p {
+  font-family: $font-roboto-slab;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 32px;
 }

@@ -22,6 +22,54 @@
   user-select: none;
 
   .close { outline: none; }
+
+  &.modal-header-feature {
+    flex-direction: column;
+
+    .close {
+      position: absolute;
+      top: 0;
+      right: 0;
+      margin: 0;
+      padding: 1rem 1.35rem;
+    }
+
+    .avatar {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      margin: 10px 0 20px;
+
+      img {
+        width: 100px;
+        min-width: 100px;
+        height: 100px;
+        min-height: 100px;
+        margin: 0 auto;
+        border-radius: 50px;
+
+        @media (min-width: $sm-screen) {
+          width: 140px;
+          min-width: 140px;
+          height: 140px;
+          min-height: 140px;
+          border-radius: 70px;
+        }
+      }
+    }
+
+    .modal-title {
+      width: 100%;
+      font-size: 24px;
+      text-transform: capitalize;
+      text-align: center;
+
+      @media (min-width: $sm-screen) {
+        font-size: 28px;
+      }
+    }
+  }
 }
 
 .modal-body {

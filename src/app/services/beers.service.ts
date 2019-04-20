@@ -43,12 +43,12 @@ export class BeersService implements OnDestroy {
       .catch(error => this.notify.error('Error updating beer', error));
   }
 
-  public createBeer(title: String, description: String) {
+  public createBeer() {
     const beer: IBeer = {
-      id: 'beer-' + title.replace(/[^A-Za-z0-9]/g, '').trim().toLowerCase(),
-      title: title.trim(),
-      description: description.trim(),
-      image: '',
+      id: 'beer-' + this.activeBeer.title.replace(/[^A-Za-z0-9]/g, '').trim().toLowerCase(),
+      title: this.activeBeer.title.trim(),
+      description: this.activeBeer.description.trim(),
+      image: this.activeBeer.image,
       created: new Date(),
       edited: new Date(),
       isActive: true
@@ -77,17 +77,6 @@ export class BeersService implements OnDestroy {
       .catch(error => this.notify.error('Error editing beer', error));
   }
 
-  public editBeerImage(image: String) {
-    return this.beersDoc.ref.get()
-      .then(response => {
-        const beers = response.data();
-        beers[`${this.activeBeer.id}`].image = image;
-        return this.updateBeers(beers)
-          .then(() => this.notify.success('Image updated successfully'));
-      })
-      .catch(error => this.notify.error('Error updating image', error));
-  }
-
   public removeBeer(id: String) {
     return this.beersDoc.ref.get()
       .then(response => {
@@ -110,6 +99,18 @@ export class BeersService implements OnDestroy {
 
   public setActiveBeer(id: String) {
     this.activeBeer = this.beers[`${id}`];
+  }
+
+  public setActiveBeerTitle(title: String) {
+    this.activeBeer.title = title;
+  }
+
+  public setActiveBeerDescription(description: String) {
+    this.activeBeer.description = description;
+  }
+
+  public setActiveBeerImage(image: String) {
+    this.activeBeer.image = image;
   }
 
   public resetActiveBeer() {

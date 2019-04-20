@@ -4,10 +4,12 @@
 
 .tab-container {
   width: 100%;
+  min-width: 360px;
   max-width: 540px;
   margin: 0 auto;
 
   @media (min-width: $md-screen) {
+    min-width: initial;
     max-width: initial;
   }
 }

@@ -1,7 +1,7 @@
 <div class="mt-4 mt-md-2 pr-3 pl-3 pb-3 pr-sm-0 pl-sm-0">
-  <h3 class="heading">Users
-    <span *ngIf="adminService.users">({{ adminService.users.length }})</span>
-  </h3>
+  <h3
+    class="heading"
+    *ngIf="adminService.users">Users ({{ adminService.users.length || 0 }})</h3>
   <div *ngIf="!adminService.isLoading; else showLoading">
     <ul
       class="list"
@@ -45,7 +45,7 @@
       <div
         class="modal-content"
         *ngIf="activeUser">
-        <div class="modal-header">
+        <div class="modal-header modal-header-feature">
           <div class="avatar">
             <img [src]="activeUser.photoURL">
           </div>

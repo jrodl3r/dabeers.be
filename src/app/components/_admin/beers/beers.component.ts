@@ -1,34 +1,16 @@
-import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Component } from '@angular/core';
 import { AngularFireStorage, AngularFireUploadTask } from '@angular/fire/storage';
 import { Observable } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 
 import { BeersService } from '../../../services/beers.service';
-import { FormsService } from '../../../services/forms.service';
-
-type InputFields = 'title' | 'description';
-type FormErrors = { [u in InputFields]: string };
 
 @Component({
   selector: 'app-beers',
   templateUrl: './beers.component.html',
   styleUrls: ['./beers.component.scss']
 })
-export class BeersComponent implements OnInit {
-  beersForm: FormGroup;
-  formErrors: FormErrors = {
-    'title': '',
-    'description': '',
-  };
-  validationMessages = {
-    'title': {
-      'required': 'Title is required.'
-    },
-    'description': {
-      'required': 'Description is required.'
-    }
-  };
+export class BeersComponent {
   isCreateModalActive: Boolean = false;
   isEditModalActive: Boolean = false;
   isRemoveModalActive: Boolean = false;
@@ -40,25 +22,26 @@ export class BeersComponent implements OnInit {
 
   constructor(
     public beersService: BeersService,
-    private storage: AngularFireStorage,
-    private forms: FormsService,
-    private fb: FormBuilder
+    private storage: AngularFireStorage
   ) { }
 
-  ngOnInit() {
-    this.buildForm();
-  }
-
   createBeer() {
-    this.beersService
-      .createBeer(this.beersForm.getRawValue().title, this.beersForm.getRawValue().description)
+    this.beersService.createBeer()
       .then(() => this.hideModals());
   }
 
   editBeer() {
-    this.beersService
-      .editBeer(this.beersForm.getRawValue().title, this.beersForm.getRawValue().description)
-      .then(() => this.hideModals());
+    // this.beersService
+    //   .editBeer(this.beersForm.getRawValue().title, this.beersForm.getRawValue().description)
+    //   .then(() => this.hideModals());
+  }
+
+  setBeerTitle(title: String) {
+    this.beersService.setActiveBeerTitle(title);
+  }
+
+  setBeerDescription(description: String) {
+    this.beersService.setActiveBeerDescription(description);
   }
 
   removeBeer() {
@@ -92,7 +75,7 @@ export class BeersComponent implements OnInit {
         finalize(() => {
           ref.getDownloadURL().subscribe(url => {
             if (url) {
-              this.beersService.editBeerImage(url);
+              this.beersService.setActiveBeerImage(url);
               setTimeout(() => this.isImageUploadActive = false, 2500);
             }
           });
@@ -103,17 +86,17 @@ export class BeersComponent implements OnInit {
 
   showCreateBeerModal() {
     this.beersService.resetActiveBeer();
-    this.beersForm.setValue({ title: '', description: '' });
-    this.beersForm.reset();
+    // this.beersForm.setValue({ title: '', description: '' });
+    // this.beersForm.reset();
     this.isCreateModalActive = true;
   }
 
   showEditBeerModal(id: String) {
     this.beersService.setActiveBeer(id);
-    this.beersForm.setValue({
-      title: this.beersService.beers[`${id}`].title,
-      description: this.beersService.beers[`${id}`].description
-    });
+    // this.beersForm.setValue({
+    //   title: this.beersService.beers[`${id}`].title,
+    //   description: this.beersService.beers[`${id}`].description
+    // });
     this.isEditModalActive = true;
   }
 
@@ -124,20 +107,20 @@ export class BeersComponent implements OnInit {
 
   hideModals() {
     this.beersService.resetActiveBeer();
-    this.isEditModalActive = false;
     this.isCreateModalActive = false;
+    this.isEditModalActive = false;
     this.isRemoveModalActive = false;
     this.isImageUploadActive = false;
   }
 
-  buildForm() {
-    this.beersForm = this.fb.group({
-      'title': [this.beersService.activeBeer.title, [Validators.required]],
-      'description': [this.beersService.activeBeer.description, [Validators.required]]
-    });
-    this.beersForm.valueChanges.subscribe((data) =>
-      this.forms.validate(data, this.beersForm, this.formErrors, this.validationMessages, ['title', 'description']));
-    this.forms.validate({}, this.beersForm, this.formErrors, this.validationMessages, ['title', 'description']);
-  }
+  // buildForm() {
+  //   this.beersForm = this.fb.group({
+  //     'title': [this.beersService.activeBeer.title, [Validators.required]],
+  //     'description': [this.beersService.activeBeer.description, [Validators.required]]
+  //   });
+  //   this.beersForm.valueChanges.subscribe((data) =>
+  //     this.forms.validate(data, this.beersForm, this.formErrors, this.validationMessages, ['title', 'description']));
+  //   this.forms.validate({}, this.beersForm, this.formErrors, this.validationMessages, ['title', 'description']);
+  // }
 
 }

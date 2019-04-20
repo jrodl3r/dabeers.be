@@ -1,9 +1,9 @@
 <div class="mt-4 mt-md-2 pr-3 pl-3 pb-3 pr-sm-0 pl-sm-0">
-  <h3 class="heading">Beers
-    <span *ngIf="beersService.beerCount()">({{ beersService.beerCount() }})</span>
+  <h3 class="heading">
+    Beers ({{ beersService.beerCount() || 0 }})
     <button
         type="button"
-        class="btn btn-sm btn-success shadow-none m-0 ml-auto mr-2"
+        class="btn btn-sm btn-primary shadow-none m-0 ml-auto mr-2"
         (click)="showCreateBeerModal()">
         <i class="fa fa-plus mr-1"></i> Add New Beer</button>
   </h3>
@@ -32,10 +32,8 @@
   </div>
 </ng-template>
 
-<!-- Modals -->
-<div [class.modal-open]="isCreateModalActive || isEditModalActive || isRemoveModalActive">
-
-  <!-- Create / Edit Beer -->
+<!-- Create / Edit Beer -->
+<div [class.modal-open]="isCreateModalActive || isEditModalActive">
   <div
     class="modal fade"
     [class.show]="isCreateModalActive || isEditModalActive"
@@ -46,8 +44,47 @@
     aria-hidden="true">
     <div role="document" class="modal-dialog modal-notify">
       <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">{{ isEditModalActive ? 'Edit' : 'Add New' }} Beer</h5>
+        <div class="modal-header modal-header-feature">
+          <div class="avatar">
+            <button
+              class="btn btn-sm btn-light"
+              (click)="changeImage($event)"
+              *ngIf="!isImageUploadActive">
+                {{ beersService.activeBeer.image ? 'Edit' : 'Add' }} Image
+            </button>
+            <input
+              id="changeImage"
+              type="file"
+              (change)="uploadImage($event.target.files)" />
+            <div
+              class="progress-indicator"
+              *ngIf="imageUploadPercentage | async as percent">
+              <div
+                class="progress"
+                *ngIf="percent < 100">
+                <div
+                  class="progress-bar"
+                  role="progressbar"
+                  aria-valuenow="percent"
+                  aria-valuemin="0"
+                  aria-valuemax="100"
+                  [style.width]="percent + '%'"></div>
+              </div>
+              <span *ngIf="percent < 100">{{ percent | number: '1.0-0' }}%</span>
+              <span
+                class="text-success"
+                *ngIf="isImageUploadActive && percent === 100">
+                  <i class="fa fa-check-circle mr-1"></i> Ready
+              </span>
+            </div>
+            <img [src]="beersService.activeBeer.image || '/assets/img/bottle.png'">
+          </div>
+          <h5
+            class="modal-title"
+            contenteditable="true"
+            (blur)="setBeerTitle($event.target.textContent)">
+            {{ beersService.activeBeer.title || 'Beer Title' }}
+          </h5>
           <button
             type="button"
             class="close"
@@ -57,7 +94,40 @@
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-        <form [formGroup]="beersForm">
+        <div class="modal-body pt-4 pr-4 pl-4 pb-0">
+          <p
+            class="pt-2 pb-3"
+            contenteditable="true"
+            (blur)="setBeerDescription($event.target.textContent)">
+            {{ beersService.activeBeer.description || 'Beer Description' }}
+          </p>
+        </div>
+        <div class="modal-footer p-2">
+          <small
+            class="d-none d-sm-inline ml-2 mr-auto text-light"
+            *ngIf="isCreateModalActive">
+            <strong>Click to make changes</strong>
+          </small>
+          <button
+            type="button"
+            class="btn btn-sm btn-grey mr-2"
+            data-dismiss="modal"
+            (click)="hideModals()">Cancel</button>
+          <button
+            type="button"
+            *ngIf="isEditModalActive"
+            (click)="editBeer()"
+            class="btn btn-sm btn-success mr-2">Save</button>
+            <!-- [disabled]="!beersForm.valid" -->
+          <button
+            type="button"
+            *ngIf="!isEditModalActive"
+            (click)="createBeer()"
+            [disabled]="!beersService.activeBeer.title || !beersService.activeBeer.description"
+            class="btn btn-sm btn-success">Create</button>
+            <!-- [disabled]="!beersForm.valid" -->
+        </div>
+        <!-- <form [formGroup]="beersForm">
           <div class="modal-body pt-4 pr-4 pl-4 pb-0">
             <input
               type="text"
@@ -114,34 +184,17 @@
               </div>
             </div>
           </div>
-          <div class="modal-footer p-2">
-            <button
-              type="button"
-              class="btn btn-sm btn-grey mr-2"
-              data-dismiss="modal"
-              (click)="hideModals()">Cancel</button>
-            <button
-              type="button"
-              *ngIf="isEditModalActive"
-              (click)="editBeer()"
-              [disabled]="!beersForm.valid"
-              class="btn btn-sm btn-success mr-2">Save</button>
-            <button
-              type="button"
-              *ngIf="!isEditModalActive"
-              (click)="createBeer()"
-              [disabled]="!beersForm.valid"
-              class="btn btn-sm btn-success">Create</button>
-          </div>
-        </form>
+        </form> -->
       </div>
     </div>
   </div>
+</div>
 
-  <!-- Remove Beer -->
+<!-- Remove Beer -->
+<div [class.modal-open]="isRemoveModalActive">
   <div
     class="modal fade"
-    [class.show]="isRemoveModalActive && !isCreateModalActive && !isEditModalActive"
+    [class.show]="isRemoveModalActive"
     id="removeBeerModal"
     tabindex="-1"
     role="dialog"

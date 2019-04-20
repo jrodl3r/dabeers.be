@@ -9,3 +9,7 @@ label { font-weight: 700; }
 textarea.form-control {
   height: 110px !important;
 }
+
+[contenteditable='true']:focus {
+  outline: none;
+}

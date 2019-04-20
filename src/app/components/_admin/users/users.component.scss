@@ -1,47 +1,6 @@
 @import '../../../styles/variables';
 @import '../../../styles/colors';
 
-.modal-header {
-  flex-direction: column;
-
-  .close {
-    position: absolute;
-    top: 0;
-    right: 0;
-    margin: 0;
-    padding: 1rem 1.35rem;
-  }
-
-  .avatar {
-    display: flex;
-    align-items: center;
-    width: 100%;
-    margin: 10px 0 20px;
-
-    img {
-      width: 100px;
-      margin: 0 auto;
-      border-radius: 50px;
-
-      @media (min-width: $sm-screen) {
-        width: 140px;
-        border-radius: 70px;
-      }
-    }
-  }
-}
-
-.modal-title {
-  width: 100%;
-  font-size: 24px;
-  text-transform: capitalize;
-  text-align: center;
-
-  @media (min-width: $sm-screen) {
-    font-size: 28px;
-  }
-}
-
 .modal-body {
   font-family: $font-roboto-slab;
 

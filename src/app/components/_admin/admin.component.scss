@@ -37,6 +37,7 @@ h3 {
   width: 100%;
   background: $light-grey-color;
   border-bottom: 1px solid $grey-color;
+  overflow-x: scroll;
 
   @media (min-width: $xs-screen) {
     left: calc(-1 * (100vw - 100%) / 2);
