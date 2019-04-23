@@ -48,6 +48,7 @@
           <div class="avatar">
             <button
               class="btn btn-sm btn-light"
+              tabindex="1"
               (click)="changeImage($event)"
               *ngIf="!isImageUploadActive">
                 {{ beersService.activeBeer.image ? 'Edit' : 'Add' }} Image
@@ -82,8 +83,10 @@
           <h5
             class="modal-title"
             contenteditable="true"
-            (blur)="setBeerTitle($event.target.textContent)">
-            {{ beersService.activeBeer.title || 'Beer Title' }}
+            tabindex="2"
+            (blur)="setBeerTitle($event.target.textContent)"
+            (keyup)="validateBeerTitle($event.target.textContent)">
+            {{ beersService.activeBeer.title || defaultTitle }}
           </h5>
           <button
             type="button"
@@ -98,8 +101,10 @@
           <p
             class="pt-2 pb-3"
             contenteditable="true"
-            (blur)="setBeerDescription($event.target.textContent)">
-            {{ beersService.activeBeer.description || 'Beer Description' }}
+            tabindex="3"
+            (blur)="setBeerDescription($event.target.textContent)"
+            (keyup)="validateBeerDescription($event.target.textContent)">
+            {{ beersService.activeBeer.description || defaultDescription }}
           </p>
         </div>
         <div class="modal-footer p-2">
@@ -109,23 +114,21 @@
             <strong>Click to make changes</strong>
           </small>
           <button
-            type="button"
             class="btn btn-sm btn-grey mr-2"
             data-dismiss="modal"
+            tabindex="4"
             (click)="hideModals()">Cancel</button>
           <button
-            type="button"
-            *ngIf="isEditModalActive"
+            class="btn btn-sm btn-primary mr-2"
+            tabindex="5"
             (click)="editBeer()"
-            class="btn btn-sm btn-success mr-2">Save</button>
-            <!-- [disabled]="!beersForm.valid" -->
+            *ngIf="isEditModalActive">Save</button>
           <button
-            type="button"
-            *ngIf="!isEditModalActive"
+            class="btn btn-sm btn-primary"
+            tabindex="5"
+            [disabled]="!hasChanges"
             (click)="createBeer()"
-            [disabled]="!beersService.activeBeer.title || !beersService.activeBeer.description"
-            class="btn btn-sm btn-success">Create</button>
-            <!-- [disabled]="!beersForm.valid" -->
+            *ngIf="!isEditModalActive">Create</button>
         </div>
         <!-- <form [formGroup]="beersForm">
           <div class="modal-body pt-4 pr-4 pl-4 pb-0">

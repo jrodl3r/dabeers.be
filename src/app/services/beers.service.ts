@@ -54,25 +54,32 @@ export class BeersService implements OnDestroy {
       isActive: true
     };
     return this.beersDoc.ref.get()
-    .then(response => {
-      const beers = response.data();
-      beers[`${beer.id}`] = beer;
-      return this.updateBeers(beers)
-        .then(() => this.notify.success('Beer created successfully'));
-    })
-    .catch(error => this.notify.error('Error creating beer', error));
+      .then(response => {
+        const beers = response.data();
+        beers[`${beer.id}`] = beer;
+        return this.updateBeers(beers)
+          .then(() => {
+            this.resetActiveBeer();
+            this.notify.success('Beer created');
+          });
+      })
+      .catch(error => this.notify.error('Error creating beer', error));
     // TODO: add new beer doc to votes collection
   }
 
-  public editBeer(title: String, description: String) {
+  public editBeer() {
     return this.beersDoc.ref.get()
       .then(response => {
         const beers = response.data();
-        beers[`${this.activeBeer.id}`].title = title;
-        beers[`${this.activeBeer.id}`].description = description;
+        beers[`${this.activeBeer.id}`].title = this.activeBeer.title;
+        beers[`${this.activeBeer.id}`].description = this.activeBeer.description;
+        beers[`${this.activeBeer.id}`].image = this.activeBeer.image;
         beers[`${this.activeBeer.id}`].edited = new Date();
         return this.updateBeers(beers)
-          .then(() => this.notify.success('Beer updated successfully'));
+          .then(() => {
+            this.resetActiveBeer();
+            this.notify.success('Beer updated');
+          });
       })
       .catch(error => this.notify.error('Error editing beer', error));
   }
