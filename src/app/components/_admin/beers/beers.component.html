@@ -49,7 +49,7 @@
             <button
               class="btn btn-sm btn-light"
               tabindex="1"
-              (click)="changeImage($event)"
+              (click)="openImageUpload($event)"
               *ngIf="!isImageUploadActive">
                 {{ beersService.activeBeer.image ? 'Edit' : 'Add' }} Image
             </button>
@@ -111,7 +111,7 @@
           <small
             class="d-none d-sm-inline ml-2 mr-auto text-light"
             *ngIf="isCreateModalActive">
-            <strong>Click to make changes</strong>
+            <strong>Click items to make changes</strong>
           </small>
           <button
             class="btn btn-sm btn-grey mr-2"
@@ -121,12 +121,13 @@
           <button
             class="btn btn-sm btn-primary mr-2"
             tabindex="5"
+            [disabled]="!canUpdate"
             (click)="editBeer()"
             *ngIf="isEditModalActive">Save</button>
           <button
             class="btn btn-sm btn-primary"
             tabindex="5"
-            [disabled]="!hasChanges"
+            [disabled]="!canCreate"
             (click)="createBeer()"
             *ngIf="!isEditModalActive">Create</button>
         </div>

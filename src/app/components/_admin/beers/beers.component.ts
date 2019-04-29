@@ -21,7 +21,8 @@ export class BeersComponent {
   imageMetadata: any;
   defaultTitle = 'Beer Title';
   defaultDescription = 'Beer Description';
-  hasChanges = false;
+  canCreate = false;
+  canUpdate = false;
 
   constructor(
     public beersService: BeersService,
@@ -43,7 +44,8 @@ export class BeersComponent {
   }
 
   validateBeerTitle(title: String) {
-    this.hasChanges = title && title.trim() !== this.defaultTitle && this.beersService.activeBeer.description ? true : false;
+    this.canCreate = title && title.trim() !== this.defaultTitle && this.beersService.activeBeer.description ? true : false;
+    this.canUpdate = title && title.trim() !== this.beersService.activeBeer.title;
   }
 
   setBeerDescription(description: String) {
@@ -51,7 +53,8 @@ export class BeersComponent {
   }
 
   validateBeerDescription(description: String) {
-    this.hasChanges = description && description.trim() !== this.defaultDescription && this.beersService.activeBeer.title ? true : false;
+    this.canCreate = description && description.trim() !== this.defaultDescription && this.beersService.activeBeer.title ? true : false;
+    this.canUpdate = description && description.trim() !== this.beersService.activeBeer.description;
   }
 
   removeBeer() {
@@ -63,7 +66,7 @@ export class BeersComponent {
     this.beersService.restoreBeer(id);
   }
 
-  changeImage(event: Event) {
+  openImageUpload(event: Event) {
     event.preventDefault();
     document.getElementById('changeImage').click();
   }
@@ -86,7 +89,10 @@ export class BeersComponent {
           ref.getDownloadURL().subscribe(url => {
             if (url) {
               this.beersService.setActiveBeerImage(url);
-              setTimeout(() => this.isImageUploadActive = false, 2000);
+              setTimeout(() => {
+                this.isImageUploadActive = false;
+                this.canUpdate = true;
+              }, 2000);
             }
           });
         })
@@ -115,7 +121,8 @@ export class BeersComponent {
     this.isEditModalActive = false;
     this.isRemoveModalActive = false;
     this.isImageUploadActive = false;
-    this.hasChanges = false;
+    this.canCreate = false;
+    this.canUpdate = false;
   }
 
 }
