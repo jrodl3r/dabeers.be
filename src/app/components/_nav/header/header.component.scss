@@ -1,7 +1,7 @@
 @import '../../../styles/variables';
 @import '../../../styles/animation';
 @import '../../../styles/colors';
-@import '../../../styles/typogrophy';
+@import '../../../styles/typography';
 
 .nav {
   align-items: center;
@@ -125,7 +125,7 @@
 
 .display-name {
   display: none;
-  font-size: 16px;
+  font-size: 15px;
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
@@ -225,7 +225,7 @@
   width: auto;
   margin-bottom: 0;
   padding: 4px 10px 4px 15px;
-  font-size: .95rem;
+  font-size: 14px;
   text-align: left;
   color: #FFF;
   border-radius: 4px;

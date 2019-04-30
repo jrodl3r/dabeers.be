@@ -2,7 +2,7 @@
 @import '../../../styles/variables';
 
 .image {
-  min-width: 50px;
+  min-width: 40px;
   user-select: none;
 
   @media (min-width: $sm-screen) {
@@ -16,8 +16,8 @@
 }
 
 img {
-  max-height: 50px;
-  max-width: 50px;
+  max-height: 40px;
+  max-width: 40px;
 
   @media (min-width: $sm-screen) {
     max-height: 70px;
@@ -39,9 +39,11 @@ img {
   display: flex;
   flex-direction: column;
   width: 100%;
+  margin-left: 10px;
 
   @media (min-width: $md-screen) {
     margin-right: 50px;
+    margin-left: 0;
   }
 
   @media (min-width: $lg-screen) {
@@ -67,13 +69,17 @@ img {
   }
 
   .title {
-    font-family: $font-montserrat;
-    font-weight: 700;
-    font-size: 14px;
+    font-weight: 900;
+    font-size: 13px;
     cursor: default;
+
+    @media (min-width: $xs-screen) {
+      font-size: 15px;
+    }
 
     @media (min-width: $sm-screen) {
       font-size: 16px;
+      line-height: 1.5;
     }
   }
 }
@@ -82,21 +88,20 @@ img {
   display: flex;
   justify-content: center;
   min-width: 55px;
-  font-family: $font-montserrat;
-  font-size: 17px;
-  font-weight: 700;
+  font-size: 20px;
+  font-weight: 900;
   color: #303E45;
   user-select: none;
   cursor: default;
 
   @media (min-width: $sm-screen) {
     padding: 10px;
-    font-size: 20px;
+    font-size: 22px;
   }
 
   @media (min-width: $md-screen) {
     min-width: 60px;
-    font-size: 24px;
+    font-size: 26px;
   }
 
   @media (min-width: $lg-screen) {
@@ -249,10 +254,27 @@ img {
       * { pointer-events: none; }
     }
 
+    &.has-vote {
+      &:hover i { opacity: .4; }
+      i { opacity: .7; }
+    }
+
     i {
       padding: 5px;
       transition: $default-anim;
       cursor: pointer;
+
+      @media (min-width: $xs-screen) {
+        font-size: 26px;
+      }
+
+      @media (min-width: $sm-screen) {
+        font-size: 32px;
+      }
+
+      @media (min-width: $lg-screen) {
+        font-size: 26px;
+      }
 
       &:hover { transform: scale(1.15); }
       &.selected { pointer-events: none; }
@@ -275,7 +297,7 @@ img {
 
 .total-votes {
   position: relative;
-  top: 11px;
+  top: 13px;
   left: -3px;
   font-family: $font-roboto-slab;
   font-size: 11px;
@@ -293,7 +315,7 @@ img {
 
 .total-votes-divider {
   position: relative;
-  top: 3px;
+  top: 2px;
   left: -1px;
   font-family: $font-roboto-slab;
 

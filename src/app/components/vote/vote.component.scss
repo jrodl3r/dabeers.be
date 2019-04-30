@@ -64,21 +64,16 @@
   justify-content: center;
   align-items: center;
   padding: 12px 18px;
-  font-family: $font-montserrat;
-  font-size: 11px;
-  font-weight: 700;
+  font-size: 12px;
+  font-weight: 500;
   color: #FFF;
   background-color: $special-dark-color;
   border-top-right-radius: 0.25rem;
   border-top-left-radius: 0.25rem;
   box-shadow: inset 0 -2px 5px rgba(0,0,0, .5);
 
-  @media (min-width: $sm-screen) {
-    font-size: 12px;
-  }
-
-  @media (min-width: $md-screen) {
-    font-size: 14px;
+  @media (min-width: $xs-screen) {
+    font-size: 15px;
   }
 
   @media (min-width: $lg-screen) {
@@ -93,6 +88,7 @@
     width: 100%;
 
     span {
+      font-weight: 900;
       text-shadow: 0 0 2px rgba(0,0,0, .32);
       user-select: none;
     }
@@ -110,14 +106,15 @@
     }
   }
 
-  .label {
-    font-size: 12px;
-    opacity: .5;
-  }
-
   li {
     &:first-of-type a { margin-left: 15px; }
     &:last-of-type a { margin-right: -5px; }
+
+    .label {
+      font-size: 12px;
+      font-weight: 700;
+      opacity: .4;
+    }
 
     a {
       margin: 0 0 0 5px;
@@ -129,6 +126,7 @@
       user-select: none;
 
       &.active {
+        font-weight: 900;
         color: $elegant-dark-color;
         background: rgba(255,255,255, .3);
         pointer-events: none;
