@@ -2,10 +2,11 @@
   <h3 class="heading">
     Beers ({{ beersService.beerCount() || 0 }})
     <button
-        type="button"
-        class="btn btn-sm btn-primary shadow-none m-0 ml-auto mr-2"
-        (click)="showCreateBeerModal()">
-        <i class="fa fa-plus mr-1"></i> Add New Beer</button>
+      type="button"
+      class="btn btn-sm btn-primary shadow-none m-0 ml-auto mr-2"
+      (click)="showCreateBeerModal()">
+      <i class="fa fa-plus mr-1"></i> Add New Beer
+    </button>
   </h3>
   <div *ngIf="!beersService.isLoading; else showLoading">
     <ul
@@ -47,7 +48,7 @@
         <div class="modal-header modal-header-feature">
           <div class="avatar">
             <button
-              class="btn btn-sm btn-light"
+              class="btn btn-sm btn-light shadow-none"
               tabindex="1"
               (click)="openImageUpload($event)"
               *ngIf="!isImageUploadActive">
@@ -78,16 +79,15 @@
                   <i class="fa fa-check-circle mr-1"></i> Ready
               </span>
             </div>
-            <img [src]="beersService.activeBeer.image || '/assets/img/bottle.png'">
+            <img [src]="image || beersService.activeBeer.image || '/assets/img/bottle.png'">
           </div>
           <h5
+            id="active-beer-title"
             class="modal-title"
             contenteditable="true"
             tabindex="2"
-            (blur)="setBeerTitle($event.target.textContent)"
-            (keyup)="validateBeerTitle($event.target.textContent)">
-            {{ beersService.activeBeer.title || defaultTitle }}
-          </h5>
+            [innerHTML]="beersService.activeBeer.title || defaultTitle"
+            (keyup)="validateBeerTitle($event.target.textContent)"></h5>
           <button
             type="button"
             class="close"
@@ -99,15 +99,24 @@
         </div>
         <div class="modal-body pt-4 pr-4 pl-4 pb-0">
           <p
+            id="active-beer-description"
             class="pt-2 pb-3"
             contenteditable="true"
             tabindex="3"
-            (blur)="setBeerDescription($event.target.textContent)"
-            (keyup)="validateBeerDescription($event.target.textContent)">
-            {{ beersService.activeBeer.description || defaultDescription }}
-          </p>
+            [innerHTML]="beersService.activeBeer.description || defaultDescription"
+            (keyup)="validateBeerDescription($event.target.textContent)"></p>
         </div>
         <div class="modal-footer p-2">
+          <small
+            class="activator d-none ml-2 mr-auto text-danger"
+            [class.d-sm-inline]="isEditModalActive"
+            (click)="beersService.activeBeer.isActive ? showRemoveBeerModal() : restoreBeer()">
+            <i
+              class="fa mr-1"
+              [class.fa-trash]="beersService.activeBeer.isActive"
+              [class.fa-undo]="!beersService.activeBeer.isActive"></i>
+            {{ beersService.activeBeer.isActive ? 'Remove' : 'Restore' }}
+          </small>
           <small
             class="d-none d-sm-inline ml-2 mr-auto text-light"
             *ngIf="isCreateModalActive">
@@ -117,7 +126,7 @@
             class="btn btn-sm btn-grey mr-2"
             data-dismiss="modal"
             tabindex="4"
-            (click)="hideModals()">Cancel</button>
+            (click)="hideModals()">Close</button>
           <button
             class="btn btn-sm btn-primary mr-2"
             tabindex="5"
@@ -131,64 +140,6 @@
             (click)="createBeer()"
             *ngIf="!isEditModalActive">Create</button>
         </div>
-        <!-- <form [formGroup]="beersForm">
-          <div class="modal-body pt-4 pr-4 pl-4 pb-0">
-            <input
-              type="text"
-              name="title"
-              class="form-control"
-              [class.mb-4]="!formErrors.title"
-              placeholder="Beer Title"
-              formControlName="title">
-            <div *ngIf="formErrors.title" class="text-danger p-2 pb-3">{{ formErrors.title }}</div>
-            <textarea
-              type="text"
-              name="description"
-              class="form-control"
-              [class.mb-3]="!formErrors.description"
-              placeholder="Beer Description"
-              formControlName="description"></textarea>
-            <div *ngIf="formErrors.description" class="text-danger p-2 pb-3">{{ formErrors.description }}</div>
-            <div
-              class="row align-items-center pr-2 pl-2 pb-3"
-              *ngIf="beersService.activeBeer.isActive">
-              <a
-                href=""
-                class="mr-auto ml-2"
-                [class.disabled]="isImageUploadActive"
-                (click)="changeImage($event)">Change Image</a>
-              <input
-                id="changeImage"
-                type="file"
-                (change)="uploadImage($event.target.files)" />
-              <div
-                class="progress-indicator ml-3 mr-2"
-                *ngIf="imageUploadPercentage | async as percent">
-                <div
-                  class="progress w-100 ml-auto"
-                  *ngIf="percent < 100">
-                  <div
-                    class="progress-bar"
-                    role="progressbar"
-                    aria-valuenow="percent"
-                    aria-valuemin="0"
-                    aria-valuemax="100"
-                    [style.width]="percent + '%'"></div>
-                </div>
-                <span
-                  class="ml-2 mr-0"
-                  *ngIf="percent < 100">
-                  {{ percent | number: '1.0-0' }}%
-                </span>
-                <span
-                  class="text-success mr-0 ml-auto"
-                  *ngIf="isImageUploadActive && percent === 100">
-                    <i class="fa fa-check-circle mr-2"></i> Upload Complete
-                </span>
-              </div>
-            </div>
-          </div>
-        </form> -->
       </div>
     </div>
   </div>
@@ -204,7 +155,7 @@
     role="dialog"
     aria-labelledby="removeBeerModal"
     aria-hidden="true">
-    <div role="document" class="modal-dialog modal-sm modal-notify modal-danger">
+    <div role="document" class="modal-dialog modal-sm modal-notify modal-danger mt-3">
       <div class="modal-content text-center">
         <div class="modal-header d-flex justify-content-center">
           <p class="heading">Are you sure?</p>
@@ -221,7 +172,7 @@
             type="button"
             class="btn btn-sm btn-grey waves-effect"
             data-dismiss="modal"
-            (click)="hideModals()">No</button>
+            (click)="hideRemoveModal()">No</button>
         </div>
       </div>
     </div>

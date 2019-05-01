@@ -78,7 +78,7 @@ export class BeersService implements OnDestroy {
         return this.updateBeers(beers)
           .then(() => {
             this.resetActiveBeer();
-            this.notify.success('Beer updated');
+            this.notify.info('Beer updated');
           });
       })
       .catch(error => this.notify.error('Error editing beer', error));
@@ -89,6 +89,8 @@ export class BeersService implements OnDestroy {
       .then(response => {
         const beers = response.data();
         beers[`${id}`].isActive = false;
+        this.activeBeer.isActive = false;
+        this.notify.info('Beer removed');
         return this.updateBeers(beers);
       })
       .catch(error => this.notify.error('Error removing beer', error));
@@ -99,6 +101,8 @@ export class BeersService implements OnDestroy {
       .then(response => {
         const beers = response.data();
         beers[`${id}`].isActive = true;
+        this.activeBeer.isActive = true;
+        this.notify.info('Beer restored');
         return this.updateBeers(beers);
       })
       .catch(error => this.notify.error('Error restoring beer', error));
@@ -117,7 +121,7 @@ export class BeersService implements OnDestroy {
   }
 
   public setActiveBeerImage(image: String) {
-    this.activeBeer.image = image;
+    this.activeBeer.image = image ? image : this.activeBeer.image;
   }
 
   public resetActiveBeer() {
@@ -137,7 +141,8 @@ export class BeersService implements OnDestroy {
   }
 
   public activeBeerCount() {
-    return this.beers ? Object.keys(this.beers).filter(id => this.beers[`${id}`].isActive === true).length : 0;
+    return this.beers ? Object.keys(this.beers)
+      .filter(id => this.beers[`${id}`].isActive === true).length : 0;
   }
 
 }

@@ -33,7 +33,12 @@ h3.heading {
   margin-top: 2rem;
   margin-bottom: 1rem;
   padding-bottom: 1rem;
+  font-size: 1.5rem;
   border-bottom: 1px solid $offset-grey-color;
+
+  @media (min-width: $sm-screen) {
+    font-size: 1.75rem;
+  }
 
   @media (min-width: $md-screen) {
     margin-top: 0;

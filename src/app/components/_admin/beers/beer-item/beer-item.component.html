@@ -1,23 +1,9 @@
-<img class="photo" [src]="beer.image || '/assets/img/bottle.png'">
-<span class="title ml-0">{{ beer.title }} <small class="pl-1">{{ beer.isActive ? '' : '(Inactive)'}}</small></span>
+<img
+  class="photo"
+  [src]="beer.image || '/assets/img/bottle.png'">
+<span class="title ml-0">
+  {{ beer.title }} <small class="pl-1">{{ beer.isActive ? '' : '(Inactive)'}}</small>
+</span>
 <div class="trigger ml-auto mr-3">
   <i class="fa fa-chevron-right text-black-50"></i>
 </div>
-<!-- <button
-  type="button"
-  class="btn btn-sm btn-primary shadow-none mt-1 mb-1 mr-2 ml-auto"
-  [class.d-none]="!beer.isActive"
-  (click)="emitEditBeer(beer.id)">
-  <i class="fa fa-edit mr-1"></i> Edit</button>
-<button
-  type="button"
-  class="btn btn-sm btn-danger shadow-none mt-1 mb-1 mr-2 ml-2"
-  [class.d-none]="!beer.isActive"
-  (click)="emitRemoveBeer(beer.id)">
-  <i class="fa fa-remove mr-1"></i> Remove</button>
-<button
-  type="button"
-  class="btn btn-sm btn-warning shadow-none mt-1 mb-1 mr-2 ml-auto"
-  [class.d-none]="beer.isActive"
-  (click)="emitRestoreBeer(beer.id)">
-  <i class="fa fa-undo mr-1"></i> Restore</button> -->

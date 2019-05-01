@@ -19,6 +19,7 @@ export class BeersComponent {
   imageUploadPercentage: Observable<number>;
   imageUploadSnapshot: Observable<any>;
   imageMetadata: any;
+  image = '';
   defaultTitle = 'Beer Title';
   defaultDescription = 'Beer Description';
   canCreate = false;
@@ -30,30 +31,34 @@ export class BeersComponent {
   ) { }
 
   createBeer() {
+    const title = document.getElementById('active-beer-title').innerHTML;
+    const description = document.getElementById('active-beer-description').innerHTML;
+    this.beersService.setActiveBeerTitle(title.trim() !== this.defaultTitle ? title.trim() : '');
+    this.beersService.setActiveBeerDescription(description.trim() !== this.defaultDescription ? description.trim() : '');
+    this.beersService.setActiveBeerImage(this.image);
     this.beersService.createBeer()
       .then(() => this.hideModals());
   }
 
   editBeer() {
+    const title = document.getElementById('active-beer-title').innerHTML;
+    const description = document.getElementById('active-beer-description').innerHTML;
+    this.beersService.setActiveBeerTitle(title.trim() !== this.defaultTitle ? title.trim() : '');
+    this.beersService.setActiveBeerDescription(description.trim() !== this.defaultDescription ? description.trim() : '');
+    this.beersService.setActiveBeerImage(this.image);
     this.beersService.editBeer()
       .then(() => this.hideModals());
   }
 
-  setBeerTitle(title: String) {
-    this.beersService.setActiveBeerTitle(title.trim() !== this.defaultTitle ? title.trim() : '');
-  }
-
   validateBeerTitle(title: String) {
-    this.canCreate = title && title.trim() !== this.defaultTitle && this.beersService.activeBeer.description ? true : false;
+    const description = document.getElementById('active-beer-description').innerHTML;
+    this.canCreate = title && title.trim() !== this.defaultTitle && description !== this.defaultDescription ? true : false;
     this.canUpdate = title && title.trim() !== this.beersService.activeBeer.title;
   }
 
-  setBeerDescription(description: String) {
-    this.beersService.setActiveBeerDescription(description.trim() !== this.defaultDescription ? description.trim() : '');
-  }
-
   validateBeerDescription(description: String) {
-    this.canCreate = description && description.trim() !== this.defaultDescription && this.beersService.activeBeer.title ? true : false;
+    const title = document.getElementById('active-beer-title').innerHTML;
+    this.canCreate = description && description.trim() !== this.defaultDescription && title !== this.defaultTitle ? true : false;
     this.canUpdate = description && description.trim() !== this.beersService.activeBeer.description;
   }
 
@@ -62,8 +67,8 @@ export class BeersComponent {
       .then(() => this.hideModals());
   }
 
-  restoreBeer(id: String) {
-    this.beersService.restoreBeer(id);
+  restoreBeer() {
+    this.beersService.restoreBeer(this.beersService.activeBeer.id);
   }
 
   openImageUpload(event: Event) {
@@ -88,7 +93,7 @@ export class BeersComponent {
         finalize(() => {
           ref.getDownloadURL().subscribe(url => {
             if (url) {
-              this.beersService.setActiveBeerImage(url);
+              this.image = url;
               setTimeout(() => {
                 this.isImageUploadActive = false;
                 this.canUpdate = true;
@@ -106,12 +111,12 @@ export class BeersComponent {
   }
 
   showEditBeerModal(id: String) {
+    this.beersService.resetActiveBeer();
     this.beersService.setActiveBeer(id);
     this.isEditModalActive = true;
   }
 
-  showRemoveBeerModal(id: String) {
-    this.beersService.setActiveBeer(id);
+  showRemoveBeerModal() {
     this.isRemoveModalActive = true;
   }
 
@@ -123,6 +128,11 @@ export class BeersComponent {
     this.isImageUploadActive = false;
     this.canCreate = false;
     this.canUpdate = false;
+    this.image = '';
+  }
+
+  hideRemoveModal() {
+    this.isRemoveModalActive = false;
   }
 
 }

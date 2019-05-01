@@ -26,6 +26,12 @@ export class NotifyService {
     }
   }
 
+  warn(msg: string) {
+    if (this.system.isBrowser()) {
+      this.toastr.error(msg);
+    }
+  }
+
   error(msg: string, err: string = '') {
     if (this.system.isBrowser()) {
       this.toastr.error(msg);
