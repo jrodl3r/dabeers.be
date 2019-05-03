@@ -3,7 +3,7 @@ import { Subscription } from 'rxjs';
 
 import { AdminService } from './admin.service';
 import { ITabs } from '../../models/tab';
-import { BeersService } from 'src/app/services/beers.service';
+import { BeersService } from '../../services/beers.service';
 
 @Component({
   selector: 'app-admin',
