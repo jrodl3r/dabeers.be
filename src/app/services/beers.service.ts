@@ -10,7 +10,7 @@ import { IBeers, IBeer } from '../models/beer';
   providedIn: 'root'
 })
 export class BeersService implements OnDestroy {
-  beersDoc: AngularFirestoreDocument;
+  beersDoc: AngularFirestoreDocument<IBeers>;
   beersSub: Subscription;
   beers: IBeers = {};
   activeBeer: IBeer;
@@ -22,7 +22,7 @@ export class BeersService implements OnDestroy {
   ) {
     this.resetActiveBeer();
     this.isLoading = true;
-    this.beersDoc = this.afs.doc<IBeers>(`items/beers`);
+    this.beersDoc = this.afs.doc<IBeers>('items/beers');
     this.beersSub = this.beersDoc.valueChanges()
       .subscribe(beers => {
         this.beers = beers;

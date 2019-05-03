@@ -1,7 +1,7 @@
 <div
   class="score"
-  [class.text-success]="voteService.polls[beer.id] && voteService.polls[beer.id][uid] && voteService.polls[beer.id][uid].vote === true"
-  [class.text-danger]="voteService.polls[beer.id] && voteService.polls[beer.id][uid] && voteService.polls[beer.id][uid].vote === false"
+  [class.text-success]="voteService.votes[beer.id] && voteService.votes[beer.id][uid] && voteService.votes[beer.id][uid].vote === true"
+  [class.text-danger]="voteService.votes[beer.id] && voteService.votes[beer.id][uid] && voteService.votes[beer.id][uid].vote === false"
   *ngIf="voteService.counts[beer.id.toString()]">
     <span *ngIf="!voteService.scores[beer.id] || voteService.scores[beer.id] === 0">-</span>
     <span *ngIf="voteService.scores[beer.id] !== 0">
@@ -50,27 +50,27 @@
   <div class="vote-wrapper tooltip">
     <div
       class="tooltip-text tooltip-text-undo"
-      *ngIf="voteService.polls[beer.id] && voteService.polls[beer.id][uid]">Undo vote</div>
+      *ngIf="voteService.votes[beer.id] && voteService.votes[beer.id][uid]">Undo vote</div>
     <div
       class="tooltip-text"
-      *ngIf="voteService.polls[beer.id] && !voteService.polls[beer.id][uid] && voteService.userVoteCount === voteService.userVoteMax">No votes left</div>
+      *ngIf="voteService.votes[beer.id] && !voteService.votes[beer.id][uid] && voteService.userVoteCount === voteService.userVoteMax">No votes left</div>
     <div
       class="levers"
-      [class.has-vote]="voteService.polls[beer.id][uid]"
+      [class.has-vote]="voteService.votes[beer.id][uid]"
       [class.max-votes]="voteService.userVoteCount === voteService.userVoteMax"
-      (click)="voteService.polls[beer.id][uid] ? undoVote($event, beer.id) : null"
-      *ngIf="voteService.polls[beer.id]">
+      (click)="voteService.votes[beer.id][uid] ? undoVote($event, beer.id) : null"
+      *ngIf="voteService.votes[beer.id]">
       <i
         class="fa fa-thumbs-up"
-        [class.text-success]="!voteService.polls[beer.id][uid] || voteService.polls[beer.id][uid].vote === true"
-        [class.disabled]="voteService.polls[beer.id][uid] && voteService.polls[beer.id][uid].vote === false"
-        [class.selected]="voteService.polls[beer.id][uid] && voteService.polls[beer.id][uid].vote === true"
+        [class.text-success]="!voteService.votes[beer.id][uid] || voteService.votes[beer.id][uid].vote === true"
+        [class.disabled]="voteService.votes[beer.id][uid] && voteService.votes[beer.id][uid].vote === false"
+        [class.selected]="voteService.votes[beer.id][uid] && voteService.votes[beer.id][uid].vote === true"
         (click)="castVote(beer.id, true)"></i>
       <i
         class="fa fa-thumbs-down"
-        [class.text-danger]="!voteService.polls[beer.id][uid] || voteService.polls[beer.id][uid].vote === false"
-        [class.disabled]="voteService.polls[beer.id][uid] && voteService.polls[beer.id][uid].vote === true"
-        [class.selected]="voteService.polls[beer.id][uid] && voteService.polls[beer.id][uid].vote === false"
+        [class.text-danger]="!voteService.votes[beer.id][uid] || voteService.votes[beer.id][uid].vote === false"
+        [class.disabled]="voteService.votes[beer.id][uid] && voteService.votes[beer.id][uid].vote === true"
+        [class.selected]="voteService.votes[beer.id][uid] && voteService.votes[beer.id][uid].vote === false"
         (click)="castVote(beer.id, false)"></i>
     </div>
   </div>
