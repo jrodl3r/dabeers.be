@@ -1,6 +1,6 @@
 <div class="mt-4 mt-md-2 pr-3 pl-3 pb-3 pr-sm-0 pl-sm-0">
   <h3 class="heading">
-    Beers ({{ beersService.beerCount() || 0 }})
+    Beers ({{ beerService.beerCount() || 0 }})
     <button
       type="button"
       class="btn btn-sm btn-primary shadow-none m-0 ml-auto mr-2"
@@ -8,10 +8,10 @@
       <i class="fa fa-plus mr-1"></i> Add New Beer
     </button>
   </h3>
-  <div *ngIf="!beersService.isLoading; else showLoading">
+  <div *ngIf="!beerService.isLoading; else showLoading">
     <ul
       class="list"
-      *ngIf="beersService.beerCount()">
+      *ngIf="beerService.beerCount()">
       <li
         app-beer-item
         class="list-item action-item pt-3 pb-3"
@@ -20,9 +20,9 @@
         (click)="showEditBeerModal(beer.value.id)"
         (removeBeer)="showRemoveBeerModal($event)"
         (restoreBeer)="restoreBeer($event)"
-        *ngFor="let beer of beersService.beers | keyvalue"></li>
+        *ngFor="let beer of beerService.beers | keyvalue"></li>
     </ul>
-    <div *ngIf="!beersService.beerCount()">No Beers On Tap!</div>
+    <div *ngIf="!beerService.beerCount()">No Beers On Tap!</div>
   </div>
 </div>
 
@@ -52,7 +52,7 @@
               tabindex="1"
               (click)="openImageUpload($event)"
               *ngIf="!isImageUploadActive">
-                {{ beersService.activeBeer.image ? 'Edit' : 'Add' }} Image
+                {{ beerService.activeBeer.image ? 'Edit' : 'Add' }} Image
             </button>
             <input
               id="changeImage"
@@ -79,14 +79,14 @@
                   <i class="fa fa-check-circle mr-1"></i> Ready
               </span>
             </div>
-            <img [src]="image || beersService.activeBeer.image || '/assets/img/bottle.png'">
+            <img [src]="image || beerService.activeBeer.image || '/assets/img/bottle.png'">
           </div>
           <h5
             id="active-beer-title"
             class="modal-title"
             contenteditable="true"
             tabindex="2"
-            [innerHTML]="beersService.activeBeer.title || defaultTitle"
+            [innerHTML]="beerService.activeBeer.title || defaultTitle"
             (keyup)="validateBeerTitle($event.target.textContent)"></h5>
           <button
             type="button"
@@ -103,19 +103,19 @@
             class="pt-2 pb-3"
             contenteditable="true"
             tabindex="3"
-            [innerHTML]="beersService.activeBeer.description || defaultDescription"
+            [innerHTML]="beerService.activeBeer.description || defaultDescription"
             (keyup)="validateBeerDescription($event.target.textContent)"></p>
         </div>
         <div class="modal-footer p-2">
           <small
             class="activator d-none ml-2 mr-auto text-danger"
             [class.d-sm-inline]="isEditModalActive"
-            (click)="beersService.activeBeer.isActive ? showRemoveBeerModal() : restoreBeer()">
+            (click)="beerService.activeBeer.isActive ? showRemoveBeerModal() : restoreBeer()">
             <i
               class="fa mr-1"
-              [class.fa-trash]="beersService.activeBeer.isActive"
-              [class.fa-undo]="!beersService.activeBeer.isActive"></i>
-            {{ beersService.activeBeer.isActive ? 'Remove' : 'Restore' }}
+              [class.fa-trash]="beerService.activeBeer.isActive"
+              [class.fa-undo]="!beerService.activeBeer.isActive"></i>
+            {{ beerService.activeBeer.isActive ? 'Remove' : 'Restore' }}
           </small>
           <small
             class="d-none d-sm-inline ml-2 mr-auto text-light"

@@ -8,6 +8,7 @@ import { NotifyService } from './notify.service';
 import { AuthService } from './auth.service';
 import { NavService } from './nav.service';
 import { SeoService } from './seo.service';
+import { BeerService } from './beer.service';
 import { VoteService } from './vote.service';
 
 @NgModule({
@@ -29,6 +30,7 @@ import { VoteService } from './vote.service';
     AuthService,
     NavService,
     SeoService,
+    BeerService,
     VoteService
   ]
 })

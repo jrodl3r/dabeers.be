@@ -3,7 +3,7 @@ import { AngularFireStorage, AngularFireUploadTask } from '@angular/fire/storage
 import { Observable } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 
-import { BeersService } from '../../../services/beers.service';
+import { BeerService } from '../../../services/beer.service';
 
 @Component({
   selector: 'app-beers',
@@ -26,49 +26,49 @@ export class BeersComponent {
   canUpdate = false;
 
   constructor(
-    public beersService: BeersService,
+    public beerService: BeerService,
     private storage: AngularFireStorage
   ) { }
 
   createBeer() {
     const title = document.getElementById('active-beer-title').innerHTML;
     const description = document.getElementById('active-beer-description').innerHTML;
-    this.beersService.setActiveBeerTitle(title.trim() !== this.defaultTitle ? title.trim() : '');
-    this.beersService.setActiveBeerDescription(description.trim() !== this.defaultDescription ? description.trim() : '');
-    this.beersService.setActiveBeerImage(this.image);
-    this.beersService.createBeer()
+    this.beerService.setActiveBeerTitle(title.trim() !== this.defaultTitle ? title.trim() : '');
+    this.beerService.setActiveBeerDescription(description.trim() !== this.defaultDescription ? description.trim() : '');
+    this.beerService.setActiveBeerImage(this.image);
+    this.beerService.createBeer()
       .then(() => this.hideModals());
   }
 
   editBeer() {
     const title = document.getElementById('active-beer-title').innerHTML;
     const description = document.getElementById('active-beer-description').innerHTML;
-    this.beersService.setActiveBeerTitle(title.trim() !== this.defaultTitle ? title.trim() : '');
-    this.beersService.setActiveBeerDescription(description.trim() !== this.defaultDescription ? description.trim() : '');
-    this.beersService.setActiveBeerImage(this.image);
-    this.beersService.editBeer()
+    this.beerService.setActiveBeerTitle(title.trim() !== this.defaultTitle ? title.trim() : '');
+    this.beerService.setActiveBeerDescription(description.trim() !== this.defaultDescription ? description.trim() : '');
+    this.beerService.setActiveBeerImage(this.image);
+    this.beerService.editBeer()
       .then(() => this.hideModals());
   }
 
   validateBeerTitle(title: String) {
     const description = document.getElementById('active-beer-description').innerHTML;
     this.canCreate = title && title.trim() !== this.defaultTitle && description !== this.defaultDescription ? true : false;
-    this.canUpdate = title && title.trim() !== this.beersService.activeBeer.title;
+    this.canUpdate = title && title.trim() !== this.beerService.activeBeer.title;
   }
 
   validateBeerDescription(description: String) {
     const title = document.getElementById('active-beer-title').innerHTML;
     this.canCreate = description && description.trim() !== this.defaultDescription && title !== this.defaultTitle ? true : false;
-    this.canUpdate = description && description.trim() !== this.beersService.activeBeer.description;
+    this.canUpdate = description && description.trim() !== this.beerService.activeBeer.description;
   }
 
   removeBeer() {
-    this.beersService.removeBeer(this.beersService.activeBeer.id)
+    this.beerService.removeBeer(this.beerService.activeBeer.id)
       .then(() => this.hideModals());
   }
 
   restoreBeer() {
-    this.beersService.restoreBeer(this.beersService.activeBeer.id);
+    this.beerService.restoreBeer(this.beerService.activeBeer.id);
   }
 
   openImageUpload(event: Event) {
@@ -106,13 +106,13 @@ export class BeersComponent {
   }
 
   showCreateBeerModal() {
-    this.beersService.resetActiveBeer();
+    this.beerService.resetActiveBeer();
     this.isCreateModalActive = true;
   }
 
   showEditBeerModal(id: String) {
-    this.beersService.resetActiveBeer();
-    this.beersService.setActiveBeer(id);
+    this.beerService.resetActiveBeer();
+    this.beerService.setActiveBeer(id);
     this.isEditModalActive = true;
   }
 
@@ -121,7 +121,7 @@ export class BeersComponent {
   }
 
   hideModals() {
-    this.beersService.resetActiveBeer();
+    this.beerService.resetActiveBeer();
     this.isCreateModalActive = false;
     this.isEditModalActive = false;
     this.isRemoveModalActive = false;

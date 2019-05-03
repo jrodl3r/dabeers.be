@@ -4,7 +4,7 @@
     <div class="control-bar">
       <div
         class="inner"
-        *ngIf="isLoggedIn; else isOffline">
+        *ngIf="auth.isLoggedIn(); else isOffline">
         <span
           *ngIf="voteService.userVoteCount < voteService.userVoteMax">
             You have {{ voteService.userVoteMax - voteService.userVoteCount }}
@@ -42,23 +42,23 @@
 
     <div
       class="beers"
-      *ngIf="!beersService.isLoading; else showLoading">
+      *ngIf="!beerService.isLoading; else showLoading">
       <ul
-        *ngIf="beersService.activeBeerCount()">
+        *ngIf="beerService.activeBeerCount()">
         <li
           app-vote-item
-          [uid]="uid"
-          [isLoggedIn]="isLoggedIn"
+          [uid]="this.auth.getUserID()"
+          [isLoggedIn]="this.auth.isLoggedIn()"
           [beer]="beer.value"
-          *ngFor="let beer of beersService.beers | keyvalue | activeItemsPipe
+          *ngFor="let beer of beerService.beers | keyvalue | activeItemsPipe
             | sortItemsPipe: voteService.sortFlag : voteService.scores : voteService.counts : voteService.pipeWiggle"></li>
         <li
           class="blank"
-          *ngIf="beersService.activeBeerCount() % 2 !== 0"></li>
+          *ngIf="beerService.activeBeerCount() % 2 !== 0"></li>
       </ul>
       <h3
         class="text-center mt-5 mb-5"
-        *ngIf="!beersService.activeBeerCount()">No Beers On Tap... 😬</h3>
+        *ngIf="!beerService.activeBeerCount()">No Beers On Tap... 😬</h3>
     </div>
 
     <ng-template #showLoading>

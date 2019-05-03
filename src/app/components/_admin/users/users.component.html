@@ -84,7 +84,7 @@
               <span class="badge bg-secondary-dark ml-2 mr-3">Active Poll</span>
               <ul class="record">
                 <li *ngFor="let item of activeUserVotes">
-                  {{ beersService.beers[item.beer].title }}
+                  {{ beerService.beers[item.beer].title }}
                   <i
                     class="fa fa-thumbs-up text-success ml-1 mr-2"
                     *ngIf="item.vote === true"></i>

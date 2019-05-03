@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 import { AdminService } from '../admin.service';
-import { BeersService } from '../../../services/beers.service';
+import { BeerService } from '../../../services/beer.service';
 import { VoteService } from '../../../services/vote.service';
 
 import { IUser } from '../../../models/user';
@@ -18,7 +18,7 @@ export class UsersComponent {
 
   constructor(
     public voteService: VoteService,
-    public beersService: BeersService,
+    public beerService: BeerService,
     public adminService: AdminService) {
     this.resetActiveUser();
   }

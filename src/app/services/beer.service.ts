@@ -9,7 +9,7 @@ import { IBeers, IBeer } from '../models/beer';
 @Injectable({
   providedIn: 'root'
 })
-export class BeersService implements OnDestroy {
+export class BeerService implements OnDestroy {
   beersDoc: AngularFirestoreDocument<IBeers>;
   beersSub: Subscription;
   beers: IBeers = {};
