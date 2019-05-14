@@ -1,6 +1,7 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { Subscription } from 'rxjs';
+import { shareReplay } from 'rxjs/operators';
 
 import { NotifyService } from './notify.service';
 
@@ -24,6 +25,7 @@ export class BeerService implements OnDestroy {
     this.isLoading = true;
     this.beersDoc = this.afs.doc<IBeers>('items/beers');
     this.beersSub = this.beersDoc.valueChanges()
+      .pipe(shareReplay(1))
       .subscribe(beers => {
         this.beers = beers;
         this.isLoading = false;

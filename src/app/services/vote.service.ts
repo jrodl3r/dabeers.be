@@ -115,7 +115,7 @@ export class VoteService implements OnDestroy {
     this.sortFlag = flag.toString();
   }
 
-  getActiveUserVotes(uid: String) {
+  getUserVotes(uid: String) {
     const votes = [];
     Object.keys(this.voters).forEach(beer => {
       this.voters[beer].forEach(user => {

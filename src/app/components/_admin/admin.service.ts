@@ -6,9 +6,7 @@ import { NotifyService } from '../../services/notify.service';
 
 import { IUser } from '../../models/user';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class AdminService implements OnDestroy {
   usersCollection: AngularFirestoreCollection<IUser>;
   usersSub: Subscription;

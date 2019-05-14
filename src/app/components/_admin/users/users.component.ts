@@ -33,7 +33,7 @@ export class UsersComponent {
 
   showUserModal(uid: String) {
     this.setActiveUser(uid);
-    this.activeUserVotes = this.voteService.getActiveUserVotes(uid);
+    this.activeUserVotes = this.voteService.getUserVotes(uid);
     this.isUserModalActive = true;
   }
 
