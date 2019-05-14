@@ -120,7 +120,10 @@
           <small
             class="d-none d-sm-inline ml-2 mr-auto text-light"
             *ngIf="isCreateModalActive">
-            <strong>Click items to make changes</strong>
+            <strong *ngIf="!isInputDirty()">Click items to make changes</strong>
+            <strong *ngIf="isInputDirty(defaultTitle) && !isInputDirty(defaultDescription)">Don't forget the description</strong>
+            <strong *ngIf="!isInputDirty(defaultTitle) && isInputDirty(defaultDescription)">Don't forget the title</strong>
+            <strong *ngIf="isInputDirty(defaultTitle) && isInputDirty(defaultDescription)">Ready when you are!</strong>
           </small>
           <button
             class="btn btn-sm btn-grey mr-2"

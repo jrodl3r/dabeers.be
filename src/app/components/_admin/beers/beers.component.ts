@@ -20,8 +20,8 @@ export class BeersComponent {
   imageUploadSnapshot: Observable<any>;
   imageMetadata: any;
   image = '';
-  defaultTitle = 'Beer Title';
-  defaultDescription = 'Beer Description';
+  defaultTitle: String = 'Beer Title';
+  defaultDescription: String = 'Beer Description';
   canCreate = false;
   canUpdate = false;
 
@@ -102,6 +102,18 @@ export class BeersComponent {
           });
         })
       ).subscribe();
+    }
+  }
+
+  isInputDirty(input: String) {
+    const title = document.getElementById('active-beer-title').innerHTML;
+    const description = document.getElementById('active-beer-description').innerHTML;
+    if (!input) {
+      return description !== this.defaultDescription || title !== this.defaultTitle;
+    } else if (input === this.defaultTitle) {
+      return title !== this.defaultTitle;
+    } else if (input === this.defaultDescription) {
+      return description !== this.defaultDescription;
     }
   }
 
