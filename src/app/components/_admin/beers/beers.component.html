@@ -46,13 +46,16 @@
     <div role="document" class="modal-dialog modal-notify">
       <div class="modal-content">
         <div class="modal-header modal-header-feature">
-          <div class="avatar">
+          <div
+            class="avatar"
+            [class.drag-active]="dragHovered">
             <button
               class="btn btn-sm btn-light shadow-none"
               tabindex="1"
+              (dragover)="onDragImageOver($event)"
               (click)="openImageUpload($event)"
               *ngIf="!isImageUploadActive">
-                {{ beerService.activeBeer.image ? 'Edit' : 'Add' }} Image
+                {{ image || beerService.activeBeer.image ? 'Edit' : 'Add' }} Image
             </button>
             <input
               id="changeImage"
@@ -79,14 +82,19 @@
                   <i class="fa fa-check-circle mr-1"></i> Ready
               </span>
             </div>
-            <img [src]="image || beerService.activeBeer.image || '/assets/img/bottle.png'">
+            <span class="drop-splash">Drop Image</span>
+            <img
+              [src]="image || beerService.activeBeer.image || '/assets/img/bottle.png'"
+              (drop)="onDropImage($event);"
+              (dragover)="onDragImageOver($event)"
+              (dragleave)="onDragImageLeave($event)">
           </div>
           <h5
             id="active-beer-title"
             class="modal-title"
             contenteditable="true"
             tabindex="2"
-            [innerHTML]="beerService.activeBeer.title || defaultTitle"
+            [innerText]="beerService.activeBeer.title || defaultTitle"
             (keyup)="validateBeerTitle($event.target.textContent)"></h5>
           <button
             type="button"
@@ -103,7 +111,7 @@
             class="pt-2 pb-3"
             contenteditable="true"
             tabindex="3"
-            [innerHTML]="beerService.activeBeer.description || defaultDescription"
+            [innerText]="beerService.activeBeer.description || defaultDescription"
             (keyup)="validateBeerDescription($event.target.textContent)"></p>
         </div>
         <div class="modal-footer p-2">
@@ -123,7 +131,7 @@
             <strong *ngIf="!isInputDirty()">Click items to make changes</strong>
             <strong *ngIf="isInputDirty(defaultTitle) && !isInputDirty(defaultDescription)">Don't forget the description</strong>
             <strong *ngIf="!isInputDirty(defaultTitle) && isInputDirty(defaultDescription)">Don't forget the title</strong>
-            <strong *ngIf="isInputDirty(defaultTitle) && isInputDirty(defaultDescription)">Ready when you are!</strong>
+            <strong *ngIf="isInputDirty(defaultTitle) && isInputDirty(defaultDescription)">Everything looks good, Right?</strong>
           </small>
           <button
             class="btn btn-sm btn-grey mr-2"

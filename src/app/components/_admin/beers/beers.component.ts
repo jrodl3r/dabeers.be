@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 
 import { BeerService } from '../../../services/beer.service';
+import { NotifyService } from '../../../services/notify.service';
 
 @Component({
   selector: 'app-beers',
@@ -20,6 +21,7 @@ export class BeersComponent {
   imageUploadSnapshot: Observable<any>;
   imageMetadata: any;
   image = '';
+  dragHovered = false;
   defaultTitle: String = 'Beer Title';
   defaultDescription: String = 'Beer Description';
   canCreate = false;
@@ -27,12 +29,13 @@ export class BeersComponent {
 
   constructor(
     public beerService: BeerService,
+    public notifyService: NotifyService,
     private storage: AngularFireStorage
   ) { }
 
   createBeer() {
-    const title = document.getElementById('active-beer-title').innerHTML;
-    const description = document.getElementById('active-beer-description').innerHTML;
+    const title = document.getElementById('active-beer-title').innerText;
+    const description = document.getElementById('active-beer-description').innerText;
     this.beerService.setActiveBeerTitle(title.trim() !== this.defaultTitle ? title.trim() : '');
     this.beerService.setActiveBeerDescription(description.trim() !== this.defaultDescription ? description.trim() : '');
     this.beerService.setActiveBeerImage(this.image);
@@ -41,8 +44,8 @@ export class BeersComponent {
   }
 
   editBeer() {
-    const title = document.getElementById('active-beer-title').innerHTML;
-    const description = document.getElementById('active-beer-description').innerHTML;
+    const title = document.getElementById('active-beer-title').innerText;
+    const description = document.getElementById('active-beer-description').innerText;
     this.beerService.setActiveBeerTitle(title.trim() !== this.defaultTitle ? title.trim() : '');
     this.beerService.setActiveBeerDescription(description.trim() !== this.defaultDescription ? description.trim() : '');
     this.beerService.setActiveBeerImage(this.image);
@@ -51,13 +54,13 @@ export class BeersComponent {
   }
 
   validateBeerTitle(title: String) {
-    const description = document.getElementById('active-beer-description').innerHTML;
+    const description = document.getElementById('active-beer-description').innerText;
     this.canCreate = title && title.trim() !== this.defaultTitle && description !== this.defaultDescription ? true : false;
     this.canUpdate = title && title.trim() !== this.beerService.activeBeer.title;
   }
 
   validateBeerDescription(description: String) {
-    const title = document.getElementById('active-beer-title').innerHTML;
+    const title = document.getElementById('active-beer-title').innerText;
     this.canCreate = description && description.trim() !== this.defaultDescription && title !== this.defaultTitle ? true : false;
     this.canUpdate = description && description.trim() !== this.beerService.activeBeer.description;
   }
@@ -105,9 +108,32 @@ export class BeersComponent {
     }
   }
 
+  onDropImage(event: any) {
+    event.preventDefault();
+    if (event.dataTransfer.files.length && event.dataTransfer.files[0].type === 'image/png') {
+      this.uploadImage(event.dataTransfer.files);
+    } else if (event.dataTransfer.getData('text') && event.dataTransfer.getData('text').endsWith('.png')) {
+      this.image = event.dataTransfer.getData('text');
+      this.canUpdate = true;
+    } else {
+      this.notifyService.error('Content is not supported');
+    }
+    this.dragHovered = false;
+  }
+
+  onDragImageOver(event: Event) {
+    event.preventDefault();
+    this.dragHovered = true;
+  }
+
+  onDragImageLeave(event: Event) {
+    event.preventDefault();
+    this.dragHovered = false;
+  }
+
   isInputDirty(input: String) {
-    const title = document.getElementById('active-beer-title').innerHTML;
-    const description = document.getElementById('active-beer-description').innerHTML;
+    const title = document.getElementById('active-beer-title').innerText;
+    const description = document.getElementById('active-beer-description').innerText;
     if (!input) {
       return description !== this.defaultDescription || title !== this.defaultTitle;
     } else if (input === this.defaultTitle) {

@@ -80,7 +80,7 @@ export class BeerService implements OnDestroy {
         return this.updateBeers(beers)
           .then(() => {
             this.resetActiveBeer();
-            this.notify.info('Beer updated');
+            this.notify.success('Beer updated');
           });
       })
       .catch(error => this.notify.error('Error editing beer', error));

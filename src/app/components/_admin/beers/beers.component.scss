@@ -11,8 +11,25 @@ h3 {
   .avatar {
     position: relative;
 
+    &.drag-active {
+
+      button {
+        display: none;
+        pointer-events: none;
+      }
+
+      img {
+        opacity: .25;
+        border: 2px dashed $mid-grey-color;
+        transition: .15s ease-in-out;
+      }
+
+      .drop-splash { display: flex; }
+    }
+
     button {
       position: absolute;
+      z-index: 1;
       margin: 0 auto;
       padding: 5px 15px;
       font-size: 10px;
@@ -29,6 +46,13 @@ h3 {
     img {
       background: #FFF;
       border: 1px solid #EEE;
+    }
+
+    .drop-splash {
+      display: none;
+      position: absolute;
+      font-weight: 700;
+      color: $mid-grey-color;
     }
   }
 
