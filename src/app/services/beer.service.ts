@@ -41,7 +41,7 @@ export class BeerService implements OnDestroy {
   }
 
   private updateBeers(beers: IBeers) {
-    return this.beersDoc.set(beers, { merge: true })
+    return this.beersDoc.set(beers)
       .catch(error => this.notify.error('Error updating beer', error));
   }
 

@@ -1,12 +1,11 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
-// import * as firebase from 'firebase/app';
 import { Subscription } from 'rxjs';
 
 import { AuthService } from './auth.service';
 import { NotifyService } from './notify.service';
 
-import { IPoll, IVotes, IVote } from '../models/vote';
+import { IPoll, IVote } from '../models/vote';
 
 @Injectable({
   providedIn: 'root'
@@ -14,8 +13,6 @@ import { IPoll, IVotes, IVote } from '../models/vote';
 export class VoteService implements OnDestroy {
   votesDoc: AngularFirestoreDocument<IPoll>;
   votesSub: Subscription;
-  // votesCollection: AngularFirestoreCollection<IVotes>;
-  // userSub: Subscription;
   votes: IPoll = {};
   voters: any = {};     // list of user names
   counts: any = {};     // total # of votes
@@ -43,31 +40,15 @@ export class VoteService implements OnDestroy {
         this.notify.error('Error fetching votes', error);
         this.isLoading = false;
       });
-    // this.votesCollection = this.afs.collection<IVotes>('votes');
-    // this.votesSub = this.votesCollection.snapshotChanges()
-    //   .pipe(
-    //     map(actions => actions.map(a => {
-    //       const data = a.payload.doc.data() as IVotes;
-    //       const id = a.payload.doc.id;
-    //       return { id, data };
-    //     }))
-    //   )
-    //   .subscribe(beers => {
-    //     beers.forEach(beer => this.polls[`${beer.id}`] = beer.data);
-    //     this.calcTotals();
-    //     this.isLoading = false;
-    //   },
-    //   error => (() => {
-    //     this.notify.error('Error fetching votes', error);
-    //     this.isLoading = false;
-    //   }));
-
-    // this.userSub = this.auth.user.subscribe(user => { if (user) { this.calcTotals(); }});
   }
 
   ngOnDestroy() {
     this.votesSub.unsubscribe();
-    // this.userSub.unsubscribe();
+  }
+
+  private updateVotes(votes: IPoll) {
+    return this.votesDoc.set(votes)
+      .catch(error => this.notify.error('Error updating votes', error));
   }
 
   calcTotals() {
@@ -93,21 +74,35 @@ export class VoteService implements OnDestroy {
   }
 
   castVote(id: String, vote: Boolean) {
-    // const email = this.auth.getUserEmail();
-    // const uid = this.auth.getUserID();
-    // const ballot: IVote = { created: new Date(), email, uid, vote };
-    // this.votesCollection.doc(`${id}`)
-    //   .set({ [`${uid}`]: ballot }, { merge: true })
-    //   .then(() => this.auth.saveActivity())
-    //   .catch(error => this.notify.error('Error casting vote', error));
+    const email = this.auth.getUserEmail();
+    const uid = this.auth.getUserID();
+    const ballot: IVote = { created: new Date(), email, uid, vote };
+    this.votesDoc.ref.get()
+      .then(response => {
+        const votes: IPoll = response.data();
+        votes[`${id}`][`${uid}`] = ballot;
+        return this.updateVotes(votes)
+          .then(() => {
+            this.auth.saveActivity();
+            this.notify.success('Vote cast!');
+          });
+      })
+      .catch(error => this.notify.error('Error casting vote', error));
   }
 
   undoVote(id: String) {
-    // const uid = this.auth.getUserID();
-    // this.votesCollection.doc(`${id}`)
-    //   .update({ [`${uid}`]: firebase.firestore.FieldValue.delete() })
-    //   .then(() => this.auth.saveActivity())
-    //   .catch(error => this.notify.error('Error undoing vote', error));
+    const uid = this.auth.getUserID();
+    this.votesDoc.ref.get()
+      .then(response => {
+        const votes: IPoll = response.data();
+        delete votes[`${id}`][`${uid}`];
+        return this.updateVotes(votes)
+          .then(() => {
+            this.auth.saveActivity();
+            this.notify.warn('Vote Undone');
+          });
+      })
+      .catch(error => this.notify.error('Error undoing vote', error));
   }
 
   setSortFlag(event: Event, flag: String) {
