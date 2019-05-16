@@ -119,7 +119,9 @@
         </div>
         <div class="modal-footer p-2">
           <small
-            class="activator d-none ml-2 mr-auto text-danger"
+            class="activator d-none ml-2 mr-auto"
+            [class.text-danger]="beerService.activeBeer.isActive"
+            [class.text-success]="!beerService.activeBeer.isActive"
             [class.d-sm-inline]="isEditModalActive"
             (click)="beerService.activeBeer.isActive ? showRemoveBeerModal() : restoreBeer()">
             <i
