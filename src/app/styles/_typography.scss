@@ -30,6 +30,9 @@ h2 {
 }
 
 h3.heading {
+  display: flex;
+  align-items: center;
+  min-height: 52px;
   margin-top: 2rem;
   margin-bottom: 1rem;
   padding-bottom: 1rem;
