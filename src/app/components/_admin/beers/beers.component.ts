@@ -21,7 +21,7 @@ export class BeersComponent {
   imageUploadSnapshot: Observable<any>;
   imageMetadata: any;
   image = '';
-  dragHovered = false;
+  dragActive = false;
   defaultTitle: String = 'Beer Title';
   defaultDescription: String = 'Beer Description';
   canCreate = false;
@@ -67,7 +67,7 @@ export class BeersComponent {
 
   removeBeer() {
     this.beerService.removeBeer(this.beerService.activeBeer.id)
-      .then(() => this.hideModals());
+      .then(() => this.hideRemoveModal());
   }
 
   restoreBeer() {
@@ -118,17 +118,19 @@ export class BeersComponent {
     } else {
       this.notifyService.error('Content is not supported');
     }
-    this.dragHovered = false;
+    this.dragActive = false;
   }
 
-  onDragImageOver(event: Event) {
+  onDragImageEnter(event: Event) {
     event.preventDefault();
-    this.dragHovered = true;
+    event.stopPropagation();
+    this.dragActive = true;
   }
 
   onDragImageLeave(event: Event) {
     event.preventDefault();
-    this.dragHovered = false;
+    event.stopPropagation();
+    this.dragActive = false;
   }
 
   isInputDirty(input: String) {

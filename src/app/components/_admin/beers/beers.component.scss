@@ -13,18 +13,14 @@ h3 {
 
     &.drag-active {
 
-      button {
-        display: none;
-        pointer-events: none;
-      }
+      button { display: none; }
+      .drop-zone, .drop-splash { display: flex; }
 
-      img {
+      .vignette {
         opacity: .25;
         border: 2px dashed $mid-grey-color;
         transition: .15s ease-in-out;
       }
-
-      .drop-splash { display: flex; }
     }
 
     button {
@@ -43,9 +39,14 @@ h3 {
       &:hover { opacity: 1; }
     }
 
-    img {
-      background: #FFF;
-      border: 1px solid #EEE;
+    .drop-zone {
+      position: absolute;
+      z-index: 1200;
+      display: none;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
     }
 
     .drop-splash {

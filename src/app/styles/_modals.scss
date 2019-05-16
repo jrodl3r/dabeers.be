@@ -42,18 +42,29 @@
       margin: 10px 0 20px;
 
       img {
-        width: 100px;
-        min-width: 100px;
+        max-height: 100px;
+        max-width: 100px;
+
+        @media (min-width: $sm-screen) {
+          max-height: 140px;
+          max-width: 140px;
+        }
+      }
+
+      .vignette {
+        display: flex;
+        justify-content: center;
         height: 100px;
-        min-height: 100px;
+        width: 100px;
         margin: 0 auto;
+        overflow: hidden;
+        background: #FFF;
+        border: 1px solid #EEE;
         border-radius: 50px;
 
         @media (min-width: $sm-screen) {
           width: 140px;
-          min-width: 140px;
           height: 140px;
-          min-height: 140px;
           border-radius: 70px;
         }
       }

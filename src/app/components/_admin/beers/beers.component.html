@@ -48,11 +48,11 @@
         <div class="modal-header modal-header-feature">
           <div
             class="avatar"
-            [class.drag-active]="dragHovered">
+            [class.drag-active]="dragActive"
+            (dragenter)="onDragImageEnter($event)">
             <button
               class="btn btn-sm btn-light shadow-none"
               tabindex="1"
-              (dragover)="onDragImageOver($event)"
               (click)="openImageUpload($event)"
               *ngIf="!isImageUploadActive">
                 {{ image || beerService.activeBeer.image ? 'Edit' : 'Add' }} Image
@@ -83,11 +83,14 @@
               </span>
             </div>
             <span class="drop-splash">Drop Image</span>
-            <img
-              [src]="image || beerService.activeBeer.image || '/assets/img/bottle.png'"
-              (drop)="onDropImage($event);"
-              (dragover)="onDragImageOver($event)"
-              (dragleave)="onDragImageLeave($event)">
+            <div class="vignette">
+              <img [src]="image || beerService.activeBeer.image || '/assets/img/bottle.png'">
+            </div>
+            <div
+              class="drop-zone"
+              (drop)="onDropImage($event)"
+              (dragover)="onDragImageEnter($event)"
+              (dragleave)="onDragImageLeave($event)"></div>
           </div>
           <h5
             id="active-beer-title"
@@ -123,7 +126,7 @@
               class="fa mr-1"
               [class.fa-trash]="beerService.activeBeer.isActive"
               [class.fa-undo]="!beerService.activeBeer.isActive"></i>
-            {{ beerService.activeBeer.isActive ? 'Remove' : 'Restore' }}
+            {{ beerService.activeBeer.isActive ? 'Disable' : 'Restore' }}
           </small>
           <small
             class="d-none d-sm-inline ml-2 mr-auto text-light"

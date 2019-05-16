@@ -92,7 +92,7 @@ export class BeerService implements OnDestroy {
         const beers = response.data();
         beers[`${id}`].isActive = false;
         this.activeBeer.isActive = false;
-        this.notify.info('Beer removed');
+        this.notify.warn('Beer disabled');
         return this.updateBeers(beers);
       })
       .catch(error => this.notify.error('Error removing beer', error));
@@ -104,7 +104,7 @@ export class BeerService implements OnDestroy {
         const beers = response.data();
         beers[`${id}`].isActive = true;
         this.activeBeer.isActive = true;
-        this.notify.info('Beer restored');
+        this.notify.success('Beer restored');
         return this.updateBeers(beers);
       })
       .catch(error => this.notify.error('Error restoring beer', error));
