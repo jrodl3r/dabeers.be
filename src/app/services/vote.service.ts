@@ -5,12 +5,15 @@ import { Subscription } from 'rxjs';
 import { AuthService } from './auth.service';
 import { NotifyService } from './notify.service';
 
-import { IPoll, IVote } from '../models/vote';
+import { IPollInfo, IPoll, IVote } from '../models/vote';
 
 @Injectable({
   providedIn: 'root'
 })
 export class VoteService implements OnDestroy {
+  pollInfoDoc: AngularFirestoreDocument<IPollInfo>;
+  pollInfoSub: Subscription;
+  pollInfo: IPollInfo;
   votesDoc: AngularFirestoreDocument<IPoll>;
   votesSub: Subscription;
   votes: IPoll = {};
@@ -20,25 +23,37 @@ export class VoteService implements OnDestroy {
   userVoteMax = 6;
   userVoteCount = 0;
   sortFlag = 'score';
-  pipeWiggle: Boolean = true;
-  isLoading: Boolean = false;
+  // pipeWiggle: Boolean = true;
+  isFetchingPollInfo: Boolean = false;
+  isFetchingVotes: Boolean = false;
 
   constructor(
     private afs: AngularFirestore,
     private auth: AuthService,
     private notify: NotifyService
   ) {
-    this.isLoading = true;
+    this.isFetchingVotes = true;
     this.votesDoc = this.afs.doc('items/votes');
     this.votesSub = this.votesDoc.valueChanges()
       .subscribe(votes => {
         this.votes = votes;
         this.calcTotals();
-        this.isLoading = false;
+        this.isFetchingVotes = false;
       },
       error => {
         this.notify.error('Error fetching votes', error);
-        this.isLoading = false;
+        this.isFetchingVotes = false;
+      });
+    this.isFetchingPollInfo = true;
+    this.pollInfoDoc = this.afs.doc('polls/active');
+    this.pollInfoSub = this.pollInfoDoc.valueChanges()
+      .subscribe(info => {
+        this.pollInfo = info;
+        this.isFetchingPollInfo = false;
+      },
+      error => {
+        this.notify.error('Error fetching poll info', error);
+        this.isFetchingPollInfo = false;
       });
   }
 

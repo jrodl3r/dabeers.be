@@ -6,13 +6,22 @@ export interface IPollInfo {
   created: Date;
   finished: Date;
   id: String;
+  status: [IPollStatusItems];
+}
+
+interface IPollStatusItems {
+  [key: string]: IPollStatus; // beer-id
+}
+
+interface IPollStatus {
+  active: Boolean;
 }
 
 export interface IPollResult extends IPollInfo {
   poll: IPoll;
 }
 
-export interface IVotes {
+interface IVotes {
   [key: string]: IVote; // user-id
 }
 
